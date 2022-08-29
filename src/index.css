@@ -1,13 +1,70 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+    margin: 0;
+    padding:0;
+    font-family: 'Montserrat', sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+
+    .card{
+        @apply
+        bg-white
+        w-96 min-h-[10rem]
+        shadow-lg rounded-md overflow-hidden
+
+        /* Responsive */
+        lg:w-80
+    }
+    .img-profile{
+        @apply
+        w-20 h-20 border object-cover rounded-full
+
+        /* Responsive */
+        lg:w-14 lg:h-14
+    }
+    .date{
+        @apply
+        px-3 py-1 rounded-full text-base
+        border border-black
+
+        /* Responsive */
+        lg:text-sm
+    }
+    .status{
+        @apply
+        px-3 py-1 rounded-full text-base
+        bg-green-cyan text-white
+
+        /* Responsive */
+        lg:text-sm
+
+    }
+    .description-card{
+        @apply
+        text-base text-center
+        overflow-visible whitespace-pre-line
+
+        /* Responsive */
+        lg:text-sm
+
+    }
+    .button-card{
+        @apply
+        h-8
+        flex-grow
+        flex justify-center items-center
+        text-white font-bold
+        bg-very-dark-blue hover:bg-very-dark-blue/80
+        transition rounded-md
+
+        /* Responsive */
+        lg:text-sm lg:h-7
+
+    }
 }
