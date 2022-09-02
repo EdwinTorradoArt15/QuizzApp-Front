@@ -6,23 +6,28 @@ import imgperfil from "../img/imgperfil.jpeg";
 
 export const dataSidebar = [
   {
-    name: "Home",
+    titulo: 'Inicio',
+    name: "inicio",
     icon: <AiFillHome />,
   },
   {
-    name: "Cuestionarios",
+    titulo: 'Cuestionarios',
+    name: "cuestionarios",
     icon: <AiFillProfile />,
   },
   {
-    name: "Completados",
+    titulo: 'Completados',
+    name: "completados",
     icon: <BiCheckDouble />,
   },
   {
-    name: "Perfil",
+    titulo: 'Perfil',
+    name: 'perfil',
     icon: <BsFillPersonFill />,
   },
   {
-    name: "Configuracion",
+    titulo: 'Configuracion',
+    name: 'configuracion',
     icon: <AiFillSetting />,
   },
 ];

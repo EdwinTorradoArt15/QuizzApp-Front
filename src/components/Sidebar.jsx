@@ -26,7 +26,7 @@ const Sidebar = () => {
         <>
           <div className="flex justify-between items-center">
             <Link
-              to="/"
+              to="/dashboard/inicio"
               onClick={() => handleCloseSidebar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-white"
             >
@@ -47,7 +47,7 @@ const Sidebar = () => {
             {dataSidebar.map((item) => (
               <div key={item.name}>
                 <NavLink
-                  to={`/${item.name}`}
+                  to={`/dashboard/${item.name}`}
                   key={item.name}
                   onClick={handleCloseSidebar}
                   style={({isActive}) => ({
@@ -58,7 +58,7 @@ const Sidebar = () => {
                   }
                 >
                   {item.icon}
-                  <span className="capitalize">{item.name}</span>
+                  <span className="capitalize">{item.titulo}</span>
                 </NavLink>
               </div>
             ))}
