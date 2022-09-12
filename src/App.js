@@ -1,6 +1,6 @@
 import { Route, Routes} from 'react-router-dom';
 
-import { Login, FormularioRegistro, Dashboard} from './components';
+import { Login, Dashboard, FormRegister, Register} from './components';
 
 import "./App.css";
 
@@ -11,7 +11,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Login/>}/>
-        <Route path='/formulario_registro' element={<FormularioRegistro/>}/>
+        <Route path='/registro' element={<Register/>}/>
         <Route path='/dashboard/*' element={<Dashboard/>}/>
       </Routes>
 

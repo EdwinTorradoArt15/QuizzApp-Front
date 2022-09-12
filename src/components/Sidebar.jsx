@@ -1,7 +1,5 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { MdOutlineCancel } from "react-icons/md";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import { dataSidebar } from "../data/datos";
 import { useStateContext } from "../context/ContextProvider";
@@ -16,32 +14,22 @@ const Sidebar = () => {
   };
 
   const activeLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-black text-md m-2";
+    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-l-lg text-black ml-2";
   const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-[#f1faee] dark:text-gray-200 dark:hover:text-black hover:bg-white hover:text-black m-2";
+    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-l-lg text-[#f1faee] dark:text-gray-200 dark:hover:text-black hover:bg-white hover:text-black my-2 ml-2";
 
   return (
-    <div className="bg-very-dark-blue h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+    <div className="bg-bright-blue h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
       {activeMenu && (
         <>
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-center">
             <Link
               to="/dashboard/inicio"
               onClick={() => handleCloseSidebar}
-              className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-white"
+              className="items-center ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-white"
             >
               <span>QuizApp</span>
             </Link>
-            <TooltipComponent content="Cerrar" position="BottomCenter">
-              <button
-                type="button"
-                onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
-                style={{color: 'white'}}
-                className="text-xl rounded-full p-3 mt-4 block md:hidden"
-              >
-                <MdOutlineCancel />
-              </button>
-            </TooltipComponent>
           </div>
           <div className="mt-10">
             {dataSidebar.map((item) => (

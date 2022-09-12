@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { FiShoppingCart } from "react-icons/fi";
 import { BsFillChatLeftFill, BsFillMoonFill ,BsBellFill } from "react-icons/bs";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { useStateContext } from "../context/ContextProvider";
 import imgperfil from "../img/imgperfil.jpeg";
 
-const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
-  <TooltipComponent content={title} position="BottomCenter">
+const NavButton = ({customFunc, icon, color, dotColor }) => (
     <button
       type="button"
       onClick={customFunc}
@@ -21,7 +18,6 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
       />
       {icon}
     </button>
-  </TooltipComponent>
 );
 
 const Navbar = () => {
@@ -49,9 +45,8 @@ const Navbar = () => {
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 
   return (
-    <div className="flex justify-between p-2 relative bg-very-dark-blue">
+    <div className="flex justify-between p-2 relative bg-bright-blue">
       <NavButton
-        title="Menu"
         customFunc={handleActiveMenu}
         color="white"
         icon={<AiOutlineMenu />}
@@ -61,19 +56,17 @@ const Navbar = () => {
         <NavButton title="Mode" color="white" icon={<BsFillMoonFill/>} />
 
         <NavButton
-          title="Chat"
-          dotColor="#ffee32"
+          dotColor="#C1121F"
           color="white"
           icon={<BsFillChatLeftFill />}
         />
 
         <NavButton
-          title="Notification"
-          dotColor="#ffee32"
+          dotColor="#C1121F"
           color="white"
           icon={<BsBellFill/>}
         />
-        <TooltipComponent content="Profile" position="BottomCenter">
+
           <div className="flex items-center gap-2 cursor-pointer p-1 rounded-lg">
             <img
               src={imgperfil}
@@ -81,13 +74,12 @@ const Navbar = () => {
               alt="Imagen usuario"
             />
             <p>
-              <span className="text-white text-14">Hi, </span>
+              <span className="text-white text-14">Hola,</span>
               {""}
               <span className="text-white font-bold ml-1 text-14">Edwin</span>
             </p>
             <MdKeyboardArrowDown className="text-white text-14" />
           </div>
-        </TooltipComponent>
       </div>
     </div>
   );

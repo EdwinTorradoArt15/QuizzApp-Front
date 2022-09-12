@@ -6,12 +6,34 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 
+.fade-anim img{
+    animation: fadeAnim 0.5s ease-out;
+}
+@keyframes fadeAnim{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components{
 
+    .error-message{
+        @apply
+        bg-red-100 border-l-4 border-red-500 text-red-700
+        text-sm rounded-r-md p-1 mt-1 font-semibold
+    }
+    .confirm-message{
+        @apply
+        bg-green-100 border-l-4 border-green-500 text-green-700
+        text-sm rounded-r-md p-1 mt-1 font-semibold
+    }
     .card{
         @apply
         bg-white
@@ -69,23 +91,11 @@ body{
         flex-grow
         flex justify-center items-center
         text-white font-bold
-        bg-very-dark-blue hover:bg-very-dark-blue/80
+        bg-bright-blue hover:bg-bright-blue/80
         transition rounded-md
 
         /* Responsive */
         lg:text-sm lg:h-7
     }
-    .button-card-desabilitado{
-        @apply
-        h-8
-        flex-grow
-        flex justify-center items-center
-        text-white font-bold
-        bg-very-dark-blue/50
-        transition rounded-md
-        cursor-auto
 
-        /* Responsive */
-        lg:text-sm lg:h-7
-    }
 }

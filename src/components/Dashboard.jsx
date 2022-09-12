@@ -16,24 +16,24 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="flex relative dark:bg-main-dark-bg">
+      <div className="flex relative">
         {activeMenu ? (
-          <div className="w-72 fixed dark:bg-secondary-dark-bg bg-white">
+          <div className="w-72 fixed ">
             <Sidebar />
           </div>
         ) : (
-          <div className="w-0 dark:bg-secondary-dark-bg">
+          <div className="w-0">
             <Sidebar />
           </div>
         )}
         <div
           className={
             activeMenu
-              ? "dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  "
-              : "bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 "
+              ? "min-h-screen md:ml-72 w-full  "
+              : "w-full min-h-screen flex-2 "
           }
         >
-          <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
+          <div className="fixed md:static bg-main-bg w-full">
             <Navbar />
           </div>
           <div>
