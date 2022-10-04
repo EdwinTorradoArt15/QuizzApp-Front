@@ -1,4 +1,6 @@
+import { Route, Routes } from "react-router-dom";
 import FormLogin from "./FormLogin";
+import FormRegister from "./FormRegister";
 import Sliders from "./Sliders";
 
 const Login = () => {
@@ -12,6 +14,9 @@ const Login = () => {
           flex items-center justify-center"
       >
         <FormLogin/>
+        <Routes>
+          <Route path="/registro" element={<FormRegister/>}></Route>
+        </Routes>
       </div>
     </div>
   );

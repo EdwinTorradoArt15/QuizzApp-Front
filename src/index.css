@@ -1,101 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-body{
-    margin: 0;
-    padding:0;
-    font-family: 'Montserrat', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
-.fade-anim img{
-    animation: fadeAnim 0.5s ease-out;
+/* Animacion de flash en el carrusel */
+.fade-anim img {
+  animation: fadeAnim 0.5s ease-out;
 }
-@keyframes fadeAnim{
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
+@keyframes fadeAnim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-
-    .error-message{
-        @apply
-        bg-red-100 border-l-4 border-red-500 text-red-700
-        text-sm rounded-r-md p-1 mt-1 font-semibold
-    }
-    .confirm-message{
-        @apply
-        bg-green-100 border-l-4 border-green-500 text-green-700
-        text-sm rounded-r-md p-1 mt-1 font-semibold
-    }
-    .card{
-        @apply
-        bg-white
+@layer components {
+  .error-message {
+    @apply bg-red-100 border-l-4 border-red-500 text-red-700
+        text-sm rounded-r-md p-1 mt-1 font-semibold;
+  }
+  .confirm-message {
+    @apply bg-green-100 border-l-4 border-green-500 text-green-700
+        text-sm rounded-r-md p-1 mt-1 font-semibold;
+  }
+  .card {
+    @apply bg-black
         w-96 min-h-[10rem]
-        shadow-lg rounded-md overflow-hidden
+        flex items-center justify-center
+        drop-shadow-3xl rounded-md overflow-hidden
 
         /* Responsive */
-        lg:w-80
-    }
-    .img-profile{
-        @apply
-        w-20 h-20 border object-cover rounded-full
+        md:w-56;
+  }
+  .cardCuestionarios {
+    @apply bg-white
+        w-96 min-h-[10rem]
+        rounded-md overflow-hidden
+        drop-shadow-3xl
 
         /* Responsive */
-        lg:w-14 lg:h-14
-    }
-    .date{
-        @apply
-        px-3 py-1 rounded-full text-base
-        border border-black
-
-        /* Responsive */
-        lg:text-sm
-    }
-    .status-disponible{
-        @apply
-        px-3 py-1 rounded-full text-base
-        bg-green-cyan text-white
-
-        /* Responsive */
-        lg:text-sm
-
-    }
-    .status-desabilitado{
-        @apply
-        px-3 py-1 rounded-full text-base
-        bg-rosa-rojo text-white
-
-        /* Responsive */
-        lg:text-sm
-
-    }
-    .description-card{
-        @apply
-        text-base text-center
-        overflow-visible whitespace-pre-line
-
-        /* Responsive */
-        lg:text-sm
-
-    }
-    .button-card{
-        @apply
-        h-8
-        flex-grow
-        flex justify-center items-center
-        text-white font-bold
-        bg-bright-blue hover:bg-bright-blue/80
-        transition rounded-md
-
-        /* Responsive */
-        lg:text-sm lg:h-7
-    }
-
+        md:w-60;
+  }
+  .card-header {
+    @apply px-1.5 py-2;
+  }
+  .buttonCardCuestionario {
+    @apply
+     text-14 text-white
+     /* Hover */
+     hover:text-bright-blue hover:bg-white
+    rounded-md font-bold border-2 border-bright-blue bg-bright-blue py-1 px-2;
+  }
+  .container-img{
+    @apply
+    w-full h-48
+  }
+  .banner{
+    @apply
+    p-2
+    w-full h-48 flex flex-col items-center
+  }
 }

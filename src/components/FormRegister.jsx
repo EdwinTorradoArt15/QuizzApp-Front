@@ -145,7 +145,7 @@ const FormRegister = () => {
 
             <button
               type="submit"
-              className="w-full block bg-bright-blue hover:bg-white hover:text-bright-blue text-white font-semibold rounded-lg px-4 py-3 mt-4 hover:border hover:border-bright-blue"
+              className="w-full block border bg-bright-blue hover:bg-white hover:text-bright-blue text-white font-semibold rounded-lg px-4 py-3 mt-4 hover:border hover:border-bright-blue"
             >
               <p>Crear cuenta</p>
             </button>

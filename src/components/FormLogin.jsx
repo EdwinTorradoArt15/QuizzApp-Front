@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link,} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AiFillGoogleCircle } from "react-icons/ai";
 
 const FormLogin = () => {
@@ -41,7 +41,7 @@ const FormLogin = () => {
             </div>
             <Link
               to={"/dashboard/inicio"}
-              className="w-full block text-center bg-bright-blue hover:bg-white hover:text-bright-blue hover:border hover:border-bright-blue text-white font-semibold rounded-lg px-4 py-3 mt-6"
+              className="w-full block text-center bg-bright-blue hover:bg-white border-2 hover:text-bright-blue hover:border-2 hover:border-bright-blue text-white font-semibold rounded-lg px-4 py-3 mt-6"
             >
               Iniciar sesion
             </Link>
@@ -49,7 +49,7 @@ const FormLogin = () => {
           <hr className="my-6 border-gray-300 w-full" />
           <button
             type="button"
-            className="w-full block bg-bright-blue hover:bg-white hover:text-bright-blue text-white font-semibold rounded-lg px-4 py-3 hover:border hover:border-bright-blue"
+            className="w-full block bg-bright-blue hover:bg-white border-2 hover:text-bright-blue text-white font-semibold rounded-lg px-4 py-3 hover:border-2 hover:border-bright-blue"
           >
             <div className="flex items-center justify-center ">
               <AiFillGoogleCircle className="text-lg" />
@@ -68,6 +68,7 @@ const FormLogin = () => {
           <p className="text-xs text-gray-500 mt-2">
             &copy; 2022 Art Developers - Derechos totalmente reservados.
           </p>
+
         </div>
   )
 }

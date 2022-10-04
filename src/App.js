@@ -1,6 +1,6 @@
 import { Route, Routes} from 'react-router-dom';
 
-import { Login, Dashboard, FormRegister, Register} from './components';
+import { Login, Dashboard, Register} from './components';
 
 import "./App.css";
 

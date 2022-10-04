@@ -1,37 +1,42 @@
-import React from 'react'
-import { dataCard } from '../data/datos'
+import SearchBar from '../components/SearchBar'
+import { masPopulares } from '../data/datos'
+import { categorias } from '../data/datos'
 
 const Inicio = () => {
   return (
-    <div className="mt-5">
-        <h2 className='text-3xl ml-9 mb-3 font-bold'>Mas populares</h2>
-        <div className="flex flex-wrap justify-center gap-5 items-center">
-          {dataCard.map((item) => (
-            <div
-              key={item.title}
-              className="card"
-            >
-              <div className="py-2 px-2 flex items-center">
-                <img className="img-profile" src={item.imgperfil} alt="foto-perfil" />
-                <div className="px-1">
-                  <p className="font-bold text-lg lg:text-base">{item.nombCuest}</p>
-                  <p className="text-very-gray text-base lg:text-sm">{item.usuario}</p>
-                </div>
-              </div>
+    <div className="w-full p-3">
 
-              <div className="p-2 flex flex-col gap-3">
-                <div className="flex items-center justify-center gap-2">
-                  <span className="date">{item.fecha}</span>
-                  <span className="status-disponible">{item.estado}</span>
-                </div>
-                <h2 className="description-card">{item.descripcion}</h2>
-                <div className="mt-3">
-                  <div className="flex gap-1">
-                    <button className="button-card">{item.boton1}</button>
-                    <button className="button-card">{item.boton2}</button>
-                    <button className="button-card">{item.boton3}</button>
-                  </div>
-                </div>
+      {/* Barra de busqueda */}
+        <SearchBar/>
+        <h1 className='mt-7 font-bold text-2xl'>Categorias mas populares</h1>
+        <div className="flex flex-wrap my-7 justify-center gap-10 items-center">
+          {masPopulares.map((item) => (
+            <div
+              key={item.id}
+              style={{backgroundImage:`url(${item.imagen})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat:'no-repeat'}}
+              className='card'
+            >
+              <div>
+                <button className='border-2 rounded-md px-3 py-2 text-white font-extrabold hover:bg-white hover:text-black'>
+                  {item.nombreCat}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h1 className='my-7 font-bold text-2xl'>Elige una categoria</h1>
+        <div className='flex flex-wrap my-7 justify-center gap-10 items-center'>
+        {categorias.map((item) => (
+            <div
+              key={item.id}
+              style={{backgroundImage: `url(${item.imagen})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat:'no-repeat'}}
+              className='card'
+            >
+              <div>
+                <button className='border-2 rounded-md px-3 py-2 text-white font-extrabold hover:bg-white hover:text-black'>
+                  {item.nombreCat}
+                </button>
               </div>
             </div>
           ))}
