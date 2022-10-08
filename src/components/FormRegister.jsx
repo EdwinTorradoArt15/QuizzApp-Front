@@ -6,7 +6,7 @@ const FormRegister = () => {
   return (
     <div className="w-full h-100">
       <h1 className="text-xl font-bold">Logo Quick Test</h1>
-      <h1 className="text-xl md:text-2xl font-bold leading-tighy mt-12">
+      <h1 className="text-xl md:text-2xl 2xl:text-2xl font-bold mt-12">
         Registrate con nosotros
       </h1>
       <Formik
@@ -66,7 +66,7 @@ const FormRegister = () => {
         {({ errors }) => (
           <Form className="mt-6">
             <div>
-              <label htmlFor="nombre" className="block text-gray-700">
+              <label htmlFor="nombre" className="block text-gray-700 text-lg">
                 Nombre
               </label>
               <Field
@@ -85,7 +85,7 @@ const FormRegister = () => {
             </div>
 
             <div className="mt-4">
-              <label htmlFor="correo" className="block text-gray-700">
+              <label htmlFor="correo" className="block text-gray-700 text-lg">
                 Correo electronico
               </label>
               <Field
@@ -104,7 +104,7 @@ const FormRegister = () => {
             </div>
 
             <div className="mt-4">
-              <label htmlFor="contraseña" className="block text-gray-700">
+              <label htmlFor="contraseña" className="block text-gray-700 text-lg">
                 Contraseña
               </label>
               <Field
@@ -124,7 +124,7 @@ const FormRegister = () => {
             </div>
 
             <div className="mt-4">
-              <label htmlFor="contraseña2" className="block text-gray-700">
+              <label htmlFor="contraseña2" className="block text-gray-700 text-lg">
                 Confirmar contraseña
               </label>
               <Field
@@ -145,7 +145,7 @@ const FormRegister = () => {
 
             <button
               type="submit"
-              className="w-full block border bg-bright-blue hover:bg-white hover:text-bright-blue text-white font-semibold rounded-lg px-4 py-3 mt-4 hover:border hover:border-bright-blue"
+              className="w-full block text-center btn-cuestionario font-semibold text-14 2xl:text-lg px-3 py-2 mt-6"
             >
               <p>Crear cuenta</p>
             </button>

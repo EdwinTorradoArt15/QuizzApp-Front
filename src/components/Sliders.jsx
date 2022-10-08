@@ -7,6 +7,8 @@ import slider1 from "../img/slider1.jpg";
 import slider2 from "../img/slider2.jpg";
 import slider3 from "../img/slider3.jpg";
 
+import '../css/components/sliders.css'
+
 const imgsLogin = [slider1, slider2, slider3];
 
 let count = 0;
@@ -40,7 +42,7 @@ const Sliders = () => {
   const startSlider = () => {
     slideInterval = setInterval(() => {
       handleOnNextClick();
-    }, 2000);
+    }, 3000);
   };
 
     //Pausar animacion

@@ -2,19 +2,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { catMusica, catPaises } from "../data/datos";
+import '../css/pages/cuestionarios.css';
 const Cuestionarios = () => {
   return (
-    <div className="mt-5">
+    <div className="w-full p-3">
       <SearchBar />
 
-      <Link to={'/dashboard/cuestionarios/crear_cuestionarios'} className="mt-7 rounded-md font-medium border-2 border-bright-blue hover:text-bright-blue hover:bg-white bg-bright-blue text-white py-2 px-2.5">
-        Crear cuestionario
+    <div className="mt-7">
+      <Link to={'/dashboard/cuestionarios/crear_cuestionarios'} className="btn-cuestionario font-bold px-3 py-2 text-xl">
+          Crear cuestionario
       </Link>
+    </div>
 
       {/* Categoria paises */}
       <div className="mt-7">
         <h1 className="font-bold text-2xl">Paises</h1>
-        <div className="flex flex-wrap my-7 justify-center gap-5 items-center">
+        <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
           {catPaises.map((item) => (
             <div key={item.id} className="cardCuestionarios">
               <div className="container-img">
@@ -26,21 +29,21 @@ const Cuestionarios = () => {
               </div>
               <div className="card-body">
                 <div className="card-header">
-                  <h1 className="font-semibold text-base">{item.titulo}</h1>
-                  <span className="font-semibold text-14 text-black/50">
+                  <h1 className="font-semibold text-base 2xl:text-lg">{item.titulo}</h1>
+                  <span className="font-semibold text-14 2xl:text-base text-black/50">
                     {item.nombreUser}
                   </span>
                 </div>
                 <div className="px-1.5 pb-2">
-                  <button className="text-14 text-white rounded-md py-1 px-9 border-2 border-light-yellow bg-light-yellow font-semibold cursor-default">
+                  <p className="text-14 2xl:text-lg text-white rounded-md px-5 py-1 border-2 border-light-yellow bg-light-yellow font-semibold w-max">
                     {item.categoria}
-                  </button>
+                  </p>
 
                   <div className="flex gap-2.5 py-2">
-                    <button className="buttonCardCuestionario">
+                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">
                       Modificar
                     </button>
-                    <button className="buttonCardCuestionario">
+                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">
                       Estadisticas
                     </button>
                   </div>
@@ -55,7 +58,7 @@ const Cuestionarios = () => {
       {/* Categoria musica */}
       <div className="mt-7 ">
         <h1 className="font-bold text-2xl">Musica</h1>
-        <div className="flex flex-wrap my-7 justify-center gap-5 items-center">
+        <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
           {catMusica.map((item) => (
             <div key={item.id} className="cardCuestionarios">
               <div key={item.id} className="cardCuestionarios">
@@ -68,21 +71,21 @@ const Cuestionarios = () => {
                 </div>
                 <div className="card-body">
                   <div className="card-header">
-                    <h1 className="font-semibold text-base">{item.titulo}</h1>
-                    <span className="font-semibold text-14 text-black/50">
+                    <h1 className="font-semibold text-base 2xl:text-lg">{item.titulo}</h1>
+                    <span className="font-semibold text-14 2xl:text-base text-black/50">
                       {item.nombreUser}
                     </span>
                   </div>
                   <div className="px-1.5 pb-2">
-                    <button className="text-14 text-white rounded-md py-1 px-9 border-2 border-lime-green bg-lime-green font-semibold cursor-default">
+                    <p className="text-14 2xl:text-lg text-white rounded-md px-5 py-1 border-2 border-lime-green bg-lime-green font-semibold w-max">
                       {item.categoria}
-                    </button>
+                    </p>
 
                     <div className="flex gap-2.5 py-2">
-                      <button className="buttonCardCuestionario">
+                      <button className="btn-cuestionario btn-cuestionarios font-semibold px-2 py-1 text-14 2xl:text-lg">
                         Modificar
                       </button>
-                      <button className="buttonCardCuestionario">
+                      <button className="btn-cuestionario btn-cuestionarios font-semibold px-2 py-1 text-14 2xl:text-lg">
                         Estadisticas
                       </button>
                     </div>

@@ -2,14 +2,15 @@ import React from "react";
 import { AiFillHome, AiFillProfile, AiFillSetting } from "react-icons/ai";
 import { BiCheckDouble } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
-import animales from '../img/animales.avif'
-import matematicas from '../img/matematicas.avif'
-import paises from '../img/paises.avif';
-import juegos from '../img/juegos.avif';
-import historia from '../img/historia.avif';
-import deportes from '../img/deportes.avif';
-import musica from '../img/musica.avif';
-import tecnologia from '../img/tecnologia.avif'
+import animales from '../img/imgEdit/animales.jpg'
+import matematicas from '../img/imgEdit/matematicas.jpg'
+import paises from '../img/imgEdit/paises.jpg';
+import juegos from '../img/imgEdit/juegos.jpg';
+import historia from '../img/imgEdit/historia.jpg';
+import deportes from '../img/imgEdit/deportes.jpg';
+import musica from '../img/imgEdit/musica.jpg';
+import tecnologia from '../img/imgEdit/tecnologia.jpg'
+
 import colombia from '../img/colombia.avif'
 import banderas from '../img/banderas.avif'
 import paises3 from '../img/paises3.avif'

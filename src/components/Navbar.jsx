@@ -18,7 +18,7 @@ const Navbar = () => {
     </div>
     <div className="flex">
       <Tooltip title="Modo" arrow>
-        <button style={{ color: "white" }}>
+        <button style={{ color: "black" }}>
           <FaMoon />
         </button>
       </Tooltip>

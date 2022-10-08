@@ -1,6 +1,5 @@
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import { Fragment } from "react";
 import { FaPen, FaPlus } from "react-icons/fa";
 import banner from "../img/banner.avif";
 import { catPaises } from "../data/datos";
@@ -8,7 +7,9 @@ import imgperfil from "../img/imgperfil.jpeg";
 
 const Perfil = () => {
   return (
-    <Fragment>
+    <div className="w-full p-3">
+
+      {/* Banner */}
       <div className="banner">
         <img
           src={banner}
@@ -48,11 +49,11 @@ const Perfil = () => {
       </div>
 
       {/* Info usuario */}
-      <div className="mt-1 text-center">
+      <div className="mt-1 flex flex-col items-center">
         <p className="font-bold text-xl">Edwin Torrado</p>
-        <p className="font-medium text-lg text-black/50">UX/UI - Front-End</p>
-        <div className="flex justify-center">
-          <button className="flex items-center gap-2 border-2 border-bright-blue bg-bright-blue p-2 text-white hover:bg-white hover:text-bright-blue font-semibold rounded-md text-lg ">
+        <p className="font-medium text-base text-black/50">UX/UI - Front-End</p>
+        <div className="flex justify-center pt-2">
+          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg">
             Editar perfil <FaPen size={13} />
           </button>
         </div>
@@ -60,21 +61,21 @@ const Perfil = () => {
 
       {/* Botones informacion */}
       <div className="flex gap-3 justify-center mt-5">
-        <button className="flex items-center gap-2 border-2 border-bright-blue bg-bright-blue p-2 text-white hover:bg-white hover:text-bright-blue font-semibold rounded-md text-lg">
+        <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg">
           Seguir <FaPlus size={13} />{" "}
         </button>
-        <button className="bg-white drop-shadow-lg border p-3 rounded-md text-lg font-semibold">
+        <button className="bg-white drop-shadow-lg border rounded-md font-semibold px-3 py-2 text-14 2xl:text-lg">
           160K seguidores
         </button>
-        <button className="bg-white drop-shadow-lg border p-3 rounded-md text-lg font-semibold">
+        <button className="bg-white drop-shadow-lg border rounded-md font-semibold px-3 py-2 text-14 2xl:text-lg">
           200K seguidos
         </button>
       </div>
 
       {/* Creados recientemente */}
       <div className="mt-7">
-        <h1 className="mx-7 font-bold text-2xl ">Creados recientemente</h1>
-        <div className="flex flex-wrap mt-7 justify-center gap-5 items-center">
+        <h1 className="font-bold text-2xl ">Creados recientemente</h1>
+        <div className="flex flex-wrap mt-7 justify-center gap-6 items-center">
           {catPaises.map((item) => (
             <div key={item.id} className="cardCuestionarios">
               <div className="container-img">
@@ -86,21 +87,21 @@ const Perfil = () => {
               </div>
               <div className="card-body">
                 <div className="card-header">
-                  <h1 className="font-semibold text-base">{item.titulo}</h1>
-                  <span className="font-semibold text-14 text-black/50">
+                  <h1 className="font-semibold text-base 2xl:text-lg">{item.titulo}</h1>
+                  <span className="font-semibold text-14 2xl:text-base text-black/50">
                     {item.nombreUser}
                   </span>
                 </div>
                 <div className="px-1.5 pb-2">
-                  <button className="text-14 text-white rounded-md py-1 px-9 border-2 border-light-yellow bg-light-yellow font-semibold cursor-default">
+                  <p className="text-14 2xl:text-lg text-white rounded-md px-5 py-1 border-2 border-light-yellow bg-light-yellow font-semibold w-max">
                     {item.categoria}
-                  </button>
+                  </p>
 
                   <div className="flex gap-2.5 py-2">
-                    <button className="buttonCardCuestionario">
+                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">
                       Modificar
                     </button>
-                    <button className="buttonCardCuestionario">
+                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">
                       Estadisticas
                     </button>
                   </div>
@@ -110,7 +111,7 @@ const Perfil = () => {
           ))}
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 
