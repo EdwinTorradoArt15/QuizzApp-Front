@@ -155,15 +155,15 @@ const CrearCuestionario = () => {
         </div>
 
         <div className="flex justify-center mt-5">
-          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">Añadir respuesta <AiOutlinePlus className='text-lg '/> </button>
+          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">Añadir respuesta <AiOutlinePlus className='text-lg '/> </button>
         </div>
 
         <div className='mt-8'>
-          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">Añadir pregunta <AiOutlinePlus className='text-lg '/> </button>
+          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">Añadir pregunta <AiOutlinePlus className='text-lg '/> </button>
         </div>
 
         <div className="mt-5">
-          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">Crear</button>
+          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">Crear</button>
         </div>
       </div>
     </div>

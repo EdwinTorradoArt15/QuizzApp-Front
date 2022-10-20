@@ -53,7 +53,7 @@ const Perfil = () => {
         <p className="font-bold text-xl">Edwin Torrado</p>
         <p className="font-medium text-base text-black/50">UX/UI - Front-End</p>
         <div className="flex justify-center pt-2">
-          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg">
+          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">
             Editar perfil <FaPen size={13} />
           </button>
         </div>
@@ -61,13 +61,13 @@ const Perfil = () => {
 
       {/* Botones informacion */}
       <div className="flex gap-3 justify-center mt-5">
-        <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg">
+        <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">
           Seguir <FaPlus size={13} />{" "}
         </button>
-        <button className="bg-white drop-shadow-lg border rounded-md font-semibold px-3 py-2 text-14 2xl:text-lg">
+        <button className="bg-white drop-shadow-lg border rounded-md font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">
           160K seguidores
         </button>
-        <button className="bg-white drop-shadow-lg border rounded-md font-semibold px-3 py-2 text-14 2xl:text-lg">
+        <button className="bg-white drop-shadow-lg border rounded-md font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">
           200K seguidos
         </button>
       </div>
@@ -87,21 +87,21 @@ const Perfil = () => {
               </div>
               <div className="card-body">
                 <div className="card-header">
-                  <h1 className="font-semibold text-base 2xl:text-lg">{item.titulo}</h1>
-                  <span className="font-semibold text-14 2xl:text-base text-black/50">
+                  <h1 className="font-semibold text-base 2xl:text-lg md:text-lg">{item.titulo}</h1>
+                  <span className="font-semibold text-14 2xl:text-base md:text-base text-black/50">
                     {item.nombreUser}
                   </span>
                 </div>
                 <div className="px-1.5 pb-2">
-                  <p className="text-14 2xl:text-lg text-white rounded-md px-5 py-1 border-2 border-light-yellow bg-light-yellow font-semibold w-max">
+                  <p className="text-14 2xl:text-lg md:text-base text-white rounded-md px-5 py-1 border-2 border-light-yellow bg-light-yellow font-semibold w-max">
                     {item.categoria}
                   </p>
 
                   <div className="flex gap-2.5 py-2">
-                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">
+                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg md:text-base">
                       Modificar
                     </button>
-                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg">
+                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg md:text-base">
                       Estadisticas
                     </button>
                   </div>

@@ -14,11 +14,11 @@
 @layer components {
   .error-message {
     @apply bg-red-100 border-l-4 border-red-500 text-red-700
-        text-sm rounded-r-md p-1 mt-1 font-semibold;
+        text-sm md:text-xs rounded-r-md p-1 mt-1 font-semibold;
   }
   .confirm-message {
     @apply bg-green-100 border-l-4 border-green-500 text-green-700
-        text-sm rounded-r-md p-1 mt-1 font-semibold;
+        text-sm md:text-xs rounded-r-md p-1 mt-1 font-semibold;
   }
   .card {
     @apply bg-black
@@ -27,7 +27,7 @@
         drop-shadow-3xl rounded-md overflow-hidden
 
         /* Responsive */
-        2xl:w-96 md:w-56;
+        2xl:w-96 md:w-60;
   }
   .cardCuestionarios {
     @apply
@@ -37,7 +37,7 @@
         drop-shadow-3xl
 
         /* Responsive */
-        2xl:w-96 md:w-60;
+        2xl:w-96 md:w-72;
   }
   .card-header {
     @apply px-1.5 py-2;

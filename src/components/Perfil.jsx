@@ -1,25 +1,80 @@
-import React from "react";
-import Box from "@mui/material/Box";
+/* import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi"; */
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const Perfil = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+  const [name, setName] = useState("")
+  const [token, setToken] = useState("")
+  const [expire, setExpire] = useState("")
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    refreshToken();
+  }, [])
+
+  const refreshToken = async () => {
+    try{
+      const res = await axios.get('http://localhost:5000/token')
+      setToken(res.data.accesToken);
+      const decoded = jwt_decode(res.data.accesToken);
+      setName(decoded.name)
+      setExpire(decoded.exp)
+    }catch(err){
+      // Cuando el token expira lo redirecciona al login
+      if(err.response){
+        navigate("/")
+      }
+    }
+  }
+
+  const Logout = async() => {
+    try{
+      await axios.delete('http://localhost:5000/logout')
+      navigate("/")
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  /* const axiosJWT = axios.create()
+
+  axiosJWT.interceptors.request.use(async(config) => {
+    const currenDate = new Date();
+    if(expire * 1000 < currenDate.getTime()){
+        const res = await axios.get('http://localhost:5000/token')
+        config.headers.Authorization = `Bearer ${res.data.accesToken}`
+        setToken(res.data.accesToken);
+        const decoded = jwt_decode(res.data.accesToken);
+        setName(decoded.name)
+        setExpire(decoded.exp)
+    }
+    return config;
+  }, (err) => {
+    return Promise.reject(err)
+  }) */
+
+  /*   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
+  }; */
   return (
     <div>
-        <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+      <p>{name}</p>
+      <button onClick={Logout} className='border'>Cerrar sesion</button>
+      {/*   <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Perfil" arrow>
           <IconButton
             onClick={handleClick}
@@ -38,7 +93,7 @@ const Perfil = () => {
                 height: 30,
               }}
             >
-              E
+              Edwin Torrado
             </Avatar>
           </IconButton>
         </Tooltip>
@@ -82,9 +137,9 @@ const Perfil = () => {
           <ListItemIcon>
             <BiLogOut color="#ba181b" size={20} />
           </ListItemIcon>
-          Logout
+          Cerrar sesion
         </MenuItem>
-      </Menu>
+      </Menu> */}
     </div>
   )
 }
