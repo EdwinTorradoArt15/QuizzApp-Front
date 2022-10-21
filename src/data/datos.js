@@ -17,27 +17,27 @@ import paises3 from '../img/paises3.avif'
 
 export const dataSidebar = [
   {
-    name: "inicio",
+    path: "inicio",
     titulo: 'Inicio',
     icon: <AiFillHome />,
   },
   {
-    name: "cuestionarios",
+    path: "cuestionarios",
     titulo: 'Cuestionarios',
     icon: <AiFillProfile />,
   },
   {
-    name: "completados",
+    path: "completados",
     titulo: 'Completados',
     icon: <BiCheckDouble />,
   },
   {
-    name: 'perfil',
+    path: 'perfil',
     titulo: 'Perfil',
     icon: <BsFillPersonFill />,
   },
   {
-    name: 'configuracion',
+    path: 'configuracion',
     titulo: 'Configuracion',
     icon: <AiFillSetting />,
   },

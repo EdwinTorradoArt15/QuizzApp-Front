@@ -1,9 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "../components/SearchBar";
 import { catMusica, catPaises } from "../data/datos";
+import SearchBar from "../components/SearchBar";
 import '../css/pages/cuestionarios.css';
 const Cuestionarios = () => {
+
   return (
     <div className="w-full p-3">
       <SearchBar />

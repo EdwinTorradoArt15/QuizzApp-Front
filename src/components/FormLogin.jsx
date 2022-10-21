@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
-
+import {instance} from '../api/api'
+import Loader from "./Loader";
 
 const CheckBox = ({ value, onChange }) => {
   return <input type="checkbox" checked={value} onChange={onChange} />;
@@ -14,15 +14,18 @@ const FormLogin = () => {
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");  
   const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const Login = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try{
-      await axios.post('http://localhost:5000/login',{
+      const res = await instance.post('/login',{
         correo: correo,
         clave: contraseña,
       })
+        localStorage.setItem('token', res.data.refreshToken)
         navigate("/dashboard/inicio")
     }catch(err){
       if(err.response){
@@ -42,7 +45,7 @@ const FormLogin = () => {
         <div>
           <label className="block text-gray-700 text-lg md:text-base">Correo electronico</label>
           <input
-            type="email"
+            type="text"
             placeholder="Correo electronico"
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
@@ -80,9 +83,10 @@ const FormLogin = () => {
         </div>
         <button
           type="submit"
-          className="w-full block text-center btn-cuestionario font-semibold text-14 2xl:text-lg md:text-base px-3 py-2 mt-6"
+          className="w-full flex justify-center items-center btn-cuestionario font-semibold text-14 2xl:text-lg md:text-base px-3 py-2 mt-6"
         >
           Iniciar sesion
+        {loading && <Loader/>}
         </button>
         <p className="text-red-600 text-center">{msg}</p>
       </form>

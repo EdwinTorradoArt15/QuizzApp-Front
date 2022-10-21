@@ -1,11 +1,12 @@
-/* import Box from "@mui/material/Box";
+import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { BiLogOut } from "react-icons/bi"; */
+import Divider from '@mui/material/Divider';
+import { BiLogOut } from "react-icons/bi";
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
@@ -23,7 +24,7 @@ const Perfil = () => {
 
   const refreshToken = async () => {
     try{
-      const res = await axios.get('http://localhost:5000/token')
+      const res = await axios.post('http://localhost:5000/token',{refreshToken: localStorage.getItem('token')})
       setToken(res.data.accesToken);
       const decoded = jwt_decode(res.data.accesToken);
       setName(decoded.name)
@@ -45,36 +46,17 @@ const Perfil = () => {
     }
   }
 
-  /* const axiosJWT = axios.create()
-
-  axiosJWT.interceptors.request.use(async(config) => {
-    const currenDate = new Date();
-    if(expire * 1000 < currenDate.getTime()){
-        const res = await axios.get('http://localhost:5000/token')
-        config.headers.Authorization = `Bearer ${res.data.accesToken}`
-        setToken(res.data.accesToken);
-        const decoded = jwt_decode(res.data.accesToken);
-        setName(decoded.name)
-        setExpire(decoded.exp)
-    }
-    return config;
-  }, (err) => {
-    return Promise.reject(err)
-  }) */
-
-  /*   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  }; */
+  };
   return (
     <div>
-      <p>{name}</p>
-      <button onClick={Logout} className='border'>Cerrar sesion</button>
-      {/*   <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Perfil" arrow>
           <IconButton
             onClick={handleClick}
@@ -84,17 +66,7 @@ const Perfil = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar
-              sx={{
-                fontFamily: "Montserrat",
-                fontWeight: "500",
-                bgcolor: "#ba181b",
-                width: 30,
-                height: 30,
-              }}
-            >
-              Edwin Torrado
-            </Avatar>
+      <Avatar src="/broken-image.jpg" />
           </IconButton>
         </Tooltip>
       </Box>
@@ -135,11 +107,18 @@ const Perfil = () => {
       >
         <MenuItem sx={{ fontFamily: "Montserrat" }}>
           <ListItemIcon>
+          <Avatar src="/broken-image.jpg" />
+          </ListItemIcon>
+          {name}
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={Logout} sx={{ fontFamily: "Montserrat" }}>
+          <ListItemIcon>
             <BiLogOut color="#ba181b" size={20} />
           </ListItemIcon>
           Cerrar sesion
         </MenuItem>
-      </Menu> */}
+      </Menu>
     </div>
   )
 }

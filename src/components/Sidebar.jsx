@@ -13,13 +13,13 @@ const Sidebar = () => {
         </Link>
         <div>
           {/* Menu sidebar */}
-          {dataSidebar.map((item) => (
-            <>
-              <NavLink to={`/dashboard/${item.name}`} key={item.name} className={'nav-link'}>
+          {dataSidebar.map((item,index) => (
+            <div key={index}>
+              <NavLink to={item.path} key={item.name} className={'nav-link'}>
                 <i className="nav-link-icon">{item.icon}</i>
                 <span  className="nav-link-name">{item.titulo}</span>
               </NavLink>
-            </>
+            </div>
           ))}
         </div>
       </div>

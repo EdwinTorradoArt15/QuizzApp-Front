@@ -2,6 +2,7 @@ import banner from "../img/banner.avif";
 import { useState } from "react";
 import {AiOutlineClose,AiOutlinePlus} from "react-icons/ai";
 
+// Cambiar a react hooks forms
 const CheckBox = ({value, onChange}) => {
   return(
       <input type="checkbox" checked={value} onChange={onChange}/>
@@ -31,8 +32,9 @@ const CrearCuestionario = () => {
   return (
     <div className="w-full p-3">
       {/* Header */}
-      <div className="flex gap-5 items-center">
-        <h1 className="font-bold text-2xl">Nombre del cuestionario</h1>
+      <form className="flex gap-5 items-center">
+        <label htmlFor="">Nombre de la categoria</label>
+        <input type="text" className="border"/>
 
         {/* Select categorias */}
         <select
@@ -79,7 +81,7 @@ const CrearCuestionario = () => {
             60 segundos
           </option>
         </select>
-      </div>
+      </form>
 
       {/* Banner cuestionario */}
       <div className="w-full h-48 mt-6">
@@ -95,11 +97,9 @@ const CrearCuestionario = () => {
       </div>
 
       {/* Preguntas */}
-      <div className="mt-6">
-        <p className="text-lg">
-          <span className="text-bright-blue font-bold">1.</span>Enunciado
-          pregunta
-        </p>
+      <form className="mt-6">
+        <label htmlFor="">Enunciado de la pregunta</label>
+        <input type="text" className="border"/>
         {/* Repuestas preguntas */}
         <div className="flex justify-center mt-6">
           <div className="grid items-center grid-cols-2 gap-5">
@@ -165,7 +165,7 @@ const CrearCuestionario = () => {
         <div className="mt-5">
           <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">Crear</button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -23,7 +23,7 @@ const Dashboard = () => {
         <Sidebar />
       </aside>
       <Routes>
-        <Route path="/dashboard/inicio" element={<Inicio />} />
+        <Route path="/" element={<Inicio />} />
         <Route path="/inicio" element={<Inicio />} />
         <Route path="/cuestionarios" element={<Cuestionarios />} />
         <Route
