@@ -1,12 +1,44 @@
 import { Link } from "react-router-dom";
 import { catMusica, catPaises } from "../data/datos";
-import SearchBar from "../components/SearchBar";
+import { BiSearchAlt } from "react-icons/bi";
+import { useState } from "react";
 import '../css/pages/cuestionarios.css';
-const Cuestionarios = () => {
 
+const Cuestionarios = () => {
+  const [search, setSearch] = useState("");
   return (
     <div className="w-full p-3">
-      <SearchBar />
+      
+      {/* Barra busqueda */}
+      <form className="mt-5">
+        <div className="flex justify-between">
+          <div className="flex">
+            <input
+              type="text"
+              placeholder="Busqueda"
+              value={search}
+              onChange={(event) => {
+                setSearch(event.target.value);
+              }}
+              className="px-3 py-2 placeholder-gray-500 text-black rounded-l-lg border-2 border-bright-blue/20 focus-within:border-bright-blue  focus:outline-none"
+            />
+            <div className="inline-flex">
+              <button className="btn-cuestionario px-3 rounded-r-lg">
+                <BiSearchAlt size={20} />
+              </button>
+            </div>
+          </div>
+          <div>
+            <select className="bg-transparent font-medium focus:outline-none p-3 border-2 border-bright-blue/20 focus-within:border-bright-blue rounded-lg">
+              <option value="categorias">Categorias</option>
+              <option value="animales">Animales</option>
+              <option value="matematicas">Matematicas</option>
+              <option value="paises">Paises</option>
+              <option value="juegos">Juegos</option>
+            </select>
+          </div>
+        </div>
+      </form>
 
     <div className="mt-7">
       <Link to={'/dashboard/cuestionarios/crear_cuestionarios'} className="btn-cuestionario font-semibold px-3 py-2 text-xl">

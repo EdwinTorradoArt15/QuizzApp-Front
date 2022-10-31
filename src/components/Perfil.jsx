@@ -37,14 +37,20 @@ const Perfil = () => {
     }
   }
 
-  const Logout = async() => {
+  const Logout = () => {
+    localStorage.removeItem('token')
+    navigate("/")
+  }
+
+  //? Por socializar
+  /* const Logout = async() => {
     try{
       await axios.delete('http://localhost:5000/logout')
       navigate("/")
     }catch(err){
       console.log(err)
     }
-  }
+  } */
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

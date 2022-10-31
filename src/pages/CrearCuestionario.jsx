@@ -1,40 +1,22 @@
 import banner from "../img/banner.avif";
-import { useState } from "react";
-import {AiOutlineClose,AiOutlinePlus} from "react-icons/ai";
-
-// Cambiar a react hooks forms
-const CheckBox = ({value, onChange}) => {
-  return(
-      <input type="checkbox" checked={value} onChange={onChange}/>
-  )
-}
+import { useForm, useFieldArray } from "react-hook-form";
 
 const CrearCuestionario = () => {
-  const [checked, setChecked] = useState(false);
-  const [checked2, setChecked2] = useState(false);
-  const [checked3, setChecked3] = useState(false);
-  const [checked4, setChecked4] = useState(false);
-
-  const handleChange = () => {
-    setChecked(!checked);
-  }
-
-  const handleChange2 = () => {
-    setChecked2(!checked2);
-  }
-  const handleChange3 = () => {
-    setChecked3(!checked3);
-  }
-  const handleChange4 = () => {
-    setChecked4(!checked4);
-  }
+  const { register, control, handleSubmit } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "preguntas",
+  });
 
   return (
     <div className="w-full p-3">
       {/* Header */}
-      <form className="flex gap-5 items-center">
-        <label htmlFor="">Nombre de la categoria</label>
-        <input type="text" className="border"/>
+      <form
+        className="flex gap-5 items-center"
+        onSubmit={handleSubmit(console.log)}
+      >
+        <label>Nombre del cuestionario</label>
+        <input type="text" placeholder="Nombre" className="border" />
 
         {/* Select categorias */}
         <select
@@ -97,75 +79,80 @@ const CrearCuestionario = () => {
       </div>
 
       {/* Preguntas */}
-      <form className="mt-6">
-        <label htmlFor="">Enunciado de la pregunta</label>
-        <input type="text" className="border"/>
-        {/* Repuestas preguntas */}
-        <div className="flex justify-center mt-6">
-          <div className="grid items-center grid-cols-2 gap-5">
-
-            {/* Respuesta 1 */}
-            <div className="flex gap-2 items-center">
-              <div className="flex gap-2 items-center border drop-shadow-3xl rounded-lg px-3 py-3">
-                <CheckBox value={checked} onChange={handleChange}/>
-                <p>
-                  <span className="text-bright-blue font-semibold">A.</span>{" "}
-                  Respuesta 1
-                </p>
+      <form className="mt-6" onSubmit={handleSubmit(data => console.log(data))}>
+        {fields.map(({ id, nombre, r1,r2,r3,r4 }, index) => {
+          return (
+            <div key={id}>
+              <div className="flex items-center gap-2">
+                <label className="text-bright-blue font-bold text-xl">1.</label>
+                <input
+                  {...register(`preguntas.${index}.nombre`)}
+                  defaultValue={nombre}
+                  placeholder="Pregunta"
+                  className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                />
               </div>
-              <AiOutlineClose className="bg-slate-400 text-white hover:bg-rosa-rojo rounded-full text-lg p-1"/>
-            </div>
-
-            {/* Respuesta 2 */}
-            <div className="flex gap-2 items-center">
-              <div className="flex gap-2 items-center border drop-shadow-3xl rounded-lg px-3 py-3">
-                <CheckBox value={checked2} onChange={handleChange2}/>
-                <p>
-                  <span className="text-bright-blue font-semibold">B.</span>{" "}
-                  Respuesta 2
-                </p>
+              <div className="flex justify-center items-center my-4">
+                  <div className="grid items-center grid-cols-2 gap-5">
+                    <div className="flex gap-2 items-center">
+                      <div className="flex gap-2 items-center">
+                        <input defaultValue={r1} {...register(`preguntas.${index}.r1`)} type="checkbox"/>
+                        <input defaultValue={r1} {...register(`preguntas.${index}.r1`)} placeholder="Respuesta 1" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <div className="flex gap-2 items-center">
+                        <input defaultValue={r2} {...register(`preguntas.${index}.r2`)} type="checkbox"/>
+                        <input defaultValue={r2} {...register(`preguntas.${index}.r2`)} placeholder="Respuesta 2" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <div className="flex gap-2 items-center">
+                        <input defaultValue={r3} {...register(`preguntas.${index}.r3`)} type="checkbox"/>
+                        <input defaultValue={r3} {...register(`preguntas.${index}.r3`)} placeholder="Respuesta 3" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <div className="flex gap-2 items-center">
+                        <input defaultValue={r4} {...register(`preguntas.${index}.r4`)} type="checkbox"/>
+                        <input defaultValue={r4} {...register(`preguntas.${index}.r4`)} placeholder="Respuesta 4" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                      </div>
+                    </div>
+                  </div>
               </div>
-              <AiOutlineClose className="bg-slate-400 text-white hover:bg-rosa-rojo rounded-full text-lg p-1"/>
-            </div>
-
-            {/* Respuesta 3 */}
-            <div className="flex gap-2 items-center">
-              <div className="flex gap-2 items-center border drop-shadow-3xl rounded-lg px-3 py-3">
-                <CheckBox value={checked3} onChange={handleChange3}/>
-                <p>
-                  <span className="text-bright-blue font-semibold">C.</span>{" "}
-                  Respuesta 3
-                </p>
+              {/* <select
+                {...register(`preguntas.${index}.type`)}
+                defaultValue={type}
+                className="border-2 border-black"
+              >
+                <option value="">Select</option>
+                <option value="10">ItemA</option>
+                <option value="20">ItemB</option>
+              </select> */}
+              <div className="flex justify-center mt-6">
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
+                >
+                  Delete
+                </button>
               </div>
-              <AiOutlineClose className="bg-slate-400 text-white hover:bg-rosa-rojo rounded-full text-lg p-1"/>
             </div>
-
-            {/* Respuesta 4 */}
-            <div className="flex gap-2 items-center">
-              <div className="flex gap-2 items-center border drop-shadow-3xl rounded-lg px-3 py-3">
-                <CheckBox value={checked4} onChange={handleChange4}/>
-                <p>
-                  <span className="text-bright-blue font-semibold">D.</span>{" "}
-                  Respuesta 4
-                </p>
-              </div>
-              <AiOutlineClose className="bg-slate-400 text-white hover:bg-rosa-rojo rounded-full text-lg p-1"/>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center mt-5">
-          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">Añadir respuesta <AiOutlinePlus className='text-lg '/> </button>
-        </div>
-
-        <div className='mt-8'>
-          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">Añadir pregunta <AiOutlinePlus className='text-lg '/> </button>
-        </div>
-
-        <div className="mt-5">
-          <button className="flex items-center gap-2 btn-cuestionario font-semibold px-3 py-2 text-14 2xl:text-lg md:text-base">Crear</button>
+          );
+        })}
+        <div className="flex flex-col w-max gap-7">
+          <button
+            className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
+            type="button"
+            onClick={() => append({})}
+          >
+            Agregar
+          </button>
+          <input  className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2" type="submit" />
         </div>
       </form>
+      
     </div>
   );
 };

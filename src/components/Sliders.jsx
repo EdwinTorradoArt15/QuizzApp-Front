@@ -42,7 +42,7 @@ const Sliders = () => {
   const startSlider = () => {
     slideInterval = setInterval(() => {
       handleOnNextClick();
-    }, 3000);
+    }, 4000);
   };
 
     //Pausar animacion
