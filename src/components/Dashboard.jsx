@@ -7,6 +7,7 @@ import {
   Cuestionarios,
   Completados,
   Perfil,
+  Administrar,
   Configuracion,
 } from "../pages";
 import { useStateContext } from "../context/ContextProvider";
@@ -32,6 +33,7 @@ const Dashboard = () => {
         ></Route>
         <Route path="/completados" element={<Completados />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/administrar" element={<Administrar />} />
         <Route path="/configuracion" element={<Configuracion />} />
       </Routes>
     </main>

@@ -1,19 +1,33 @@
-import { useState } from "react";
-import { masPopulares } from "../data/datos";
-import { categorias } from "../data/datos";
+import { useState, useEffect } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import { instance } from "../api/api";
 import { Link } from "react-router-dom";
 import "../css/pages/Inicio.css";
 
 const Inicio = () => {
   const [search, setSearch] = useState("");
-  const [categoria, setCategoria] = useState(categorias);
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  // Obtenemos todas las categorias
+  const getCategories = async () => {
+    try {
+      const response = await instance.get("/categories");
+      return setData(response.data.categorias);
+    } catch (err) {
+      setData([]);
+    }
+  };
 
   const filterData = () => {
-      return categoria.filter((val) => {
+      return data.filter((val) => {
       if (search === "") {
         return val;
-      } else if (val.nombreCat.toLowerCase().includes(search.toLowerCase())) {
+      } else if (val.nombre.toLowerCase().includes(search.toLowerCase())) {
         return val;
       }
       return false
@@ -55,15 +69,9 @@ const Inicio = () => {
 
       <h1 className="mt-7 font-bold text-2xl">Categorias mas populares</h1>
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
-        {masPopulares.map((item) => (
+        {data.map((item) => (
           <div
             key={item.id}
-            style={{
-              backgroundImage: `url(${item.imagen})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
             className="card"
           >
             <div>
@@ -71,7 +79,7 @@ const Inicio = () => {
                 to="/"
                 className="btn btn-categoria font-extrabold text-lg px-3 py-2"
               >
-                {item.nombreCat}
+                {item.nombre}
               </Link>
             </div>
           </div>
@@ -85,12 +93,6 @@ const Inicio = () => {
           : filterData().map((item) => (
               <div
                 key={item.id}
-                style={{
-                  backgroundImage: `url(${item.imagen})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
                 className="card"
               >
                 <div>
@@ -98,7 +100,7 @@ const Inicio = () => {
                     to=""
                     className="btn btn-categoria font-extrabold text-lg px-3 py-2"
                   >
-                    {item.nombreCat}
+                    {item.nombre}
                   </Link>
                 </div>
               </div>

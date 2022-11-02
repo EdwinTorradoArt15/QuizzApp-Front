@@ -2,8 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import {
+  TextField,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import {Btn} from '../css/Button'
 import { useForm } from "react-hook-form";
-import {instance} from '../api/api'
+import { instance } from "../api/api";
 import Loader from "./Loader";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,8 +23,12 @@ const FormRegister = () => {
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((showPassword) => !showPassword);
+  };
 
   const registerUser = async (data) => {
     try {
@@ -41,17 +54,14 @@ const FormRegister = () => {
       <form className="mt-6" onSubmit={handleSubmit(registerUser)}>
         <ToastContainer />
         <div>
-          <label className="block text-gray-700 text-lg md:text-base">
-            Usuario
-          </label>
-          <input
+          <TextField
+            fullWidth
+            label="Usuario"
             type="text"
-            placeholder="Usuario"
             {...register("usuario", {
               required: true,
               maxLength: 20,
             })}
-            className="w-full p-3 rounded-lg bg-gray-200 mt-2 border focus:border-bright-blue focus:bg-white focus:outline-none"
           />
           <p className="sr-only">
             {errors.usuario?.type === "required" &&
@@ -62,31 +72,25 @@ const FormRegister = () => {
         </div>
 
         <div className="mt-4">
-          <label className="block text-gray-700 text-lg md:text-base">
-            Nombre
-          </label>
-          <input
+          <TextField
+            fullWidth
+            label="Nombre"
             type="text"
-            placeholder="Nombre"
             {...register("nombre", {
               required: true,
             })}
-            className="w-full p-3 rounded-lg bg-gray-200 mt-2 border focus:border-bright-blue focus:bg-white focus:outline-none"
           />
         </div>
 
         <div className="mt-4">
-          <label className="block text-gray-700 text-lg md:text-base">
-            Correo
-          </label>
-          <input
+          <TextField
+            fullWidth
+            label="Correo"
             type="text"
-            placeholder="Correo electronico"
             {...register("correo", {
               required: true,
               pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
             })}
-            className="w-full p-3 rounded-lg bg-gray-200 mt-2 border focus:border-bright-blue focus:bg-white focus:outline-none"
           />
           <p className="sr-only">
             {errors.correo?.type === "required" &&
@@ -97,73 +101,56 @@ const FormRegister = () => {
         </div>
 
         <div className="mt-4">
-          <label className="block text-gray-700 text-lg md:text-base">
-            Contraseña
-          </label>
-          <div className="relative w-full">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="*********"
+          <FormControl fullWidth>
+          <InputLabel>Contraseña</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? 'text' : 'password'}
               {...register("clave")}
-              // value={contraseña}
-              // onChange={(e) => setContraseña(e.target.value)}
-              className="w-full p-3 rounded-lg bg-gray-200 mt-2 border focus:border-bright-blue focus:bg-white focus:outline-none"
-              // required
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
             />
-            <span
-              className="flex absolute inset-y-0 right-0 items-center pr-3"
-              onClick={() => setShowPassword((show) => !show)}
-            >
-              {showPassword ? (
-                <>
-                  <AiFillEye />
-                </>
-              ) : (
-                <>
-                  <AiFillEyeInvisible />
-                </>
-              )}
-            </span>
-          </div>
+          </FormControl>
         </div>
 
         <div className="mt-4">
-          <label className="block text-gray-700 text-lg md:text-base">
-            Confirmar contraseña
-          </label>
-          <div className="relative w-full">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="*********"
+        <FormControl fullWidth>
+          <InputLabel>Confirmar</InputLabel>
+            <OutlinedInput
+              type={showPassword ? 'text' : 'password'}
               {...register("confClave")}
-              // value={confContraseña}
-              // onChange={(e) => setConfContraseña(e.target.value)}
-              className="w-full p-3 rounded-lg bg-gray-200 mt-2 border focus:border-bright-blue focus:bg-white focus:outline-none"
-              // required
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
             />
-            <span
-              className="flex absolute inset-y-0 right-0 items-center pr-3"
-              onClick={() => setShowPassword((show) => !show)}
-            >
-              {showPassword ? (
-                <>
-                  <AiFillEye />
-                </>
-              ) : (
-                <>
-                  <AiFillEyeInvisible />
-                </>
-              )}
-            </span>
-          </div>
+          </FormControl>
         </div>
-        <button
+        <Btn
+          fullWidth
+          sx={{mt:2}}
           type="submit"
-          className="w-full rounded-lg text-center btn-cuestionario font-semibold text-14 2xl:text-lg md:text-base p-3 mt-6"
           value="Registrar"
         >
           {loading ? <Loader /> : "Registrarse"}
-        </button>
+        </Btn>
       </form>
 
       <p className="text-xs text-gray-500 mt-1">

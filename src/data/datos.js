@@ -37,10 +37,15 @@ export const dataSidebar = [
     icon: <BsFillPersonFill />,
   },
   {
+    path: 'administrar',
+    titulo: 'Administrar',
+    icon: <AiFillSetting />,
+  },
+  {
     path: 'configuracion',
     titulo: 'Configuracion',
     icon: <AiFillSetting />,
-  },
+  }
 ];
 
 export const masPopulares = [
