@@ -131,7 +131,7 @@ const Administrar = () => {
         />
         <div className="flex pt-3 gap-3">
           <Btn type="submit" className="btn">
-            {loading ? <Loader /> : "Agregar"}
+            {loading ? <Loader /> : "Agregar Categoria"}
           </Btn>
           <BtnCancel
             className="btnCancel"
