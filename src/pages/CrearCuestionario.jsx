@@ -10,14 +10,13 @@ import { useEffect } from "react";
 
 const CrearCuestionario = () => {
   const [idUser, setIdUser] = useState("");
-  const { register, handleSubmit } = useForm();
   const { loading, setLoading } = useState(false);
   const navigate = useNavigate();
-  /* const { register, control, handleSubmit } = useForm(); */
-  /* const { fields, append, remove } = useFieldArray({
+  const { register, control, handleSubmit } = useForm();
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "preguntas",
-  }); */
+  });
 
   useEffect(() => {
     decodedUserId();
@@ -126,7 +125,7 @@ const CrearCuestionario = () => {
       </div>
 
       {/* Preguntas */}
-      {/* <form className="mt-6" onSubmit={handleSubmit(data => console.log(data))}>
+      <form className="mt-6" onSubmit={handleSubmit(data => console.log(data))}>
         {fields.map(({ id, nombre, r1,r2,r3,r4 }, index) => {
           return (
             <div key={id}>
@@ -189,7 +188,7 @@ const CrearCuestionario = () => {
           </button>
           <input  className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2" type="submit" />
         </div>
-      </form> */}
+      </form>
     </div>
   );
 };

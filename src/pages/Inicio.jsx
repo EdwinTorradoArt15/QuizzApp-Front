@@ -1,13 +1,24 @@
 import { useState, useEffect } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io"
 import { instance } from "../api/api";
 import { Link } from "react-router-dom";
 import "../css/pages/Inicio.css";
 
 const Inicio = () => {
+  const [noOfElement, setNoOfElement] = useState(5);
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
 
+  const sliceCategorie = data.slice(0, noOfElement);
+
+  const loadMore = () => {
+    setNoOfElement((prev) => prev + 5)
+  }
+
+  const loadLess = () => {
+    setNoOfElement((prev) => prev - 5)
+  }
 
   useEffect(() => {
     getCategories();
@@ -24,13 +35,13 @@ const Inicio = () => {
   };
 
   const filterData = () => {
-      return data.filter((val) => {
+    return sliceCategorie.filter((val) => {
       if (search === "") {
         return val;
       } else if (val.nombre.toLowerCase().includes(search.toLowerCase())) {
         return val;
       }
-      return false
+      return false;
     });
   };
 
@@ -70,10 +81,7 @@ const Inicio = () => {
       <h1 className="mt-7 font-bold text-2xl">Categorias mas populares</h1>
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
         {data.map((item) => (
-          <div
-            key={item.id}
-            className="card"
-          >
+          <div key={item.id} className="card">
             <div>
               <Link
                 to="/"
@@ -93,6 +101,12 @@ const Inicio = () => {
           : filterData().map((item) => (
               <div
                 key={item.id}
+                style={{
+                  backgroundImage: `url(${item.urlImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
                 className="card"
               >
                 <div>
@@ -106,6 +120,14 @@ const Inicio = () => {
               </div>
             ))}
       </div>
+      {
+        noOfElement < data.length ?(
+          <IoIosArrowDown onClick={loadMore} size={20} className='btn-cuestionario rounded-full'/>
+          // <button onClick={loadMore} className="btn-cuestionario p-3 rounded-lg">Cargar mas</button>
+        ) : (
+          <IoIosArrowUp onClick={loadLess} size={20} className='btn-cuestionario rounded-full'/>
+        )
+      }
     </div>
   );
 };

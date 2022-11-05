@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Btn, BtnCancel } from "../css/Button";
-import { useForm } from "react-hook-form";
 import Loader from "../components/Loader";
 import { Modal, Box } from "@mui/material";
 import { TextField } from "@mui/material";
+import { AiFillCamera } from "react-icons/ai";
 import { instance } from "../api/api";
+import IconButton from '@mui/material/IconButton';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import duart from '../img/duart.PNG'
 
 const style = {
   position: "absolute",
@@ -22,7 +24,11 @@ const style = {
 
 const Administrar = () => {
   const [data, setData] = useState([]);
-  const { register, handleSubmit } = useForm();
+  const [categoria, setCategoria] = useState({
+    nombre: "",
+    descripcion: "",
+  });
+  const [image, setImg] = useState({ preview: "", data: "" });
   const [modalAdd, setModalAdd] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -45,47 +51,87 @@ const Administrar = () => {
     }
   };
 
-  const postCategories = async (data) => {
+  const handleChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    };
+    setImg(img);
+  };
+
+  const handleTarget = (e) => {
+    const { name, value } = e.target;
+    return setCategoria((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const postCategories = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
-      await instance.post("/categories", data);
+      let formData = new FormData();
+      formData.append("image", image.data);
+      formData.append("nombre", categoria.nombre);
+      formData.append("descripcion", categoria.descripcion);
+      const response = await instance.post("/categories", formData);
       setLoading(false);
-      toast.success("Ingrediente agregado correctamente");
+      toast.success(response.data.msg);
       getCategories();
       setModalAdd(false);
     } catch (err) {
-      console.log(err);
       setLoading(false);
-      toast.error("Error al agregar ingrediente");
+      toast.error(err.response.data.msg);
     }
   };
 
   const bodyModalAdd = (
     <Box sx={style}>
       <h3 className="text-xl font-semibold">Añadir categoria</h3>
-      <form onSubmit={handleSubmit(postCategories)}>
+      <form encType="multipart/form-data" onSubmit={postCategories}>
+        <div className="flex flex-col items-center justify-center w-full bg-white border-2 border-azul-marino/60 rounded-lg">
+          <img
+            src={image.preview ? image.preview : duart}
+            alt="No hay imagen"
+            className="w-full h-40 object-container object-center rounded-t-md"
+          />
+          <IconButton sx={{color: 'black'}}>
+            <label
+              htmlFor="file"
+              className=""
+            >
+              <AiFillCamera />
+            </label>
+            <input
+              id="file"
+              type="file"
+              name="urlImage"
+              onChange={handleChange}
+              style={{ display: "none" }}
+            />
+          </IconButton>
+        </div>
         <TextField
+          fullWidth
           sx={{ my: 2 }}
           label="Nombre"
           type="text"
-          {...register("nombre", {
-            required: true,
-          })}
-          defaultValue={data.nombre}
+          onChange={handleTarget}
+          name="nombre"
           variant="filled"
         />
         <TextField
+          fullWidth
           label="Descripcion"
           type="text"
-          {...register("descripcion", {
-            required: true,
-          })}
-          defaultValue={data.descripcion}
+          onChange={handleTarget}
+          name="descripcion"
           variant="filled"
         />
         <div className="flex pt-3 gap-3">
           <Btn type="submit" className="btn">
-            {loading ? <Loader /> : "Agregar ingrediente"}
+            {loading ? <Loader /> : "Agregar"}
           </Btn>
           <BtnCancel
             className="btnCancel"
@@ -109,9 +155,17 @@ const Administrar = () => {
           return (
             <div
               key={cat.id}
+              style={{
+                backgroundImage: `url(${cat.urlImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
               className="card"
             >
-                <p className="btn btn-categoria font-extrabold text-lg px-3 py-2">{cat.nombre}</p>
+              <p className="btn btn-categoria font-extrabold text-lg px-3 py-2">
+                {cat.nombre}
+              </p>
             </div>
           );
         })}

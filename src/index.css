@@ -22,12 +22,9 @@
   }
   .card {
     @apply bg-black
-        w-96 min-h-[10rem]
+        w-72 min-h-[10rem]
         flex items-center justify-center
         drop-shadow-3xl rounded-md overflow-hidden
-
-        /* Responsive */
-        2xl:w-96 md:w-60;
   }
   .cardCuestionarios {
     @apply
