@@ -9,15 +9,29 @@ import Loader from "../components/Loader";
 import { useEffect } from "react";
 
 const CrearCuestionario = () => {
+  const [categorias, setCategorias] = useState([]);
   const [idUser, setIdUser] = useState("");
   const { loading, setLoading } = useState(false);
+
+  const [mostrarPregunta, setMostrarPregunta] = useState(false);
+
   const navigate = useNavigate();
-  const { register, control, handleSubmit } = useForm();
+  const { register, control, handleSubmit, reset, getValues, watch } =
+    useForm();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "preguntas",
   });
 
+  const traerCuestionarios = async () => {
+    try {
+      const response = await instance.get("/cuestionaries/preguntas");
+      console.log("Lista de cuestionarios:", response.data);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    traerCuestionarios();
+  }, []);
   useEffect(() => {
     decodedUserId();
   }, []);
@@ -28,11 +42,51 @@ const CrearCuestionario = () => {
         ...data,
         idUsuarioCreador: idUser,
       });
-      toast.success(response.data.msg);
-      setTimeout(() => {
-        navigate("/dashboard/cuestionarios");
-      }, 2000);
+      console.log("Esta es la respuesta:", response);
+      if (response.data.success === true) {
+        toast.success(response.data.msg);
+        reset({
+          idCuestionario: response.data.cuestionario.id,
+          nombreCuestionario: response.data.cuestionario.nomCuest,
+        });
+        console.log("Valores actuales del form:", getValues());
+
+        setMostrarPregunta(true);
+      }
     } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const enviarPreguntas = async (data) => {
+    const informacionPreguntasFormateada = data.preguntas.map((pregunta) => {
+      const valorRespuesta = pregunta[`${pregunta.respuestaPregunta}`];
+
+      return {
+        descripcion: pregunta.nombre,
+        idCuestionario: data.idCuestionario,
+        respuesta: valorRespuesta,
+        opcion1: pregunta.r1,
+        opcion2: pregunta.r2,
+        opcion3: pregunta.r3,
+        opcion4: pregunta.r4,
+      };
+    });
+
+    try {
+      const response = await instance.post("/cuestionaries/preguntas", {
+        preguntas: [...informacionPreguntasFormateada],
+      });
+
+      console.log("Esto te respondo:", response);
+
+      if (response.data.success === true) {
+        toast.success(response.data.msg);
+        setMostrarPregunta(false);
+        reset({});
+      }
+    } catch (err) {
+      console.log("Errror:", err);
       toast.error(err.response.data.msg);
     }
   };
@@ -125,70 +179,137 @@ const CrearCuestionario = () => {
       </div>
 
       {/* Preguntas */}
-      <form className="mt-6" onSubmit={handleSubmit(data => console.log(data))}>
-        {fields.map(({ id, nombre, r1,r2,r3,r4 }, index) => {
-          return (
-            <div key={id}>
-              <div className="flex items-center gap-2">
-                <label className="text-bright-blue font-bold text-xl">1.</label>
-                <input
-                  {...register(`preguntas.${index}.nombre`)}
-                  defaultValue={nombre}
-                  placeholder="Pregunta"
-                  className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
-                />
-              </div>
-              <div className="flex justify-center items-center my-4">
-                  <div className="grid items-center grid-cols-2 gap-5">
-                    <div className="flex gap-2 items-center">
+      {mostrarPregunta && (
+        <form className="mt-6" onSubmit={handleSubmit(enviarPreguntas)}>
+          <h1> {getValues("nombreCuestionario")}</h1>
+
+          {fields.map(
+            ({ id, nombre, r1, r2, r3, r4, respuestaPregunta }, index) => {
+              return (
+                <div key={id}>
+                  <div className="flex items-center gap-2">
+                    <label className="text-bright-blue font-bold text-xl">
+                      {index + 1}
+                    </label>
+                    <input
+                      {...register(`preguntas.${index}.nombre`)}
+                      defaultValue={nombre}
+                      placeholder="Pregunta"
+                      className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex justify-center items-center my-4">
+                    <div className="grid items-center grid-cols-2 gap-5">
                       <div className="flex gap-2 items-center">
-                        <input defaultValue={r1} {...register(`preguntas.${index}.r1`)} type="checkbox"/>
-                        <input defaultValue={r1} {...register(`preguntas.${index}.r1`)} placeholder="Respuesta 1" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                        <div className="flex gap-2 items-center">
+                          <input
+                            value={"r1"}
+                            {...register(
+                              `preguntas.${index}.respuestaPregunta`
+                            )}
+                            type="radio"
+                          />
+                          <input
+                            defaultValue={r1}
+                            {...register(`preguntas.${index}.r1`)}
+                            placeholder="Respuesta 1"
+                            type="text"
+                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex gap-2 items-center">
                       <div className="flex gap-2 items-center">
-                        <input defaultValue={r2} {...register(`preguntas.${index}.r2`)} type="checkbox"/>
-                        <input defaultValue={r2} {...register(`preguntas.${index}.r2`)} placeholder="Respuesta 2" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                        <div className="flex gap-2 items-center">
+                          <input
+                            value={"r2"}
+                            {...register(
+                              `preguntas.${index}.respuestaPregunta`
+                            )}
+                            type="radio"
+                          />
+                          <input
+                            defaultValue={r2}
+                            {...register(`preguntas.${index}.r2`)}
+                            placeholder="Respuesta 2"
+                            type="text"
+                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex gap-2 items-center">
                       <div className="flex gap-2 items-center">
-                        <input defaultValue={r3} {...register(`preguntas.${index}.r3`)} type="checkbox"/>
-                        <input defaultValue={r3} {...register(`preguntas.${index}.r3`)} placeholder="Respuesta 3" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                        <div className="flex gap-2 items-center">
+                          <input
+                            value={"r3"}
+                            {...register(
+                              `preguntas.${index}.respuestaPregunta`
+                            )}
+                            type="radio"
+                          />
+                          <input
+                            defaultValue={r3}
+                            {...register(`preguntas.${index}.r3`)}
+                            placeholder="Respuesta 3"
+                            type="text"
+                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex gap-2 items-center">
                       <div className="flex gap-2 items-center">
-                        <input defaultValue={r4} {...register(`preguntas.${index}.r4`)} type="checkbox"/>
-                        <input defaultValue={r4} {...register(`preguntas.${index}.r4`)} placeholder="Respuesta 4" type="text" className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"/>
+                        <div className="flex gap-2 items-center">
+                          <input
+                            value={"r4"}
+                            {...register(
+                              `preguntas.${index}.respuestaPregunta`
+                            )}
+                            type="radio"
+                          />
+                          <input
+                            defaultValue={r4}
+                            {...register(`preguntas.${index}.r4`)}
+                            placeholder="Respuesta 4"
+                            type="text"
+                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-              </div>
-              <div className="flex justify-center mt-6">
-                <button
-                  type="button"
-                  onClick={() => remove(index)}
-                  className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          );
-        })}
-        <div className="flex flex-col w-max gap-7">
-          <button
-            className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
-            type="button"
-            onClick={() => append({})}
-          >
-            Agregar
-          </button>
-          <input  className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2" type="submit" />
-        </div>
-      </form>
+                  <div className="flex justify-center mt-6">
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+          )}
+          <div className="flex flex-col w-max gap-7">
+            <button
+              className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
+              type="button"
+              onClick={() =>
+                append({
+                  nombre: "",
+                  r1: "",
+                  r2: "",
+                  r3: "",
+                  r4: "",
+                })
+              }
+            >
+              Agregar
+            </button>
+            <input
+              className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
+              type="submit"
+            />
+          </div>
+        </form>
+      )}
     </div>
   );
 };
