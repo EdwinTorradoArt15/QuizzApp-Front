@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import { instance } from "../api/api";
@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import banner from "../img/banner.avif";
 import Loader from "../components/Loader";
-import { useEffect } from "react";
 
 const CrearCuestionario = () => {
   const [categorias, setCategorias] = useState([]);
@@ -14,9 +13,10 @@ const CrearCuestionario = () => {
   const { loading, setLoading } = useState(false);
 
   const [mostrarPregunta, setMostrarPregunta] = useState(false);
+  const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
 
   const navigate = useNavigate();
-  const { register, control, handleSubmit, reset, getValues, watch } =
+  const { register, control, handleSubmit, reset, getValues} =
     useForm();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -32,9 +32,24 @@ const CrearCuestionario = () => {
   useEffect(() => {
     traerCuestionarios();
   }, []);
+
   useEffect(() => {
     decodedUserId();
   }, []);
+
+  useEffect(() => {
+    getCategories();
+  }, [])
+
+  const getCategories = async () => {
+    try {
+      const response = await instance.get('/categories')
+      setCategorias(response.data.categorias)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
 
   const postCuestionario = async (data) => {
     try {
@@ -49,9 +64,9 @@ const CrearCuestionario = () => {
           idCuestionario: response.data.cuestionario.id,
           nombreCuestionario: response.data.cuestionario.nomCuest,
         });
-        console.log("Valores actuales del form:", getValues());
 
         setMostrarPregunta(true);
+        setOcultarDescripcion(false);
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -78,8 +93,6 @@ const CrearCuestionario = () => {
         preguntas: [...informacionPreguntasFormateada],
       });
 
-      console.log("Esto te respondo:", response);
-
       if (response.data.success === true) {
         toast.success(response.data.msg);
         setMostrarPregunta(false);
@@ -99,74 +112,73 @@ const CrearCuestionario = () => {
     console.log(decoded);
   };
 
-  console.log(idUser, "Este es el id del usuario creador");
-
   return (
     <div className="w-full p-3">
       {/* Header */}
       <ToastContainer />
-      <form onSubmit={handleSubmit(postCuestionario)}>
-        <div className="flex items-center">
-          <div className="flex">
-            <label>Nombre del cuestionario</label>
-            <input
-              {...register("nomCuest", { required: true })}
-              type="text"
-              placeholder="Nombre"
-              className="border"
-            />
+      {
+        ocultarDescripcion && (
+        <form onSubmit={handleSubmit(postCuestionario)}>
+          <div className="flex gap-2 items-center">
+            <div className="flex flex-col gap-1">
+              <label className="font-medium">Nombre del cuestionario</label>
+              <input
+                {...register("nomCuest", { required: true })}
+                type="text"
+                placeholder="Nombre"
+                className="border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96"
+              />
+            </div>
+            {/* Select categorias */}
+            <div className="flex flex-col gap-1">
+              <label className="font-medium">Categorías</label>
+              <select
+                {...register("idCategoria", { required: true })}
+                className="bg-bright-blue rounded-md font-semibold focus:outline-none text-white p-3"
+              >
+                {
+                  categorias.map((categoria) => (
+                    <option className='text-black bg-white' key={categoria.id} value={categoria.id}>
+                      {categoria.nombre}
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+            {/* Select tiempo */}
+            <div className="flex flex-col gap-1">
+              <label className="font-medium">Tiempo</label>
+              <select
+                {...register("tiempoTotal", { required: true })}
+                className="bg-bright-blue rounded-md font-semibold focus:outline-none text-white p-3"
+              >
+                <option value="" className="text-black bg-white">
+                  Tiempo
+                </option>
+                <option value="20" className="text-black bg-white">
+                  20 segundos
+                </option>
+                <option value="30" className="text-black bg-white">
+                  30 segundos
+                </option>
+                <option value="40" className="text-black bg-white">
+                  40 segundos
+                </option>
+                <option value="60" className="text-black bg-white">
+                  60 segundos
+                </option>
+              </select>
+            </div>
           </div>
-          {/* Select categorias */}
-          <select
-            {...register("idCategoria", { required: true })}
-            className="bg-bright-blue rounded-lg font-semibold focus:outline-none text-white p-3"
-          >
-            <option value="" className="text-black bg-white">
-              Categorias
-            </option>
-            <option value="1" className="text-black bg-white">
-              Rompecabezas
-            </option>
-            <option value="2" className="text-black bg-white">
-              Biologia
-            </option>
-            {/*           <option value="Paises" className="text-black bg-white">
-              Paises
-            </option>
-            <option value="Juegos" className="text-black bg-white">
-              Juegos
-            </option> */}
-          </select>
-          {/* Select tiempo */}
-
-          <select
-            {...register("tiempoTotal", { required: true })}
-            className="bg-bright-blue rounded-lg font-semibold focus:outline-none text-white p-3"
-          >
-            <option value="" className="text-black bg-white">
-              Tiempo
-            </option>
-            <option value="20" className="text-black bg-white">
-              20 segundos
-            </option>
-            <option value="30" className="text-black bg-white">
-              30 segundos
-            </option>
-            <option value="40" className="text-black bg-white">
-              40 segundos
-            </option>
-            <option value="60" className="text-black bg-white">
-              60 segundos
-            </option>
-          </select>
-        </div>
-        <button className="btn-cuestionario p-3" type="submit">
-          {loading ? <Loader /> : "Crear cuestionario"}
-        </button>
-      </form>
+          <button className="btn-cuestionario p-2 font-medium rounded-md mt-3" type="submit">
+            {loading ? <Loader /> : "Crear cuestionario"}
+          </button>
+        </form>
+        )
+      }
 
       {/* Banner cuestionario */}
-      <div className="w-full h-48 mt-6">
+      {/* <div className="w-full h-48 mt-6">
         <img
           src={banner}
           alt="Imagen banner"
@@ -176,7 +188,7 @@ const CrearCuestionario = () => {
             backgroundRepeat: "no-repeat",
           }}
         />
-      </div>
+      </div> */}
 
       {/* Preguntas */}
       {mostrarPregunta && (

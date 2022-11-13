@@ -1,11 +1,57 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { catMusica, catPaises } from "../data/datos";
+import {instance} from '../api/api'
+import jwt_decode from "jwt-decode";
 import { BiSearchAlt } from "react-icons/bi";
-import { useState } from "react";
 import '../css/pages/cuestionarios.css';
 
 const Cuestionarios = () => {
   const [search, setSearch] = useState("");
+  const [cuestionario, setCuestionario] = useState([])
+  const [categorias, setCategorias] = useState([])
+  const [usuarioCreador, setUsuarioCreador] = useState('')
+
+  useEffect(() => {
+    getCategories();
+  }, [])
+
+  const getCategories = async () => {
+    try {
+      const response = await instance.get('/categories')
+      setCategorias(response.data.categorias)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getCuestionaries();
+  }, [])
+
+  const getCuestionaries = async () => {
+    try {
+      const response = await instance.get('/cuestionaries/preguntas')
+      setCuestionario(response.data.cuestionarios)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const findCategory = (id) => {
+    const cat = categorias.find((categoria) => categoria.id === id)
+    return cat.nombre
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  const getUser = async () => {
+    const token = localStorage.getItem('token')
+    const decoded = jwt_decode(token)
+    setUsuarioCreador(decoded.userName)
+  }
+
   return (
     <div className="w-full p-3">
       
@@ -28,107 +74,44 @@ const Cuestionarios = () => {
               </button>
             </div>
           </div>
-          <div>
-            <select className="bg-transparent font-medium focus:outline-none p-3 border-2 border-bright-blue/20 focus-within:border-bright-blue rounded-lg">
-              <option value="categorias">Categorias</option>
-              <option value="animales">Animales</option>
-              <option value="matematicas">Matematicas</option>
-              <option value="paises">Paises</option>
-              <option value="juegos">Juegos</option>
-            </select>
-          </div>
         </div>
       </form>
 
     <div className="mt-7">
-      <Link to={'/dashboard/cuestionarios/crear_cuestionarios'} className="btn-cuestionario font-semibold px-3 py-2 text-xl">
+      <Link to={'/dashboard/cuestionarios/crear_cuestionarios'} className="btn-cuestionario font-medium p-2 text-base rounded-lg">
           Crear cuestionario
       </Link>
     </div>
-
-      {/* Categoria paises */}
       <div className="mt-7">
-        <h1 className="font-bold text-2xl">Paises</h1>
         <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
-          {catPaises.map((item) => (
-            <div key={item.id} className="cardCuestionarios">
-              <div className="container-img">
-                <img
-                  src={item.imagen}
-                  alt="Imagen carta"
-                  className="w-full h-48 object-cover"
-                />
+          {
+            cuestionario.length === 0 ? (
+              <div className="text-center">
+                <h1 className="text-2xl">No hay cuestionarios</h1>
               </div>
-              <div className="card-body">
-                <div className="card-header">
-                  <h1 className="font-semibold text-base 2xl:text-lg md:text-lg">{item.titulo}</h1>
-                  <span className="font-semibold text-14 2xl:text-base md:text-base text-black/50">
-                    {item.nombreUser}
-                  </span>
-                </div>
-                <div className="px-1.5 pb-2">
-                  <p className="text-14 2xl:text-lg md:text-base text-white rounded-md px-5 py-1 border-2 border-light-yellow bg-light-yellow font-semibold w-max">
-                    {item.categoria}
-                  </p>
-
-                  <div className="flex gap-2.5 py-2">
-                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg md:text-base">
-                      Modificar
-                    </button>
-                    <button className="btn-cuestionario font-semibold px-2 py-1 text-14 2xl:text-lg md:text-base">
-                      Estadisticas
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* Fin categoria paises */}
-
-      {/* Categoria musica */}
-      <div className="mt-7 ">
-        <h1 className="font-bold text-2xl">Musica</h1>
-        <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
-          {catMusica.map((item) => (
-            <div key={item.id} className="cardCuestionarios">
-              <div key={item.id} className="cardCuestionarios">
+            ): (
+              cuestionario.map((cuest) => (
+                <div key={cuest.id} className='cardCuestionarios'>
                 <div className="container-img">
-                  <img
-                    src={item.imagen}
-                    alt="Imagen carta"
-                    className="w-full h-48 object-cover"
-                  />
+                  <img src="" alt="Imagen cuestionario" />
                 </div>
-                <div className="card-body">
+                <div className="p-3">
                   <div className="card-header">
-                    <h1 className="font-semibold text-base 2xl:text-lg md:text-lg">{item.titulo}</h1>
-                    <span className="font-semibold text-14 2xl:text-base md:text-base text-black/50">
-                      {item.nombreUser}
-                    </span>
+                    <h3>{cuest.nomCuest}</h3>
+                    <span>{usuarioCreador}</span>
                   </div>
-                  <div className="px-1.5 pb-2">
-                    <p className="text-14 2xl:text-lg md:text-base text-white rounded-md px-5 py-1 border-2 border-lime-green bg-lime-green font-semibold w-max">
-                      {item.categoria}
-                    </p>
-
-                    <div className="flex gap-2.5 py-2">
-                      <button className="btn-cuestionario btn-cuestionarios font-semibold px-2 py-1 text-14 2xl:text-lg md:text-base">
-                        Modificar
-                      </button>
-                      <button className="btn-cuestionario btn-cuestionarios font-semibold px-2 py-1 text-14 2xl:text-lg md:text-base">
-                        Estadisticas
-                      </button>
-                    </div>
+                  <p className="text-base text-white rounded-md px-3 py-1 border-2 border-light-yellow bg-light-yellow font-medium w-max">{ findCategory(cuest.idCategoria) }</p>
+                  <div className="flex gap-2.5 py-2">
+                    <button className=" btn-cuestionario font-medium px-3 text-base rounded-lg">Modificar</button>
+                    <button className=" btn-cuestionario font-medium px-3 text-base rounded-lg">Estadisticas</button>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+              ))
+            )
+          }
         </div>
       </div>
-      {/* Fin categoria musica */}
 
     </div>
   );

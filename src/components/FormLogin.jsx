@@ -109,11 +109,11 @@ const FormLogin = () => {
           </span>
         </div>
       </Btn>
-      <p className="mt-5 text-lg">
+      <p className="mt-5 text-base">
         Necesitas una cuenta?
         <Link
           to={"/registro"}
-          className="text-blue-500 mx-1 text-14 2xl:text-lg md:text-base hover:text-blue-700 font-semibold"
+          className="text-blue-500 mx-1 text-base hover:text-blue-700 font-semibold"
         >
           Create una cuenta
         </Link>
