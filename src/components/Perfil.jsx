@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { instance } from "../api/api";
 
 const Perfil = () => {
   const [name, setName] = useState("")
@@ -24,7 +25,7 @@ const Perfil = () => {
 
   const refreshToken = async () => {
     try{
-      const res = await axios.post('http://localhost:5000/token',{refreshToken: localStorage.getItem('token')})
+      const res = await instance.post('http://localhost:5000/token',{refreshToken: localStorage.getItem('token')})
       setToken(res.data.accesToken);
       const decoded = jwt_decode(res.data.accesToken);
       setName(decoded.name)

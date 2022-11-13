@@ -10,14 +10,13 @@ import Loader from "../components/Loader";
 const CrearCuestionario = () => {
   const [categorias, setCategorias] = useState([]);
   const [idUser, setIdUser] = useState("");
-  const { loading, setLoading } = useState(false);
+  const [loading, setLoading ] = useState(false);
 
   const [mostrarPregunta, setMostrarPregunta] = useState(false);
   const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
 
   const navigate = useNavigate();
-  const { register, control, handleSubmit, reset, getValues} =
-    useForm();
+  const { register, control, handleSubmit, reset, getValues } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "preguntas",
@@ -39,20 +38,21 @@ const CrearCuestionario = () => {
 
   useEffect(() => {
     getCategories();
-  }, [])
+  }, []);
 
   const getCategories = async () => {
     try {
-      const response = await instance.get('/categories')
-      setCategorias(response.data.categorias)
+      const response = await instance.get("/categories");
+      setCategorias(response.data.categorias);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-
+  };
 
   const postCuestionario = async (data) => {
+
     try {
+      setLoading(true);
       const response = await instance.post("/cuestionaries", {
         ...data,
         idUsuarioCreador: idUser,
@@ -64,12 +64,13 @@ const CrearCuestionario = () => {
           idCuestionario: response.data.cuestionario.id,
           nombreCuestionario: response.data.cuestionario.nomCuest,
         });
-
+        setLoading(false);
         setMostrarPregunta(true);
         setOcultarDescripcion(false);
       }
     } catch (err) {
       toast.error(err.response.data.msg);
+      setLoading(false);
     }
   };
 
@@ -81,10 +82,20 @@ const CrearCuestionario = () => {
         descripcion: pregunta.nombre,
         idCuestionario: data.idCuestionario,
         respuesta: valorRespuesta,
-        opcion1: pregunta.r1,
-        opcion2: pregunta.r2,
-        opcion3: pregunta.r3,
-        opcion4: pregunta.r4,
+        opciones: [
+          {
+            descripcion: pregunta.r1,
+          },
+          {
+            descripcion: pregunta.r2,
+          },
+          {
+            descripcion: pregunta.r3,
+          },
+          {
+            descripcion: pregunta.r4,
+          },
+        ],
       };
     });
 
@@ -94,7 +105,7 @@ const CrearCuestionario = () => {
       });
 
       if (response.data.success === true) {
-        toast.success(response.data.msg);
+        toast.success("Se crearon las preguntas correctamente");
         setMostrarPregunta(false);
         reset({});
       }
@@ -116,8 +127,7 @@ const CrearCuestionario = () => {
     <div className="w-full p-3">
       {/* Header */}
       <ToastContainer />
-      {
-        ocultarDescripcion && (
+      {ocultarDescripcion && (
         <form onSubmit={handleSubmit(postCuestionario)}>
           <div className="flex gap-2 items-center">
             <div className="flex flex-col gap-1">
@@ -136,13 +146,15 @@ const CrearCuestionario = () => {
                 {...register("idCategoria", { required: true })}
                 className="bg-bright-blue rounded-md font-semibold focus:outline-none text-white p-3"
               >
-                {
-                  categorias.map((categoria) => (
-                    <option className='text-black bg-white' key={categoria.id} value={categoria.id}>
-                      {categoria.nombre}
-                    </option>
-                  ))
-                }
+                {categorias.map((categoria) => (
+                  <option
+                    className="text-black bg-white"
+                    key={categoria.id}
+                    value={categoria.id}
+                  >
+                    {categoria.nombre}
+                  </option>
+                ))}
               </select>
             </div>
             {/* Select tiempo */}
@@ -170,12 +182,15 @@ const CrearCuestionario = () => {
               </select>
             </div>
           </div>
-          <button className="btn-cuestionario p-2 font-medium rounded-md mt-3" type="submit">
+          <button
+            className="btn-cuestionario p-2 font-medium rounded-md mt-3"
+            type="submit"
+            disabled={loading ? true : false}
+          >
             {loading ? <Loader /> : "Crear cuestionario"}
           </button>
         </form>
-        )
-      }
+      )}
 
       {/* Banner cuestionario */}
       {/* <div className="w-full h-48 mt-6">
