@@ -10,7 +10,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import {Btn} from '../css/Button'
+import { Btn } from "../css/Button";
 import { useForm } from "react-hook-form";
 import { instance } from "../api/api";
 import Loader from "./Loader";
@@ -46,6 +46,8 @@ const FormRegister = () => {
     }
   };
 
+  // console.log('Estos son los errores',err)
+
   return (
     <div className="w-full h-100">
       <h1 className="text-xl md:text-xl 2xl:text-2xl font-medium">
@@ -62,12 +64,17 @@ const FormRegister = () => {
               required: true,
               maxLength: 20,
             })}
+            error={errors.usuario ? true : false}
           />
-          <p className="sr-only">
-            {errors.usuario?.type === "required" &&
-              toast.error("Usuario requerido")}
-            {errors.usuario?.type === "maxLength" &&
-              toast.error("Debe tener menos de 20 caracteres")}
+          <p>
+            {errors.usuario?.type === "required" && (
+              <span className="text-red-500">Este campo es requerido</span>
+            )}
+            {errors.usuario?.type === "maxLength" && (
+              <span className="text-red-500">
+                El usuario no puede tener mas de 20 caracteres
+              </span>
+            )}
           </p>
         </div>
 
@@ -79,7 +86,13 @@ const FormRegister = () => {
             {...register("nombre", {
               required: true,
             })}
+            error={errors.nombre ? true : false}
           />
+          <p>
+            {errors.nombre?.type === "required" && (
+              <span className="text-red-500">Este campo es requerido</span>
+            )}
+          </p>
         </div>
 
         <div className="mt-4">
@@ -91,22 +104,30 @@ const FormRegister = () => {
               required: true,
               pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
             })}
+            error={errors.correo ? true : false}
           />
-          <p className="sr-only">
-            {errors.correo?.type === "required" &&
-              toast.error("Correo requerido")}
-            {errors.correo?.type === "pattern" &&
-              toast.error("Formato de correo invalido")}
+          <p>
+            {errors.correo?.type === "required" && (
+              <span className="text-red-500">Este campo es requerido</span>
+            )}
+            {errors.correo?.type === "pattern" && (
+              <span className="text-red-500">El correo no es valido</span>
+            )}
           </p>
         </div>
 
         <div className="mt-4">
           <FormControl fullWidth>
-          <InputLabel>Contraseña</InputLabel>
+            <InputLabel error={errors.clave ? true : false}>
+              Contraseña
+            </InputLabel>
             <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? 'text' : 'password'}
-              {...register("clave")}
+              id="clave"
+              type={showPassword ? "text" : "password"}
+              {...register("clave", {
+                required: true,
+              })}
+              error={errors.clave ? true : false}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -121,20 +142,28 @@ const FormRegister = () => {
               label="Password"
             />
           </FormControl>
+          <p>
+            {errors.clave?.type === "required" && (
+              <span className="text-red-500">Este campo es requerido</span>
+            )}
+          </p>
         </div>
 
         <div className="mt-4">
-        <FormControl fullWidth>
-          <InputLabel>Confirmar</InputLabel>
+          <FormControl fullWidth>
+            <InputLabel error={errors.confClave ? true : false}>
+              Confirmar
+            </InputLabel>
             <OutlinedInput
-              type={showPassword ? 'text' : 'password'}
-              {...register("confClave")}
+              type={showPassword ? "text" : "password"}
+              {...register("confClave", {
+                required: true,
+                validate: (value) => value === document.getElementById("clave").value,
+              })}
+              error={errors.confClave ? true : false}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
+                  <IconButton onClick={handleClickShowPassword} edge="end">
                     {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
                   </IconButton>
                 </InputAdornment>
@@ -142,13 +171,16 @@ const FormRegister = () => {
               label="Password"
             />
           </FormControl>
+          <p>
+            {errors.confClave?.type === "required" && (
+              <span className="text-red-500">Este campo es requerido</span>
+            )}
+            {errors.confClave?.type === "validate" && (
+              <span className="text-red-500">Las contraseñas no coinciden</span>
+            )}
+          </p>
         </div>
-        <Btn
-          fullWidth
-          sx={{mt:2}}
-          type="submit"
-          value="Registrar"
-        >
+        <Btn fullWidth sx={{ mt: 2 }} type="submit" value="Registrar">
           {loading ? <Loader /> : "Registrarse"}
         </Btn>
       </form>

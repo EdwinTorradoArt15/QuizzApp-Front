@@ -13,13 +13,17 @@ import {
   OutlinedInput,
   TextField,
 } from "@mui/material";
-import {Btn} from '../css/Button'
+import { Btn } from "../css/Button";
 import { useForm } from "react-hook-form";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./Loader";
 
 const FormLogin = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -58,16 +62,25 @@ const FormLogin = () => {
             {...register("correo", {
               required: true,
             })}
+            error={errors.correo ? true : false}
           />
+          <p>
+            {errors.correo?.type === "required" && (
+              <span className="text-red-500">Este campo es requerido</span>
+            )}
+          </p>
         </div>
 
         <div className="mt-4">
           <FormControl fullWidth>
-            <InputLabel>Contraseña</InputLabel>
+            <InputLabel error={errors.clave ? true : false}>Contraseña</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
-              {...register("clave")}
+              {...register("clave", {
+                required: true,
+              })}
+              error={errors.clave ? true : false}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -82,26 +95,24 @@ const FormLogin = () => {
               label="Password"
             />
           </FormControl>
+          <p>
+            {errors.clave?.type === 'required' && (
+              <span className="text-red-500">Este campo es requerido</span>
+            )}
+          </p>
         </div>
 
         <div className="flex items-center justify-end pt-2">
-          <p className="text-sm md:text-sm 2xl:text-lg font-medium text-gray-700 hover:text-bright-blue focus:text-bright-blue cursor-pointer">
+          <p className="text-base font-medium text-gray-700 hover:text-bright-blue focus:text-bright-blue cursor-pointer">
             ¿Olvidaste tu contraseña?
           </p>
         </div>
-        <Btn
-          type="submit"
-          fullWidth
-          sx={{mt: 2}}
-        >
+        <Btn type="submit" fullWidth sx={{ mt: 2 }}>
           {loading ? <Loader /> : "Iniciar sesión"}
         </Btn>
       </form>
       <hr className="my-6 border-gray-300 w-full" />
-      <Btn
-        type="button"
-        fullWidth
-      >
+      <Btn type="button" fullWidth>
         <div className="flex items-center justify-center ">
           <AiFillGoogleCircle className="text-lg md:text-base" />
           <span className="ml-4 text-14 2xl:text-lg md:text-base">
