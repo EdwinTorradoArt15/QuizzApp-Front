@@ -29,12 +29,12 @@
   .cardCuestionarios {
     @apply
       bg-white
-        w-96 min-h-[10rem]
+        w-80 min-h-[10rem]
         rounded-md overflow-hidden
         drop-shadow-3xl
 
         /* Responsive */
-        2xl:w-96 md:w-72;
+        /* 2xl:w-96 md:w-72; */
   }
   .card-header {
     @apply px-1.5 py-2;

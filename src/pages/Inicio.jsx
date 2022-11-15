@@ -69,22 +69,6 @@ const Inicio = () => {
         </div>
       </form>
 
-      <h1 className="mt-7 font-bold text-2xl">Categorias mas populares</h1>
-      <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
-        {data.map((item) => (
-          <div key={item.id} className="card">
-            <div>
-              <Link
-                to="/"
-                className="btn btn-categoria font-extrabold text-lg px-3 py-2"
-              >
-                {item.nombre}
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
-
       <h1 className="my-7 font-bold text-2xl">Elige una categoria</h1>
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
         {filterData().length === 0
