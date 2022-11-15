@@ -4,7 +4,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { instance } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import banner from "../img/banner.avif";
 import Loader from "../components/Loader";
 
 const CrearCuestionario = () => {
@@ -16,7 +15,7 @@ const CrearCuestionario = () => {
   const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
 
   const navigate = useNavigate();
-  const { register, control, handleSubmit, reset, getValues } = useForm();
+  const { register, control, handleSubmit, reset, getValues, formState: { errors }, } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "preguntas",
@@ -57,7 +56,6 @@ const CrearCuestionario = () => {
         ...data,
         idUsuarioCreador: idUser,
       });
-      console.log("Esta es la respuesta:", response);
       if (response.data.success === true) {
         toast.success(response.data.msg);
         reset({
@@ -98,8 +96,8 @@ const CrearCuestionario = () => {
         ],
       };
     });
-
     try {
+      setTimeout(true)
       const response = await instance.post("/cuestionaries/preguntas", {
         preguntas: [...informacionPreguntasFormateada],
       });
@@ -109,8 +107,10 @@ const CrearCuestionario = () => {
         setMostrarPregunta(false);
         reset({});
       }
+      setLoading(false);
+      navigate("/dashboard/cuestionarios");
     } catch (err) {
-      console.log("Errror:", err);
+      setLoading(false);
       toast.error(err.response.data.msg);
     }
   };
@@ -136,8 +136,15 @@ const CrearCuestionario = () => {
                 {...register("nomCuest", { required: true })}
                 type="text"
                 placeholder="Nombre"
-                className="border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96"
+                className={`border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96 ${errors.nomCuest && "border-rosa-rojo focus-within:border-rosa-rojo"}`}
               />
+              <p>
+                {
+                  errors.nomCuest?.type === "required" && (
+                    <span className="text-rosa-rojo">Este campo es requerido</span>
+                  )
+                }
+              </p>
             </div>
             {/* Select categorias */}
             <div className="flex flex-col gap-1">
@@ -164,9 +171,6 @@ const CrearCuestionario = () => {
                 {...register("tiempoTotal", { required: true })}
                 className="bg-bright-blue rounded-md font-semibold focus:outline-none text-white p-3"
               >
-                <option value="" className="text-black bg-white">
-                  Tiempo
-                </option>
                 <option value="20" className="text-black bg-white">
                   20 segundos
                 </option>
@@ -208,13 +212,12 @@ const CrearCuestionario = () => {
       {/* Preguntas */}
       {mostrarPregunta && (
         <form className="mt-6" onSubmit={handleSubmit(enviarPreguntas)}>
-          <h1> {getValues("nombreCuestionario")}</h1>
-
+          <h1 className="text-center font-medium text-xl"> {getValues("nombreCuestionario")}</h1>
           {fields.map(
             ({ id, nombre, r1, r2, r3, r4, respuestaPregunta }, index) => {
               return (
                 <div key={id}>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 my-6">
                     <label className="text-bright-blue font-bold text-xl">
                       {index + 1}
                     </label>
@@ -222,7 +225,7 @@ const CrearCuestionario = () => {
                       {...register(`preguntas.${index}.nombre`)}
                       defaultValue={nombre}
                       placeholder="Pregunta"
-                      className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                      className="border-2 border-bright-blue/20 focus:within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96"
                     />
                   </div>
                   <div className="flex justify-center items-center my-4">
@@ -241,7 +244,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r1`)}
                             placeholder="Respuesta 1"
                             type="text"
-                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -259,7 +262,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r2`)}
                             placeholder="Respuesta 2"
                             type="text"
-                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -277,7 +280,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r3`)}
                             placeholder="Respuesta 3"
                             type="text"
-                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -295,7 +298,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r4`)}
                             placeholder="Respuesta 4"
                             type="text"
-                            className="p-1 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -305,7 +308,7 @@ const CrearCuestionario = () => {
                     <button
                       type="button"
                       onClick={() => remove(index)}
-                      className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
+                      className="btn-cuestionario rounded-lg font-medium text-base p-2"
                     >
                       Delete
                     </button>
@@ -316,7 +319,7 @@ const CrearCuestionario = () => {
           )}
           <div className="flex flex-col w-max gap-7">
             <button
-              className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
+              className="btn-cuestionario rounded-lg font-medium text-base p-2"
               type="button"
               onClick={() =>
                 append({
@@ -330,10 +333,9 @@ const CrearCuestionario = () => {
             >
               Agregar
             </button>
-            <input
-              className="btn-cuestionario rounded-lg font-semibold text-14 2xl:text-lg p-2"
-              type="submit"
-            />
+            <button type="submit" className="btn-cuestionario rounded-lg font-medium text-base p-2">
+              {loading ? <Loader/> : 'Enviar'}
+            </button>
           </div>
         </form>
       )}

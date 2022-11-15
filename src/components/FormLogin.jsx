@@ -66,7 +66,7 @@ const FormLogin = () => {
           />
           <p>
             {errors.correo?.type === "required" && (
-              <span className="text-red-500">Este campo es requerido</span>
+              <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
           </p>
         </div>
@@ -97,7 +97,7 @@ const FormLogin = () => {
           </FormControl>
           <p>
             {errors.clave?.type === 'required' && (
-              <span className="text-red-500">Este campo es requerido</span>
+              <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
           </p>
         </div>

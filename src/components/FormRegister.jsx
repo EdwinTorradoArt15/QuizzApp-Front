@@ -68,10 +68,10 @@ const FormRegister = () => {
           />
           <p>
             {errors.usuario?.type === "required" && (
-              <span className="text-red-500">Este campo es requerido</span>
+              <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
             {errors.usuario?.type === "maxLength" && (
-              <span className="text-red-500">
+              <span className="text-rosa-rojo">
                 El usuario no puede tener mas de 20 caracteres
               </span>
             )}
@@ -90,7 +90,7 @@ const FormRegister = () => {
           />
           <p>
             {errors.nombre?.type === "required" && (
-              <span className="text-red-500">Este campo es requerido</span>
+              <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
           </p>
         </div>
@@ -108,10 +108,10 @@ const FormRegister = () => {
           />
           <p>
             {errors.correo?.type === "required" && (
-              <span className="text-red-500">Este campo es requerido</span>
+              <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
             {errors.correo?.type === "pattern" && (
-              <span className="text-red-500">El correo no es valido</span>
+              <span className="text-rosa-rojo">El correo no es valido</span>
             )}
           </p>
         </div>
@@ -144,7 +144,7 @@ const FormRegister = () => {
           </FormControl>
           <p>
             {errors.clave?.type === "required" && (
-              <span className="text-red-500">Este campo es requerido</span>
+              <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
           </p>
         </div>
@@ -173,10 +173,10 @@ const FormRegister = () => {
           </FormControl>
           <p>
             {errors.confClave?.type === "required" && (
-              <span className="text-red-500">Este campo es requerido</span>
+              <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
             {errors.confClave?.type === "validate" && (
-              <span className="text-red-500">Las contraseñas no coinciden</span>
+              <span className="text-rosa-rojo">Las contraseñas no coinciden</span>
             )}
           </p>
         </div>
