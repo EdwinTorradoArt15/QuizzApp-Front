@@ -9,6 +9,7 @@ const Cuestionarios = () => {
   const [search, setSearch] = useState("");
   const [cuestionario, setCuestionario] = useState([]);
   const [categorias, setCategorias] = useState([]);
+
   const getCategories = async () => {
     try {
       const response = await instance.get("/categories");

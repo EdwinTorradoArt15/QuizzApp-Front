@@ -32,11 +32,6 @@ export const dataSidebar = [
     path: 'administrar',
     titulo: 'Administrar',
     icon: <AiFillSetting />,
-  },
-  {
-    path: 'configuracion',
-    titulo: 'Configuracion',
-    icon: <AiFillSetting />,
   }
 ];
 

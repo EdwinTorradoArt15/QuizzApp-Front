@@ -45,6 +45,6 @@
   }
   .banner{
     @apply
-    w-full h-48 flex flex-col items-center
+    w-full h-52 flex flex-col items-center
   }
 }

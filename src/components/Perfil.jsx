@@ -1,59 +1,59 @@
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Divider from '@mui/material/Divider';
+import { useState, useEffect } from "react";
+import {
+  Box,
+  Avatar,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  IconButton,
+  Tooltip,
+  Divider,
+} from "@mui/material";
 import { BiLogOut } from "react-icons/bi";
-import { useState, useEffect } from 'react'
-import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../api/api";
 
 const Perfil = () => {
-  const [name, setName] = useState("")
-  const [token, setToken] = useState("")
-  const [expire, setExpire] = useState("")
+  const [name, setName] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
+    // decodedUser();
     refreshToken();
-  }, [])
+  }, []);
 
   const refreshToken = async () => {
-    try{
-      const res = await instance.post('http://localhost:5000/token',{refreshToken: localStorage.getItem('token')})
+    try {
+      const res = await instance.post("http://localhost:5000/token", {
+        refreshToken: localStorage.getItem("token"),
+      });
       setToken(res.data.accesToken);
       const decoded = jwt_decode(res.data.accesToken);
-      setName(decoded.name)
-      setExpire(decoded.exp)
-    }catch(err){
+      setName(decoded.name);
+      setExpire(decoded.exp);
+    } catch (err) {
       // Cuando el token expira lo redirecciona al login
-      if(err.response){
-        navigate("/")
+      if (err.response) {
+        navigate("/");
       }
     }
+  };
+
+  const getInitial = (name) => {
+    const names = name.split(" ");
+    const initials = names[0].substring(0, 1).toUpperCase();
+    return initials;
   }
 
   const Logout = () => {
-    localStorage.removeItem('token')
-    navigate("/")
-  }
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
-  //? Por socializar
-  /* const Logout = async() => {
-    try{
-      await axios.delete('http://localhost:5000/logout')
-      navigate("/")
-    }catch(err){
-      console.log(err)
-    }
-  } */
-
-  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -63,7 +63,7 @@ const Perfil = () => {
   };
   return (
     <div>
-        <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Perfil" arrow>
           <IconButton
             onClick={handleClick}
@@ -73,7 +73,16 @@ const Perfil = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-      <Avatar src="/broken-image.jpg" />
+            <Avatar
+              sx={{
+                fontWeight: "500",
+                bgcolor: "#ba181b",
+                width: 30,
+                height: 30,
+              }}
+            >
+              {getInitial(name)}
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -114,7 +123,16 @@ const Perfil = () => {
       >
         <MenuItem sx={{ fontFamily: "Montserrat" }}>
           <ListItemIcon>
-          <Avatar src="/broken-image.jpg" />
+            <Avatar
+              sx={{
+                fontWeight: "500",
+                bgcolor: "#ba181b",
+                width: 30,
+                height: 30,
+              }}
+            >
+              {getInitial(name)}
+            </Avatar>
           </ListItemIcon>
           {name}
         </MenuItem>
@@ -127,7 +145,7 @@ const Perfil = () => {
         </MenuItem>
       </Menu>
     </div>
-  )
-}
+  );
+};
 
-export default Perfil
+export default Perfil;
