@@ -22,20 +22,12 @@ const style = {
 
 const Perfil = () => {
   const [userData, setUserData] = useState([]);
-  const [idUser,setIdUser] = useState('')
   const [nameUser, setNameUser] = useState('');
-  const [usuario, setUsuario] = useState({
-    usuario: '',
-    nombre: '',
-    correo: '',
-    clave: ''
-  })
   const [cuestionario, setCuestionario] = useState([]);
   const [modalUpdate, setModalUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    decodedUserId();
     decodedUserName();
     getCuestionaries();
     getUser();
@@ -43,7 +35,7 @@ const Perfil = () => {
 
   const handleTarget = (e) => {
     const { name, value } = e.target;
-    return setUsuario((prevState) => ({
+    return setUserData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -54,12 +46,6 @@ const Perfil = () => {
     const decoded = jwt_decode(token);
     setNameUser(decoded.name);
   };
-
-  const decodedUserId = () => {
-    const token = localStorage.getItem("token");
-    const decoded = jwt_decode(token);
-    setIdUser(decoded.id);
-  }
 
   const getCuestionaries = async () => {
     try {
@@ -79,7 +65,6 @@ const Perfil = () => {
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
       const response = await instance.get(`/user/${decoded.userId}`);
-      console.log(response.data.usuario);
       setUserData(response.data.usuario);
     } catch (err) {
       console.log('Error de la respuesta getUser -> ',err);
@@ -93,10 +78,9 @@ const Perfil = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
-      const response = await instance.put(`/users/update/${decoded.userId}`, usuario);
-      console.log(response.data);
+      const response = await instance.put(`/users/update/${decoded.userId}`, userData);
       setLoading(false);
-      toast.success("Usuario actualizado correctamente");
+      toast.success(response.data.msg);
       getUser();
     } catch (err) {
       console.log(err);
