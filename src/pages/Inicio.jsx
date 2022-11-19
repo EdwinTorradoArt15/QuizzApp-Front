@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { Buscador, CardCategoria } from "../components";
 import { BiSearchAlt } from "react-icons/bi";
-import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io"
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { instance } from "../api/api";
-import { Link } from "react-router-dom";
 import "../css/pages/Inicio.css";
 
 const Inicio = () => {
@@ -13,12 +13,16 @@ const Inicio = () => {
   const sliceCategorie = data.slice(0, noOfElement);
 
   const loadMore = () => {
-    setNoOfElement((prev) => prev + 5)
-  }
+    setNoOfElement((prev) => prev + 5);
+  };
 
   const loadLess = () => {
-    setNoOfElement((prev) => prev - 5)
-  }
+    setNoOfElement((prev) => prev - 5);
+  };
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
 
   useEffect(() => {
     getCategories();
@@ -55,9 +59,7 @@ const Inicio = () => {
               type="text"
               placeholder="Busqueda"
               value={search}
-              onChange={(event) => {
-                setSearch(event.target.value);
-              }}
+              onChange={handleSearch}
               className="px-3 py-2 placeholder-gray-500 text-black rounded-l-lg border-2 border-bright-blue/20 focus-within:border-bright-blue  focus:outline-none"
             />
             <div className="inline-flex">
@@ -74,35 +76,26 @@ const Inicio = () => {
         {filterData().length === 0
           ? "No se encontraron resultados"
           : filterData().map((item) => (
-              <div
+              <CardCategoria
                 key={item.id}
-                style={{
-                  backgroundImage: `url(${item.urlImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-                className="card"
-              >
-                <div>
-                  <Link
-                    to=""
-                    className="btn btn-categoria font-extrabold text-lg px-3 py-2"
-                  >
-                    {item.nombre}
-                  </Link>
-                </div>
-              </div>
+                imagen={item.urlImage}
+                nombreCategoria={item.nombre}
+              />
             ))}
       </div>
-      {
-        noOfElement < data.length ?(
-          <IoIosArrowDown onClick={loadMore} size={20} className='btn-cuestionario rounded-full'/>
-          // <button onClick={loadMore} className="btn-cuestionario p-3 rounded-lg">Cargar mas</button>
-        ) : (
-          <IoIosArrowUp onClick={loadLess} size={20} className='btn-cuestionario rounded-full'/>
-        )
-      }
+      {noOfElement < data.length ? (
+        <IoIosArrowDown
+          onClick={loadMore}
+          size={20}
+          className="btn-cuestionario rounded-full"
+        />
+      ) : (
+        <IoIosArrowUp
+          onClick={loadLess}
+          size={20}
+          className="btn-cuestionario rounded-full"
+        />
+      )}
     </div>
   );
 };

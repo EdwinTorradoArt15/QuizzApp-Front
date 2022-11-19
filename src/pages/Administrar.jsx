@@ -1,26 +1,12 @@
 import { useState, useEffect } from "react";
-import { Btn, BtnCancel } from "../css/Button";
-import Loader from "../components/Loader";
-import { Modal, Box } from "@mui/material";
-import { TextField } from "@mui/material";
+import { CardCategoria, Modales, Loader } from "../components";
+import { Modal, TextField, IconButton } from "@mui/material";
+import { Btn, BtnCancel } from "../components/Button";
 import { AiFillCamera } from "react-icons/ai";
 import { instance } from "../api/api";
-import IconButton from '@mui/material/IconButton';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import duart from '../img/duart.PNG'
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
+import duart from "../img/duart.PNG";
 
 const Administrar = () => {
   const [data, setData] = useState([]);
@@ -86,9 +72,8 @@ const Administrar = () => {
     }
   };
 
-  const bodyModalAdd = (
-    <Box sx={style}>
-      <h3 className="text-xl font-semibold">Añadir categoria</h3>
+  const modalAgg = (
+    <Modales titulo={"Añadir categoria"}>
       <form encType="multipart/form-data" onSubmit={postCategories}>
         <div className="flex flex-col items-center justify-center w-full bg-white border-2 border-azul-marino/60 rounded-lg">
           <img
@@ -96,11 +81,8 @@ const Administrar = () => {
             alt="No hay imagen"
             className="w-full h-40 object-container object-center rounded-t-md"
           />
-          <IconButton sx={{color: 'black'}}>
-            <label
-              htmlFor="file"
-              className=""
-            >
+          <IconButton sx={{ color: "black" }}>
+            <label htmlFor="file" className="">
               <AiFillCamera />
             </label>
             <input
@@ -141,7 +123,7 @@ const Administrar = () => {
           </BtnCancel>
         </div>
       </form>
-    </Box>
+    </Modales>
   );
 
   return (
@@ -151,37 +133,19 @@ const Administrar = () => {
         <Btn onClick={() => abrirCerrarModalAgregar()}>Añadir categoria</Btn>
       </div>
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
-        {data.map((cat) => {
-          return (
-            <div
-              key={cat.id}
-              style={{
-                backgroundImage: `url(${cat.urlImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-              className="card"
-            >
-              <p className="btn btn-categoria font-extrabold text-lg px-3 py-2">
-                {cat.nombre}
-              </p>
-            </div>
-          );
-        })}
+        {data.map((cat) => (
+          <CardCategoria
+            key={cat.id}
+            imagen={cat.urlImage}
+            nombreCategoria={cat.nombre}
+          />
+        ))}
       </div>
       <Modal open={modalAdd} onClose={abrirCerrarModalAgregar}>
-        {bodyModalAdd}
+        {modalAgg}
       </Modal>
     </div>
   );
 };
-
-/* style={{
-  backgroundImage: `url(${item.imagen})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-}} */
 
 export default Administrar;

@@ -10,10 +10,10 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import { Btn } from "../css/Button";
+import { Btn } from "../components/Button";
 import { useForm } from "react-hook-form";
 import { instance } from "../api/api";
-import Loader from "./Loader";
+import {Loader} from ".";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormRegister = () => {

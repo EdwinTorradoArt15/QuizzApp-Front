@@ -1,7 +1,5 @@
-import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { dataSidebar } from "../data/datos";
-import juegos from '../img/juegos.avif'
 
 const Sidebar = () => {
 
@@ -9,7 +7,7 @@ const Sidebar = () => {
     <nav className="nav">
       <div>
         <Link to="/dashboard/inicio" className="nav-logo">
-          <img src={juegos} alt="Logo" className="nav-logo-icon" />
+          <img src='' alt="Logo" className="nav-logo-icon"/>
         </Link>
         <div>
           {/* Menu sidebar */}

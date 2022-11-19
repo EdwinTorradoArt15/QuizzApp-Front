@@ -1,6 +1,5 @@
-import React from 'react'
-import { BiSearchAlt } from "react-icons/bi";
 import { useState } from "react";
+import { BiSearchAlt } from "react-icons/bi";
 import { catMusica, catPaises } from "../data/datos";
 import '../css/pages/cuestionarios.css'
 

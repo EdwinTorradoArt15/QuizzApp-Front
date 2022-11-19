@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import { ContextProvider } from './context/ContextProvider';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from "@mui/material/styles";
-import {global} from './css/style'
+import './index.css';
+import {global} from './components/style'
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 

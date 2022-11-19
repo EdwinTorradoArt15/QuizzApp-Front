@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
-import { AiFillGoogleCircle } from "react-icons/ai";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { instance } from "../api/api";
 import { toast, ToastContainer } from "react-toastify";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import {
+  AiFillEye,
+  AiFillEyeInvisible,
+  AiFillGoogleCircle,
+} from "react-icons/ai";
 import {
   FormControl,
   IconButton,
@@ -13,10 +15,10 @@ import {
   OutlinedInput,
   TextField,
 } from "@mui/material";
-import { Btn } from "../css/Button";
+import { Btn } from "../components/Button";
 import { useForm } from "react-hook-form";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "./Loader";
+import { Loader } from ".";
 
 const FormLogin = () => {
   const {
@@ -73,7 +75,9 @@ const FormLogin = () => {
 
         <div className="mt-4">
           <FormControl fullWidth>
-            <InputLabel error={errors.clave ? true : false}>Contraseña</InputLabel>
+            <InputLabel error={errors.clave ? true : false}>
+              Contraseña
+            </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
@@ -96,7 +100,7 @@ const FormLogin = () => {
             />
           </FormControl>
           <p>
-            {errors.clave?.type === 'required' && (
+            {errors.clave?.type === "required" && (
               <span className="text-rosa-rojo">Este campo es requerido</span>
             )}
           </p>

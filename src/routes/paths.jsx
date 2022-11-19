@@ -1,0 +1,15 @@
+export const HOME = '/*'
+export const LOGIN = '/login/*'
+export const REGISTRO = '/registro'
+export const DASHBOARD = '/dashboard/*'
+
+export const LOG_PUBLIC = '/dashboard/inicio'
+export const LOG_PRIVATE = '/'
+
+export const INDEX = '/'
+export const INICIO = '/inicio'
+export const CUESTIONARIOS = '/cuestionarios'
+export const CREAR_CUESTIONARIO = '/cuestionarios/crear_cuestionarios'
+export const COMPLETADOS = '/completados'
+export const PERFIL = '/perfil'
+export const ADMINISTRAR = '/administrar'

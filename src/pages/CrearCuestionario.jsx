@@ -1,21 +1,28 @@
 import { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
-import { instance } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { instance } from "../api/api";
+import {Loader} from "../components";
+import { toast, ToastContainer } from "react-toastify";
 import jwt_decode from "jwt-decode";
-import Loader from "../components/Loader";
 
 const CrearCuestionario = () => {
   const [categorias, setCategorias] = useState([]);
   const [idUser, setIdUser] = useState("");
-  const [loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [mostrarPregunta, setMostrarPregunta] = useState(false);
   const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
 
   const navigate = useNavigate();
-  const { register, control, handleSubmit, reset, getValues, formState: { errors }, } = useForm();
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "preguntas",
@@ -49,7 +56,6 @@ const CrearCuestionario = () => {
   };
 
   const postCuestionario = async (data) => {
-
     try {
       setLoading(true);
       const response = await instance.post("/cuestionaries", {
@@ -97,7 +103,7 @@ const CrearCuestionario = () => {
       };
     });
     try {
-      setTimeout(true)
+      setTimeout(true);
       const response = await instance.post("/cuestionaries/preguntas", {
         preguntas: [...informacionPreguntasFormateada],
       });
@@ -136,14 +142,17 @@ const CrearCuestionario = () => {
                 {...register("nomCuest", { required: true })}
                 type="text"
                 placeholder="Nombre"
-                className={`border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96 ${errors.nomCuest && "border-rosa-rojo focus-within:border-rosa-rojo"}`}
+                className={`border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96 ${
+                  errors.nomCuest &&
+                  "border-rosa-rojo focus-within:border-rosa-rojo"
+                }`}
               />
               <p>
-                {
-                  errors.nomCuest?.type === "required" && (
-                    <span className="text-rosa-rojo">Este campo es requerido</span>
-                  )
-                }
+                {errors.nomCuest?.type === "required" && (
+                  <span className="text-rosa-rojo">
+                    Este campo es requerido
+                  </span>
+                )}
               </p>
             </div>
             {/* Select categorias */}
@@ -212,7 +221,10 @@ const CrearCuestionario = () => {
       {/* Preguntas */}
       {mostrarPregunta && (
         <form className="mt-6" onSubmit={handleSubmit(enviarPreguntas)}>
-          <h1 className="text-center font-medium text-xl"> {getValues("nombreCuestionario")}</h1>
+          <h1 className="text-center font-medium text-xl">
+            {" "}
+            {getValues("nombreCuestionario")}
+          </h1>
           {fields.map(
             ({ id, nombre, r1, r2, r3, r4, respuestaPregunta }, index) => {
               return (
@@ -333,8 +345,11 @@ const CrearCuestionario = () => {
             >
               Agregar
             </button>
-            <button type="submit" className="btn-cuestionario rounded-lg font-medium text-base p-2">
-              {loading ? <Loader/> : 'Enviar'}
+            <button
+              type="submit"
+              className="btn-cuestionario rounded-lg font-medium text-base p-2"
+            >
+              {loading ? <Loader /> : "Enviar"}
             </button>
           </div>
         </form>

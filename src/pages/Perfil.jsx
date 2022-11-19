@@ -1,28 +1,16 @@
 import { useState, useEffect } from "react";
-import { Avatar, Modal, Box, TextField, Rating, Stack } from "@mui/material";
-import jwt_decode from "jwt-decode";
+import { Avatar, Modal, TextField, Rating, Stack } from "@mui/material";
+import { CardCuestionarios, Loader, Modales } from "../components";
+import { Btn, BtnCancel } from "../components/Button";
 import { instance } from "../api/api";
 import { FaPen, FaPlus } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Btn, BtnCancel } from "../css/Button";
-import Loader from "../components/Loader";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
+import jwt_decode from "jwt-decode";
 
 const Perfil = () => {
   const [userData, setUserData] = useState([]);
-  const [nameUser, setNameUser] = useState('');
+  const [nameUser, setNameUser] = useState("");
   const [cuestionario, setCuestionario] = useState([]);
   const [modalUpdate, setModalUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -67,7 +55,7 @@ const Perfil = () => {
       const response = await instance.get(`/user/${decoded.userId}`);
       setUserData(response.data.usuario);
     } catch (err) {
-      console.log('Error de la respuesta getUser -> ',err);
+      console.log("Error de la respuesta getUser -> ", err);
     }
   };
 
@@ -78,22 +66,25 @@ const Perfil = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
-      const response = await instance.put(`/users/update/${decoded.userId}`, userData);
+      const response = await instance.put(
+        `/users/update/${decoded.userId}`,
+        userData
+      );
       setLoading(false);
       toast.success(response.data.msg);
       getUser();
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
-  }
+  };
 
   const abrirCerrarModalAgregar = () => {
     setModalUpdate(!modalUpdate);
-  }; 
+  };
 
   const bodyModalUpdate = (
-    <Box sx={style}>
-      <h3 className="text-xl font-semibold">Editar perfil</h3>
+    <Modales titulo={"Editar perfil"}>
       <form onSubmit={updateUser}>
         <TextField
           fullWidth
@@ -141,46 +132,13 @@ const Perfil = () => {
           </BtnCancel>
         </div>
       </form>
-    </Box>
+    </Modales>
   );
 
   const getInitial = (name) => {
     const names = name.split(" ");
     const initials = names[0].substring(0, 1).toUpperCase();
     return initials;
-  };
-
-  const lastCuestionaries = () => {
-    return cuestionario.slice(0, 4).map((cuest) => {
-      return (
-        <div key={cuest.id} className="cardCuestionarios">
-          <div className="container-img">
-            <img
-              src="https://picsum.photos/1000/700"
-              alt="Imagen cuestionario"
-              className="w-full h-48 object-cover"
-            />
-          </div>
-          <div className="p-3">
-            <div className="card-header">
-              <h3 className="font-medium text-base">{cuest.nomCuest}</h3>
-              <span className="text-sm">{cuest.usuarioCreador}</span>
-            </div>
-            <p className="text-base text-white rounded-md px-3 py-1 border-2 border-light-yellow bg-light-yellow font-medium w-max">
-              {cuest.nombreCategoria}
-            </p>
-            <div className="flex gap-2.5 py-2">
-              <button className="btn-cuestionario font-medium px-3 py-1 text-base rounded-lg">
-                Modificar
-              </button>
-              <button className=" btn-cuestionario font-medium px-3 py-1 text-base rounded-lg">
-                Estadisticas
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    });
   };
 
   return (
@@ -266,7 +224,14 @@ const Perfil = () => {
       <div className="mt-7">
         <h1 className="font-bold text-2xl ">Creados recientemente</h1>
         <div className="flex flex-wrap mt-7 justify-center gap-6 items-center">
-          {lastCuestionaries()}
+          {cuestionario.slice(0, 4).map((cuest) => (
+            <CardCuestionarios
+              key={cuest.id}
+              nombre={cuest.nomCuest}
+              usuario={cuest.usuarioCreador}
+              categoria={cuest.nombreCategoria}
+            />
+          ))}
         </div>
       </div>
       <Modal open={modalUpdate} onClose={abrirCerrarModalAgregar}>

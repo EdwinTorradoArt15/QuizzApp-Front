@@ -1,8 +1,7 @@
 import { useStateContext } from "../context/ContextProvider";
 import { FaMoon } from "react-icons/fa";
+import {Perfil} from '.'
 import Tooltip from "@mui/material/Tooltip";
-import Perfil from './Perfil'
-
 
 const Navbar = () => {
   const { setActiveMenu, activeMenu } = useStateContext();

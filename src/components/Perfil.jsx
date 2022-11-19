@@ -47,7 +47,7 @@ const Perfil = () => {
     const names = name.split(" ");
     const initials = names[0].substring(0, 1).toUpperCase();
     return initials;
-  }
+  };
 
   const Logout = () => {
     localStorage.removeItem("token");
