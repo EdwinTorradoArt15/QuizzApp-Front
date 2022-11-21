@@ -1,5 +1,12 @@
-import { useState, useEffect } from "react";
-import { Avatar, Modal, TextField, Rating, Stack } from "@mui/material";
+import { useState, useEffect, createRef } from "react";
+import {
+  Avatar,
+  Modal,
+  TextField,
+  Rating,
+  Stack,
+  IconButton,
+} from "@mui/material";
 import { CardCuestionarios, Loader, Modales } from "../components";
 import { Btn, BtnCancel } from "../components/Button";
 import { instance } from "../api/api";
@@ -7,11 +14,14 @@ import { FaPen, FaPlus } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import jwt_decode from "jwt-decode";
+import { AiFillCamera } from "react-icons/ai";
 
 const Perfil = () => {
+  const ref = createRef();
   const [userData, setUserData] = useState([]);
-  const [nameUser, setNameUser] = useState("");
   const [cuestionario, setCuestionario] = useState([]);
+  const [nameUser, setNameUser] = useState("");
+  const [image, setImg] = useState({ preview: "", data: "" });
   const [modalUpdate, setModalUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +37,14 @@ const Perfil = () => {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const handleChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    };
+    setImg(img);
   };
 
   const decodedUserName = () => {
@@ -64,19 +82,31 @@ const Perfil = () => {
     e.preventDefault();
     try {
       setLoading(true);
+      let formData = new FormData();
+      formData.append("usuario", userData.usuario);
+      formData.append("nombre", userData.nombre);
+      formData.append("correo", userData.correo);
+      formData.append("clave", image.clave);
+      formData.append("image", image.data);
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
       const response = await instance.put(
         `/users/update/${decoded.userId}`,
-        userData
+        formData
       );
+      toast.success(response.data.message);
       setLoading(false);
-      toast.success(response.data.msg);
-      getUser();
+      setModalUpdate(false);
     } catch (err) {
+      console.log("Error de la respuesta updateUser -> ", err);
       setLoading(false);
-      console.log(err);
     }
+  };
+
+  const getInitial = (name) => {
+    const names = name.split('');
+    const initials = names[0]
+    return initials; 
   };
 
   const abrirCerrarModalAgregar = () => {
@@ -84,8 +114,32 @@ const Perfil = () => {
   };
 
   const bodyModalUpdate = (
-    <Modales titulo={"Editar perfil"}>
-      <form onSubmit={updateUser}>
+    <Modales ref={ref}>
+      <h3 className="text-xl font-semibold mb-2">Actualizar perfil</h3>
+      <form encType="multipart/form-data" onSubmit={updateUser}>
+        <div className="flex flex-col items-center justify-center w-full bg-white border-2 border-azul-marino/60 rounded-lg">
+          <img
+            src={
+              image.preview
+                ? image.preview
+                : "https://i.ibb.co/7bQQYkX/undraw-profile-pic.png"
+            }
+            alt="No hay imagen"
+            className="w-full h-40 object-container object-center rounded-t-md"
+          />
+          <IconButton sx={{ color: "black" }}>
+            <label htmlFor="file">
+              <AiFillCamera />
+            </label>
+            <input
+              id="file"
+              type="file"
+              name="urlImage"
+              onChange={handleChange}
+              style={{ display: "none" }}
+            />
+          </IconButton>
+        </div>
         <TextField
           fullWidth
           sx={{ mt: 2 }}
@@ -135,12 +189,6 @@ const Perfil = () => {
     </Modales>
   );
 
-  const getInitial = (name) => {
-    const names = name.split(" ");
-    const initials = names[0].substring(0, 1).toUpperCase();
-    return initials;
-  };
-
   return (
     <div className="w-full p-3">
       <ToastContainer />
@@ -156,25 +204,22 @@ const Perfil = () => {
           }}
         />
         <div className="relative bottom-24">
-          <Avatar
-            sx={{
-              fontWeight: "500",
-              bgcolor: "#ba181b",
-              width: 170,
-              height: 170,
-            }}
-          >
-            <p className="text-[3rem]">{getInitial(nameUser)}</p>
-          </Avatar>
-          {/* <img
-            src={imgperfil}
-            alt="Imagen perfil"
-            style={{
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-            className="w-48 h-48 border-4 border-black/20 rounded-full object-cover"
-          /> */}
+          {userData.urlImage ? (
+            <Avatar sx={{ width: 170, height: 170 }}>
+              <img src={userData.urlImage} alt="Imagen perfil" />
+            </Avatar>
+          ) : (
+            <Avatar
+              sx={{
+                fontWeight: "500",
+                bgcolor: "#ba181b",
+                width: 170,
+                height: 170,
+              }}
+            >
+              <p className="text-[3rem]">{getInitial(nameUser)}</p>
+            </Avatar>
+          )}
         </div>
       </div>
 

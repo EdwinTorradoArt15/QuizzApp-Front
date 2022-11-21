@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createRef } from "react";
 import { CardCategoria, Modales, Loader } from "../components";
 import { Modal, TextField, IconButton } from "@mui/material";
 import { Btn, BtnCancel } from "../components/Button";
@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import duart from "../img/duart.PNG";
 
 const Administrar = () => {
+  const ref = createRef();
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState({
     nombre: "",
@@ -30,7 +31,6 @@ const Administrar = () => {
   const getCategories = async () => {
     try {
       const response = await instance.get("/categories");
-      console.log(response.data.categorias);
       return setData(response.data.categorias);
     } catch (err) {
       setData([]);
@@ -73,7 +73,8 @@ const Administrar = () => {
   };
 
   const modalAgg = (
-    <Modales titulo={"Añadir categoria"}>
+    <Modales ref={ref}>
+      <h3 className="text-xl font-semibold mb-2">Crear categoria</h3>
       <form encType="multipart/form-data" onSubmit={postCategories}>
         <div className="flex flex-col items-center justify-center w-full bg-white border-2 border-azul-marino/60 rounded-lg">
           <img

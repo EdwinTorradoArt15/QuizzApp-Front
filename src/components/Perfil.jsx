@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { PERFIL } from '../routes/paths'
 import {
   Box,
   Avatar,
@@ -11,10 +12,11 @@ import {
 } from "@mui/material";
 import { BiLogOut } from "react-icons/bi";
 import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { instance } from "../api/api";
 
 const Perfil = () => {
+  const [userData, setUserData] = useState([]);
   const [name, setName] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const [token, setToken] = useState("");
@@ -22,7 +24,7 @@ const Perfil = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // decodedUser();
+    getUser();
     refreshToken();
   }, []);
 
@@ -43,9 +45,20 @@ const Perfil = () => {
     }
   };
 
+  const getUser = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+      const response = await instance.get(`/user/${decoded.userId}`);
+      setUserData(response.data.usuario);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const getInitial = (name) => {
-    const names = name.split(" ");
-    const initials = names[0].substring(0, 1).toUpperCase();
+    const names = name.split("");
+    const initials = names[0];
     return initials;
   };
 
@@ -73,16 +86,22 @@ const Perfil = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar
-              sx={{
-                fontWeight: "500",
-                bgcolor: "#ba181b",
-                width: 30,
-                height: 30,
-              }}
-            >
-              {getInitial(name)}
-            </Avatar>
+            {userData.urlImage ? (
+              <Avatar sx={{ width: 30, height: 30 }}>
+                <img src={userData.urlImage} alt="Imagen perfil" />
+              </Avatar>
+            ) : (
+              <Avatar
+                sx={{
+                  fontWeight: "500",
+                  bgcolor: "#ba181b",
+                  width: 30,
+                  height: 30,
+                }}
+              >
+                <p>{getInitial(name)}</p>
+              </Avatar>
+            )}
           </IconButton>
         </Tooltip>
       </Box>
@@ -121,21 +140,29 @@ const Perfil = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem sx={{ fontFamily: "Montserrat" }}>
-          <ListItemIcon>
-            <Avatar
-              sx={{
-                fontWeight: "500",
-                bgcolor: "#ba181b",
-                width: 30,
-                height: 30,
-              }}
-            >
-              {getInitial(name)}
-            </Avatar>
-          </ListItemIcon>
-          {name}
-        </MenuItem>
+        <NavLink to={PERFIL}>
+          <MenuItem sx={{ fontFamily: "Montserrat" }}>
+            <ListItemIcon>
+              {userData.urlImage ? (
+                <Avatar sx={{ width: 30, height: 30 }}>
+                  <img src={userData.urlImage} alt="Imagen perfil" />
+                </Avatar>
+              ) : (
+                <Avatar
+                  sx={{
+                    fontWeight: "500",
+                    bgcolor: "#ba181b",
+                    width: 30,
+                    height: 30,
+                  }}
+                >
+                  <p>{getInitial(name)}</p>
+                </Avatar>
+              )}
+            </ListItemIcon>
+            <p className="text-black">{name}</p>
+          </MenuItem>
+        </NavLink>
         <Divider />
         <MenuItem onClick={Logout} sx={{ fontFamily: "Montserrat" }}>
           <ListItemIcon>

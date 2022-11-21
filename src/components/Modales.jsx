@@ -1,3 +1,4 @@
+import {forwardRef} from 'react'
 import { Box } from "@mui/material";
 
 const style = {
@@ -12,13 +13,12 @@ const style = {
   p: 4,
 };
 
-const Modales = ({ children, titulo }) => {
-  return (
-    <Box sx={style}>
-      <h3 className="text-xl font-semibold">{titulo}</h3>
-      {children}
-    </Box>
-  );
-};
+const Modales = forwardRef((props, ref) => (
+  <Box sx={style} ref={ref} tabIndex={-1}>
+    {props.children}
+  </Box>
+))
+
+
 
 export default Modales;
