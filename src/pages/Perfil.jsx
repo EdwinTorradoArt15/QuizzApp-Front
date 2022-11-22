@@ -22,6 +22,7 @@ const Perfil = () => {
   const [cuestionario, setCuestionario] = useState([]);
   const [nameUser, setNameUser] = useState("");
   const [image, setImg] = useState({ preview: "", data: "" });
+  const [imagePortada, setImagePortada] = useState({ preview: "", data: "" });
   const [modalUpdate, setModalUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -45,6 +46,14 @@ const Perfil = () => {
       data: e.target.files[0],
     };
     setImg(img);
+  };
+
+  const handleChangePortada = (e) => {
+    const imgPortada = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    };
+    setImagePortada(imgPortada);
   };
 
   const decodedUserName = () => {
@@ -86,27 +95,28 @@ const Perfil = () => {
       formData.append("usuario", userData.usuario);
       formData.append("nombre", userData.nombre);
       formData.append("correo", userData.correo);
-      formData.append("clave", image.clave);
-      formData.append("image", image.data);
+      formData.append("clave", userData.clave);
+      formData.append("urlPortada", imagePortada.data);
+      formData.append("urlImage", image.data);
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
       const response = await instance.put(
         `/users/update/${decoded.userId}`,
         formData
       );
-      toast.success(response.data.message);
+      toast.success(response.data.msg);
       setLoading(false);
       setModalUpdate(false);
     } catch (err) {
-      console.log("Error de la respuesta updateUser -> ", err);
+      toast.error(err.response.data.msg);
       setLoading(false);
     }
   };
 
   const getInitial = (name) => {
-    const names = name.split('');
-    const initials = names[0]
-    return initials; 
+    const names = name.split("");
+    const initials = names[0];
+    return initials;
   };
 
   const abrirCerrarModalAgregar = () => {
@@ -117,7 +127,32 @@ const Perfil = () => {
     <Modales ref={ref}>
       <h3 className="text-xl font-semibold mb-2">Actualizar perfil</h3>
       <form encType="multipart/form-data" onSubmit={updateUser}>
-        <div className="flex flex-col items-center justify-center w-full bg-white border-2 border-azul-marino/60 rounded-lg">
+        {/* Foto portada */}
+        <div className="flex flex-col items-center justify-center my-2">
+          <img
+            src={
+              imagePortada.preview
+                ? imagePortada.preview
+                : "https://i.ibb.co/7bQQYkX/undraw-profile-pic.png"
+            }
+            alt="No hay imagen"
+            className="w-full h-40 object-container object-center rounded-lg"
+          />
+          <IconButton sx={{ color: "black" }}>
+            <label htmlFor="filePortada">
+              <AiFillCamera />
+            </label>
+            <input
+              id="filePortada"
+              type="file"
+              name="urlImage"
+              onChange={handleChangePortada}
+              style={{ display: "none" }}
+            />
+          </IconButton>
+        </div>
+        {/* Foto perfil */}
+        <div className="flex flex-col items-center justify-center">
           <img
             src={
               image.preview
@@ -125,7 +160,7 @@ const Perfil = () => {
                 : "https://i.ibb.co/7bQQYkX/undraw-profile-pic.png"
             }
             alt="No hay imagen"
-            className="w-full h-40 object-container object-center rounded-t-md"
+            className="w-40 h-40 object-container object-center rounded-full"
           />
           <IconButton sx={{ color: "black" }}>
             <label htmlFor="file">
@@ -194,15 +229,27 @@ const Perfil = () => {
       <ToastContainer />
       {/* Banner */}
       <div className="banner">
-        <img
-          src="https://picsum.photos/1000/700"
-          alt="Imagen banner"
-          className="w-full h-52 rounded-md object-cover"
-          style={{
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
+        {userData.urlPortada ? (
+          <img
+            className="w-full h-52 rounded-md object-cover"
+            style={{
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+            src={userData.urlPortada}
+            alt="Imagen portada"
+          />
+        ) : (
+          <img
+            src="https://picsum.photos/1000/700"
+            alt=""
+            className="w-full h-52 rounded-md object-cover"
+            style={{
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+        )}
         <div className="relative bottom-24">
           {userData.urlImage ? (
             <Avatar sx={{ width: 170, height: 170 }}>
