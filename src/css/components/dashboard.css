@@ -50,19 +50,6 @@ main {
   overflow: hidden;
   height: 100%;
 }
-.nav-link {
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  gap: 1.7rem;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem;
-  border-radius: 0.5rem;
-  position: relative;
-  color: #fff;
-  transition: 0.3s;
-  margin-top: 1rem;
-}
 .nav-logo {
   display: flex;
   align-items: center;
@@ -74,15 +61,6 @@ main {
   width: 10rem;
   color: #fff;
   cursor: pointer;
-}
-.nav-link:hover {
-  color: #3a53ee;
-  background-color: #fff;
-}
-.active {
-  color: #3a53ee;
-  font-weight: 600;
-  background-color: #fff;
 }
 
 .show {

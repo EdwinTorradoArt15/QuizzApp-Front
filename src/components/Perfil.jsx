@@ -140,7 +140,7 @@ const Perfil = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <NavLink to={PERFIL}>
+        <NavLink to='/dashboard/perfil'>
           <MenuItem sx={{ fontFamily: "Montserrat" }}>
             <ListItemIcon>
               {userData.urlImage ? (
@@ -160,7 +160,7 @@ const Perfil = () => {
                 </Avatar>
               )}
             </ListItemIcon>
-            <p className="text-black">{name}</p>
+            <p className="text-black dark:text-white">{name}</p>
           </MenuItem>
         </NavLink>
         <Divider />

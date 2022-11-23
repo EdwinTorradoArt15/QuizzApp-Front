@@ -24,24 +24,26 @@ const Dashboard = () => {
     const { activeMenu } = useStateContext();
 
     return (
-        <main className={activeMenu ? "space-toggle" : null}>
-            <Navbar />
-            <aside className={`sidebar ${activeMenu ? "show" : null}`}>
-                <Sidebar />
-            </aside>
-            <Routes>
-                <Route path={INDEX} element={<Inicio />} />
-                <Route path={INICIO} element={<Inicio />} />
-                <Route path={CUESTIONARIOS} element={<Cuestionarios />} />
-                <Route
-                    path={CREAR_CUESTIONARIO}
-                    element={<CrearCuestionario />}
-                ></Route>
-                <Route path={COMPLETADOS} element={<Completados />} />
-                <Route path={PERFIL} element={<Perfil />} />
-                <Route path={ADMINISTRAR} element={<Administrar />} />
-            </Routes>
-        </main>
+        <div className="dark:bg-[#191919]/95">
+            <main className={activeMenu ? "space-toggle" : null}>
+                <Navbar />
+                <aside className={`sidebar dark:bg-black ${activeMenu ? "show" : null}`}>
+                    <Sidebar />
+                </aside>
+                <Routes>
+                    <Route path={INDEX} element={<Inicio />} />
+                    <Route path={INICIO} element={<Inicio />} />
+                    <Route path={CUESTIONARIOS} element={<Cuestionarios />} />
+                    <Route
+                        path={CREAR_CUESTIONARIO}
+                        element={<CrearCuestionario />}
+                    ></Route>
+                    <Route path={COMPLETADOS} element={<Completados />} />
+                    <Route path={PERFIL} element={<Perfil />} />
+                    <Route path={ADMINISTRAR} element={<Administrar />} />
+                </Routes>
+            </main>
+        </div>
     );
 };
 

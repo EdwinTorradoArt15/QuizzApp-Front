@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../api/api";
-import {Loader} from "../components";
+import { Loader } from "../components";
 import { toast, ToastContainer } from "react-toastify";
 import jwt_decode from "jwt-decode";
 
@@ -130,19 +130,21 @@ const CrearCuestionario = () => {
   };
 
   return (
-    <div className="w-full p-3">
+    <div className="w-full min-h-screen p-3">
       {/* Header */}
       <ToastContainer />
       {ocultarDescripcion && (
         <form onSubmit={handleSubmit(postCuestionario)}>
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-col portatil:flex-row gap-2 items-start">
             <div className="flex flex-col gap-1">
-              <label className="font-medium">Nombre del cuestionario</label>
+              <label className="font-medium text-base movilM:text-lg dark:text-white">
+                Nombre del cuestionario
+              </label>
               <input
                 {...register("nomCuest", { required: true })}
                 type="text"
                 placeholder="Nombre"
-                className={`border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96 ${
+                className={`border-2 border-bright-blue/20 placeholder:text-sm focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-64 movilM:w-80 tableta:w-96 ${
                   errors.nomCuest &&
                   "border-rosa-rojo focus-within:border-rosa-rojo"
                 }`}
@@ -156,47 +158,53 @@ const CrearCuestionario = () => {
               </p>
             </div>
             {/* Select categorias */}
-            <div className="flex flex-col gap-1">
-              <label className="font-medium">Categorías</label>
-              <select
-                {...register("idCategoria", { required: true })}
-                className="bg-bright-blue rounded-md font-semibold focus:outline-none text-white p-3"
-              >
-                {categorias.map((categoria) => (
-                  <option
-                    className="text-black bg-white"
-                    key={categoria.id}
-                    value={categoria.id}
-                  >
-                    {categoria.nombre}
+            <div className="flex gap-3 mt-1 portatil:mt-0">
+              <div className="flex flex-col gap-1">
+                <label className="font-medium dark:text-white text-base movilM:text-lg">
+                  Categorías
+                </label>
+                <select
+                  {...register("idCategoria", { required: true })}
+                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-3"
+                >
+                  {categorias.map((categoria) => (
+                    <option
+                      className="text-black bg-white"
+                      key={categoria.id}
+                      value={categoria.id}
+                    >
+                      {categoria.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="font-medium dark:text-white text-base movilM:text-lg">
+                  Tiempo
+                </label>
+                <select
+                  {...register("tiempoTotal", { required: true })}
+                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-3"
+                >
+                  <option value="20" className="text-black bg-white">
+                    20 segundos
                   </option>
-                ))}
-              </select>
+                  <option value="30" className="text-black bg-white">
+                    30 segundos
+                  </option>
+                  <option value="40" className="text-black bg-white">
+                    40 segundos
+                  </option>
+                  <option value="60" className="text-black bg-white">
+                    60 segundos
+                  </option>
+                </select>
+              </div>
             </div>
             {/* Select tiempo */}
-            <div className="flex flex-col gap-1">
-              <label className="font-medium">Tiempo</label>
-              <select
-                {...register("tiempoTotal", { required: true })}
-                className="bg-bright-blue rounded-md font-semibold focus:outline-none text-white p-3"
-              >
-                <option value="20" className="text-black bg-white">
-                  20 segundos
-                </option>
-                <option value="30" className="text-black bg-white">
-                  30 segundos
-                </option>
-                <option value="40" className="text-black bg-white">
-                  40 segundos
-                </option>
-                <option value="60" className="text-black bg-white">
-                  60 segundos
-                </option>
-              </select>
-            </div>
           </div>
           <button
-            className="btn-cuestionario p-2 font-medium rounded-md mt-3"
+            className="btn-cuestionario p-2 font-medium rounded-md mt-3 text-sm movilM:text-base"
             type="submit"
             disabled={loading ? true : false}
           >
@@ -205,24 +213,10 @@ const CrearCuestionario = () => {
         </form>
       )}
 
-      {/* Banner cuestionario */}
-      {/* <div className="w-full h-48 mt-6">
-        <img
-          src={banner}
-          alt="Imagen banner"
-          className="w-full h-48 rounded-md object-cover"
-          style={{
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-      </div> */}
-
       {/* Preguntas */}
       {mostrarPregunta && (
         <form className="mt-6" onSubmit={handleSubmit(enviarPreguntas)}>
-          <h1 className="text-center font-medium text-xl">
-            {" "}
+          <h1 className="text-center dark:text-white font-medium text-base movilM:text-lg">
             {getValues("nombreCuestionario")}
           </h1>
           {fields.map(
@@ -230,14 +224,14 @@ const CrearCuestionario = () => {
               return (
                 <div key={id}>
                   <div className="flex items-center gap-2 my-6">
-                    <label className="text-bright-blue font-bold text-xl">
+                    <label className="text-bright-blue dark:text-white font-bold text-base movilM:text-lg">
                       {index + 1}
                     </label>
                     <input
                       {...register(`preguntas.${index}.nombre`)}
                       defaultValue={nombre}
                       placeholder="Pregunta"
-                      className="border-2 border-bright-blue/20 focus:within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-96"
+                      className="border-2 border-bright-blue/20 placeholder:text-xs movilM:placeholder:text-sm focus:within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-64 movilM:w-80 tableta:w-96"
                     />
                   </div>
                   <div className="flex justify-center items-center my-4">
@@ -256,7 +250,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r1`)}
                             placeholder="Respuesta 1"
                             type="text"
-                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-28 movilM:w-32 tableta:w-56 portatil:w-96 placeholder-gray-500 placeholder:text-xs movilM:placeholder:text-sm text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -274,7 +268,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r2`)}
                             placeholder="Respuesta 2"
                             type="text"
-                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-28 movilM:w-32 tableta:w-56 portatil:w-96 placeholder-gray-500 placeholder:text-xs movilM:placeholder:text-sm text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -292,7 +286,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r3`)}
                             placeholder="Respuesta 3"
                             type="text"
-                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-28 movilM:w-32 tableta:w-56 portatil:w-96 placeholder-gray-500 placeholder:text-xs movilM:placeholder:text-sm text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -310,7 +304,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r4`)}
                             placeholder="Respuesta 4"
                             type="text"
-                            className="p-2 w-96 placeholder-gray-500 text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-28 movilM:w-32 tableta:w-56 portatil:w-96 placeholder-gray-500 placeholder:text-xs movilM:placeholder:text-sm text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
@@ -320,7 +314,7 @@ const CrearCuestionario = () => {
                     <button
                       type="button"
                       onClick={() => remove(index)}
-                      className="btn-cuestionario rounded-lg font-medium text-base p-2"
+                      className="btn-cuestionario rounded-lg font-medium text-sm movilM:text-base p-2"
                     >
                       Delete
                     </button>
@@ -331,7 +325,7 @@ const CrearCuestionario = () => {
           )}
           <div className="flex flex-col w-max gap-7">
             <button
-              className="btn-cuestionario rounded-lg font-medium text-base p-2"
+              className="btn-cuestionario rounded-lg font-medium text-sm movilM:text-base p-2"
               type="button"
               onClick={() =>
                 append({
@@ -347,7 +341,7 @@ const CrearCuestionario = () => {
             </button>
             <button
               type="submit"
-              className="btn-cuestionario rounded-lg font-medium text-base p-2"
+              className="btn-cuestionario rounded-lg font-medium text-sm movilM:text-base p-2"
             >
               {loading ? <Loader /> : "Enviar"}
             </button>

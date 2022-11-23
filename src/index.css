@@ -12,29 +12,23 @@
 @tailwind utilities;
 
 @layer components {
-  .error-message {
-    @apply bg-red-100 border-l-4 border-red-500 text-red-700
-        text-sm md:text-xs rounded-r-md p-1 mt-1 font-semibold;
-  }
-  .confirm-message {
-    @apply bg-green-100 border-l-4 border-green-500 text-green-700
-        text-sm md:text-xs rounded-r-md p-1 mt-1 font-semibold;
-  }
   .card {
     @apply bg-black
-        w-72 min-h-[10rem]
+        w-60 min-h-[10rem]
         flex items-center justify-center
         drop-shadow-3xl rounded-md overflow-hidden
+        /* Responsive */
+        movilM:w-64 movilL:w-72 tableta:w-80
   }
   .cardCuestionarios {
     @apply
       bg-white
-        w-80 min-h-[10rem]
+        w-72 min-h-[10rem]
         rounded-md overflow-hidden
         drop-shadow-3xl
 
         /* Responsive */
-        /* 2xl:w-96 md:w-72; */
+        movilL:w-80 tableta:w-80
   }
   .card-header {
     @apply px-1.5 py-2;
@@ -46,5 +40,16 @@
   .banner{
     @apply
     w-full h-52 flex flex-col items-center
+  }
+
+  .btn-cuestionario{
+    @apply
+    bg-bright-blue dark:bg-black text-white 
+    cursor-pointer 
+    border-2 border-bright-blue dark:border-black/20
+    transition duration-500
+
+    /* Hover */
+    hover:bg-white dark:hover:bg-white hover:text-bright-blue dark:hover:text-black
   }
 }

@@ -225,7 +225,7 @@ const Perfil = () => {
   );
 
   return (
-    <div className="w-full p-3">
+    <div className="w-full min-h-screen p-3">
       <ToastContainer />
       {/* Banner */}
       <div className="banner">
@@ -250,11 +250,13 @@ const Perfil = () => {
             }}
           />
         )}
-        <div className="relative bottom-24">
+        <div className="relative bottom-20 movilL:bottom-24">
           {userData.urlImage ? (
-            <Avatar sx={{ width: 170, height: 170 }}>
-              <img src={userData.urlImage} alt="Imagen perfil" />
-            </Avatar>
+            <img
+              className="w-32 h-32 movilL:w-36 movilL:h-36 object-cover object-center rounded-full"
+              src={userData.urlImage}
+              alt="Imagen perfil"
+            />
           ) : (
             <Avatar
               sx={{
@@ -271,8 +273,8 @@ const Perfil = () => {
       </div>
 
       {/* Rating */}
-      <div className="flex items-center justify-center mt-24">
-        <span className="bg-lime-green text-white px-2 rounded-md font-medium">
+      <div className="flex items-center justify-center mt-1 movilM:mt-7 movilL:mt-14">
+        <span className="bg-lime-green text-white px-2 rounded-md font-medium text-sm">
           5.0
         </span>
         <Stack spacing={1}>
@@ -287,12 +289,14 @@ const Perfil = () => {
 
       {/* Info usuario */}
       <div className="mt-1 flex flex-col items-center">
-        <p className="font-bold text-xl">{userData.nombre}</p>
-        <p className="font-medium text-base text-black/50">UX/UI - Front-End</p>
+        <p className="font-bold dark:text-white text-base movilM:text-lg">{userData.nombre}</p>
+        <p className="font-medium text-xs movilM:text-sm text-black/50 dark:text-white">
+          UX/UI - Front-End
+        </p>
         <div className="flex justify-center pt-2">
           <button
             onClick={() => abrirCerrarModalAgregar()}
-            className="flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-1 text-base"
+            className="flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-1 text-sm movilM:text-base"
           >
             Editar perfil <FaPen size={13} />
           </button>
@@ -301,20 +305,22 @@ const Perfil = () => {
 
       {/* Botones informacion */}
       <div className="flex gap-3 justify-center mt-5">
-        <button className="flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-1 text-base">
+        <button className="flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-1 text-sm movilM:text-base">
           Seguir <FaPlus size={13} />
         </button>
-        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-1 text-base">
+        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-1 text-sm movilM:text-base">
           160K seguidores
         </button>
-        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-1 text-base">
+        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-1 text-sm movilM:text-base">
           200K seguidos
         </button>
       </div>
 
       {/* Creados recientemente */}
       <div className="mt-7">
-        <h1 className="font-bold text-2xl ">Creados recientemente</h1>
+        <h1 className="font-bold text-xl dark:text-white">
+          Creados recientemente
+        </h1>
         <div className="flex flex-wrap mt-7 justify-center gap-6 items-center">
           {cuestionario.slice(0, 4).map((cuest) => (
             <CardCuestionarios

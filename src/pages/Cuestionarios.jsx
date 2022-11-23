@@ -4,7 +4,6 @@ import { BiSearchAlt } from "react-icons/bi";
 import { instance } from "../api/api";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import "../css/pages/cuestionarios.css";
 
 const Cuestionarios = () => {
   const [search, setSearch] = useState("");
@@ -40,7 +39,7 @@ const Cuestionarios = () => {
   };
 
   return (
-    <div className="w-full p-3">
+    <div className="w-full min-h-screen p-3">
       {/* Barra busqueda */}
       <form className="mt-5">
         <div className="flex justify-between">
@@ -52,10 +51,10 @@ const Cuestionarios = () => {
               onChange={(event) => {
                 setSearch(event.target.value);
               }}
-              className="px-3 py-2 placeholder-gray-500 text-black rounded-l-lg border-2 border-bright-blue/20 focus-within:border-bright-blue  focus:outline-none"
+              className="px-2 movilM:px-2.5 py-1 movilM:py-2 placeholder-gray-500 text-black rounded-l-lg border-2 border-bright-blue/20 focus-within:border-bright-blue dark:focus-within:border-white focus:outline-none"
             />
             <div className="inline-flex">
-              <button className="btn-cuestionario px-3 rounded-r-lg">
+              <button className="btn-cuestionario px-2 movilM:px-2.5 rounded-r-lg">
                 <BiSearchAlt size={20} />
               </button>
             </div>
@@ -66,7 +65,7 @@ const Cuestionarios = () => {
       <div className="mt-7">
         <Link
           to={"/dashboard/cuestionarios/crear_cuestionarios"}
-          className="btn-cuestionario font-medium px-3 py-2 text-base rounded-lg"
+          className="btn-cuestionario font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
         >
           Crear cuestionario
         </Link>
@@ -75,7 +74,7 @@ const Cuestionarios = () => {
         <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
           {filterData().length === 0 ? (
             <div className="text-center">
-              <h1 className="text-xl font-medium">No hay cuestionarios</h1>
+              <p className="dark:text-white">Categoria inexistente</p>
             </div>
           ) : (
             filterData().map((categoria) => (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Buscador, CardCategoria } from "../components";
+import {  CardCategoria } from "../components";
 import { BiSearchAlt } from "react-icons/bi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { instance } from "../api/api";
@@ -50,7 +50,7 @@ const Inicio = () => {
   };
 
   return (
-    <div className="w-full h-screen p-3">
+    <div className="w-full min-h-screen 2xl:h-screen portatil:h-full p-3">
       {/* Barra de busqueda */}
       <form className="mt-5">
         <div className="flex justify-between">
@@ -60,10 +60,10 @@ const Inicio = () => {
               placeholder="Busqueda"
               value={search}
               onChange={handleSearch}
-              className="px-3 py-2 placeholder-gray-500 text-black rounded-l-lg border-2 border-bright-blue/20 focus-within:border-bright-blue  focus:outline-none"
+              className="px-2 py-1 movilM:px-2.5 movilM:py-2 placeholder-gray-500 text-black rounded-l-lg border-2 border-bright-blue/20 dark:border-black/20 focus-within:border-bright-blue dark:focus-within:border-white focus:outline-none"
             />
             <div className="inline-flex">
-              <button className="btn-cuestionario px-3 rounded-r-lg">
+              <button className="btn-cuestionario px-2 movilM:px-2.5 rounded-r-lg">
                 <BiSearchAlt size={20} />
               </button>
             </div>
@@ -71,10 +71,10 @@ const Inicio = () => {
         </div>
       </form>
 
-      <h1 className="my-7 font-bold text-2xl">Elige una categoria</h1>
+      <h1 className="my-7 dark:text-white font-bold text-xl">Elige una categoria</h1>
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
         {filterData().length === 0
-          ? "No se encontraron resultados"
+          ? <p className="dark:text-white">Categoria inexistente</p>
           : filterData().map((item) => (
               <CardCategoria
                 key={item.id}

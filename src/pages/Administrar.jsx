@@ -128,10 +128,10 @@ const Administrar = () => {
   );
 
   return (
-    <div className="w-full p-3">
+    <div className="w-full min-h-screen p-3">
       <ToastContainer />
       <div className="mt-8">
-        <Btn onClick={() => abrirCerrarModalAgregar()}>Añadir categoria</Btn>
+        <button className="btn-cuestionario font-medium px-3 py-2 text-sm movilM:text-base rounded-lg" onClick={() => abrirCerrarModalAgregar()}>Añadir categoria</button>
       </div>
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
         {data.map((cat) => (

@@ -1,8 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        'movilM': '375px',
+        'movilL': '425px',
+        'tableta': '768px',
+        'portatil': '1024px',
+        'portatilL': '1440px',
+        'monitor': '2560px'
+      },
       fontSize: {
         14: '14px',
       },
