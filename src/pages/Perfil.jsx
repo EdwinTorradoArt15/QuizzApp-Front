@@ -1,13 +1,13 @@
-import { useState, useEffect, createRef } from "react";
+import { useState, useEffect, createRef, Fragment } from "react";
 import {
   Avatar,
-  Modal,
+  // Modal,
   TextField,
   Rating,
   Stack,
   IconButton,
 } from "@mui/material";
-import { CardCuestionarios, Loader, Modales } from "../components";
+import { CardCuestionarios, Loader, Modales, Modal } from "../components";
 import { Btn, BtnCancel } from "../components/Button";
 import { instance } from "../api/api";
 import { FaPen, FaPlus } from "react-icons/fa";
@@ -17,13 +17,12 @@ import jwt_decode from "jwt-decode";
 import { AiFillCamera } from "react-icons/ai";
 
 const Perfil = () => {
-  const ref = createRef();
   const [userData, setUserData] = useState([]);
   const [cuestionario, setCuestionario] = useState([]);
   const [nameUser, setNameUser] = useState("");
   const [image, setImg] = useState({ preview: "", data: "" });
   const [imagePortada, setImagePortada] = useState({ preview: "", data: "" });
-  const [modalUpdate, setModalUpdate] = useState(false);
+  let [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,6 +30,10 @@ const Perfil = () => {
     getCuestionaries();
     getUser();
   }, []);
+
+  const handleDesactivate = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleTarget = (e) => {
     const { name, value } = e.target;
@@ -106,7 +109,7 @@ const Perfil = () => {
       );
       toast.success(response.data.msg);
       setLoading(false);
-      setModalUpdate(false);
+      setIsOpen(false);
     } catch (err) {
       toast.error(err.response.data.msg);
       setLoading(false);
@@ -118,111 +121,6 @@ const Perfil = () => {
     const initials = names[0];
     return initials;
   };
-
-  const abrirCerrarModalAgregar = () => {
-    setModalUpdate(!modalUpdate);
-  };
-
-  const bodyModalUpdate = (
-    <Modales ref={ref}>
-      <h3 className="text-xl font-semibold mb-2">Actualizar perfil</h3>
-      <form encType="multipart/form-data" onSubmit={updateUser}>
-        {/* Foto portada */}
-        <div className="flex flex-col items-center justify-center my-2">
-          <img
-            src={
-              imagePortada.preview
-                ? imagePortada.preview
-                : "https://i.ibb.co/7bQQYkX/undraw-profile-pic.png"
-            }
-            alt="No hay imagen"
-            className="w-full h-40 object-container object-center rounded-lg"
-          />
-          <IconButton sx={{ color: "black" }}>
-            <label htmlFor="filePortada">
-              <AiFillCamera />
-            </label>
-            <input
-              id="filePortada"
-              type="file"
-              name="urlImage"
-              onChange={handleChangePortada}
-              style={{ display: "none" }}
-            />
-          </IconButton>
-        </div>
-        {/* Foto perfil */}
-        <div className="flex flex-col items-center justify-center">
-          <img
-            src={
-              image.preview
-                ? image.preview
-                : "https://i.ibb.co/7bQQYkX/undraw-profile-pic.png"
-            }
-            alt="No hay imagen"
-            className="w-40 h-40 object-container object-center rounded-full"
-          />
-          <IconButton sx={{ color: "black" }}>
-            <label htmlFor="file">
-              <AiFillCamera />
-            </label>
-            <input
-              id="file"
-              type="file"
-              name="urlImage"
-              onChange={handleChange}
-              style={{ display: "none" }}
-            />
-          </IconButton>
-        </div>
-        <TextField
-          fullWidth
-          sx={{ mt: 2 }}
-          label="usuario"
-          type="text"
-          name="usuario"
-          onChange={handleTarget}
-          defaultValue={userData.usuario}
-        />
-        <TextField
-          fullWidth
-          sx={{ my: 2 }}
-          label="Nombre"
-          name="nombre"
-          type="text"
-          onChange={handleTarget}
-          defaultValue={userData.nombre}
-        />
-        <TextField
-          fullWidth
-          label="Correo"
-          type="text"
-          name="correo"
-          onChange={handleTarget}
-          defaultValue={userData.correo}
-        />
-        <TextField
-          fullWidth
-          sx={{ my: 2 }}
-          type="password"
-          label="Contraseña"
-          onChange={handleTarget}
-          name="clave"
-        />
-        <div className="flex gap-3">
-          <Btn type="submit" className="btn">
-            {loading ? <Loader /> : "Editar"}
-          </Btn>
-          <BtnCancel
-            className="btnCancel"
-            onClick={() => abrirCerrarModalAgregar()}
-          >
-            Cancelar
-          </BtnCancel>
-        </div>
-      </form>
-    </Modales>
-  );
 
   return (
     <div className="w-full min-h-screen p-3">
@@ -289,13 +187,15 @@ const Perfil = () => {
 
       {/* Info usuario */}
       <div className="mt-1 flex flex-col items-center">
-        <p className="font-bold dark:text-white text-base movilM:text-lg">{userData.nombre}</p>
+        <p className="font-bold dark:text-white text-base movilM:text-lg">
+          {userData.nombre}
+        </p>
         <p className="font-medium text-xs movilM:text-sm text-black/50 dark:text-white">
           UX/UI - Front-End
         </p>
         <div className="flex justify-center pt-2">
           <button
-            onClick={() => abrirCerrarModalAgregar()}
+            onClick={handleDesactivate}
             className="flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-1 text-sm movilM:text-base"
           >
             Editar perfil <FaPen size={13} />
@@ -332,8 +232,107 @@ const Perfil = () => {
           ))}
         </div>
       </div>
-      <Modal open={modalUpdate} onClose={abrirCerrarModalAgregar}>
-        {bodyModalUpdate}
+      <Modal
+        fragmento={Fragment}
+        titulo={"Añadir categoria"}
+        abrir={isOpen}
+        cerrar={handleDesactivate}
+      >
+        <form encType="multipart/form-data" onSubmit={updateUser}>
+          {/* Foto portada */}
+          <div className="flex flex-col items-center justify-center my-2">
+            <img
+              src={
+                imagePortada.preview
+                  ? imagePortada.preview
+                  : "https://i.ibb.co/7bQQYkX/undraw-profile-pic.png"
+              }
+              alt="No hay imagen"
+              className="w-full h-40 object-container object-center rounded-lg"
+            />
+            <IconButton sx={{ color: "black" }}>
+              <label htmlFor="filePortada">
+                <AiFillCamera />
+              </label>
+              <input
+                id="filePortada"
+                type="file"
+                name="urlImage"
+                onChange={handleChangePortada}
+                style={{ display: "none" }}
+              />
+            </IconButton>
+          </div>
+          {/* Foto perfil */}
+          <div className="flex flex-col items-center justify-center">
+            <img
+              src={
+                image.preview
+                  ? image.preview
+                  : "https://i.ibb.co/7bQQYkX/undraw-profile-pic.png"
+              }
+              alt="No hay imagen"
+              className="w-40 h-40 object-container object-center rounded-full"
+            />
+            <IconButton sx={{ color: "black" }}>
+              <label htmlFor="file">
+                <AiFillCamera />
+              </label>
+              <input
+                id="file"
+                type="file"
+                name="urlImage"
+                onChange={handleChange}
+                style={{ display: "none" }}
+              />
+            </IconButton>
+          </div>
+          <TextField
+            fullWidth
+            sx={{ mt: 2 }}
+            label="usuario"
+            type="text"
+            name="usuario"
+            onChange={handleTarget}
+            defaultValue={userData.usuario}
+          />
+          <TextField
+            fullWidth
+            sx={{ my: 2 }}
+            label="Nombre"
+            name="nombre"
+            type="text"
+            onChange={handleTarget}
+            defaultValue={userData.nombre}
+          />
+          <TextField
+            fullWidth
+            label="Correo"
+            type="text"
+            name="correo"
+            onChange={handleTarget}
+            defaultValue={userData.correo}
+          />
+          <TextField
+            fullWidth
+            sx={{ my: 2 }}
+            type="password"
+            label="Contraseña"
+            onChange={handleTarget}
+            name="clave"
+          />
+          <div className="flex gap-3">
+            <Btn type="submit" className="btn">
+              {loading ? <Loader /> : "Editar"}
+            </Btn>
+            <BtnCancel
+              className="btnCancel"
+              onClick={handleDesactivate}
+            >
+              Cancelar
+            </BtnCancel>
+          </div>
+        </form>
       </Modal>
     </div>
   );

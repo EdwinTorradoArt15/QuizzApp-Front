@@ -30,8 +30,7 @@ const CrearCuestionario = () => {
 
   const traerCuestionarios = async () => {
     try {
-      const response = await instance.get("/cuestionaries/preguntas");
-      console.log("Lista de cuestionarios:", response.data);
+      await instance.get("/cuestionaries/preguntas");
     } catch (error) {}
   };
   useEffect(() => {
@@ -126,7 +125,6 @@ const CrearCuestionario = () => {
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     setIdUser(decoded.userId);
-    console.log(decoded);
   };
 
   return (

@@ -74,7 +74,7 @@ const Cuestionarios = () => {
         <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
           {filterData().length === 0 ? (
             <div className="text-center">
-              <p className="dark:text-white">Categoria inexistente</p>
+              <p className="dark:text-white">No hay cuestionarios</p>
             </div>
           ) : (
             filterData().map((categoria) => (
