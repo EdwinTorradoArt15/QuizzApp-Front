@@ -1,0 +1,34 @@
+.card {
+  @apply bg-black
+        w-60 min-h-[10rem]
+        flex items-center justify-center
+        drop-shadow-3xl rounded-md overflow-hidden
+        /* Responsive */
+        movilM:w-64 movilL:w-72 tableta:w-80;
+}
+.cardCuestionarios {
+  @apply bg-white
+        w-72 min-h-[10rem]
+        rounded-md overflow-hidden
+        drop-shadow-3xl
+
+        /* Responsive */
+        movilL:w-80 tableta:w-80;
+}
+.card-header {
+  @apply px-1.5 py-2;
+}
+.container-img {
+  @apply w-full h-48;
+}
+
+.btn-cuestionario{
+  @apply
+  bg-bright-blue dark:bg-black text-white 
+  cursor-pointer 
+  border-2 border-bright-blue dark:border-black/20
+  transition duration-500
+
+  /* Hover */
+  hover:bg-white dark:hover:bg-white hover:text-bright-blue dark:hover:text-black
+}

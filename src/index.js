@@ -4,7 +4,7 @@ import App from './App';
 import { ContextProvider } from './context/ContextProvider';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from "@mui/material/styles";
-import './index.css';
+import './css/index.css';
 import {global} from './components/style'
 import axios from 'axios';
 axios.defaults.withCredentials = true;

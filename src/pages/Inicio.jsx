@@ -3,7 +3,6 @@ import {  CardCategoria } from "../components";
 import { BiSearchAlt } from "react-icons/bi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { instance } from "../api/api";
-import "../css/pages/Inicio.css";
 
 const Inicio = () => {
   const [noOfElement, setNoOfElement] = useState(5);

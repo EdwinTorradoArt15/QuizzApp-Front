@@ -1,0 +1,4 @@
+.banner{
+    @apply
+    w-full h-52 flex flex-col items-center
+  }

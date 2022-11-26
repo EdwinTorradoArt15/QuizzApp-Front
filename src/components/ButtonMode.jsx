@@ -17,7 +17,7 @@ const ButtonMode = () => {
                         className="hidden"
                         onClick={setMode}
                     />
-                    <Tooltip title="Modo oscuro">
+                    <Tooltip title="Modo oscuro" arrow>
                         <label htmlFor="dark" className="rounded-full bg-gray-500/20 p-1 cursor-pointer">
                             <FaMoon/>
                         </label>
@@ -33,7 +33,7 @@ const ButtonMode = () => {
                         className="hidden"
                         onClick={setMode}
                     />
-                    <Tooltip title="Modo claro">
+                    <Tooltip title="Modo claro" arrow>
                         <label htmlFor="light" className="rounded-full bg-gray-600/50 p-1 cursor-pointer">
                             <FaSun/>
                         </label>
