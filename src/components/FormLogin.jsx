@@ -2,20 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { instance } from "../api/api";
 import { toast, ToastContainer } from "react-toastify";
-import {
-  AiFillEye,
-  AiFillEyeInvisible,
-  AiFillGoogleCircle,
-} from "react-icons/ai";
-import {
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
-import { Btn } from "../components/Button";
+import { AiFillGoogleCircle } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from ".";
@@ -26,13 +13,8 @@ const FormLogin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const handleClickShowPassword = () => {
-    setShowPassword((showPassword) => !showPassword);
-  };
 
   const Login = async (data) => {
     try {
@@ -49,56 +31,60 @@ const FormLogin = () => {
   };
 
   return (
-    <div className="w-full h-100">
-      <h1 className="text-xl text-black md:text-2xl 2xl:text-2xl font-medium pb-2">
+    <div className="w-full overflow-auto scroll-smooth h-96 movilM:h-auto 2xl:h-auto">
+      <h1 className="text-xl text-black md:text-2xl 2xl:text-2xl font-semibold pb-2">
         Iniciar sesion
       </h1>
-      <p>Bienvenido a QuizzApp.</p>
+      <span>Bienvenido a QuizzApp.</span>
       <ToastContainer />
       <form className="mt-6" onSubmit={handleSubmit(Login)}>
-        <div>
-          <TextField
-            fullWidth
-            label="Correo"
+        <div className="flex flex-col">
+          <label
+            className={`block text-base font-medium ${
+              errors.correo && "text-rosa-rojo"
+            }`}
+          >
+            Correo
+          </label>
+          <input
             type="text"
+            placeholder="Correo"
             {...register("correo", {
               required: true,
             })}
-            error={errors.correo ? true : false}
+            className={`block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm ${
+              errors.correo &&
+              "focus:border-rosa-rojo focus:ring-rosa-rojo placeholder:text-rosa-rojo border-rosa-rojo"
+            }`}
           />
           <p>
             {errors.correo?.type === "required" && (
-              <span className="text-rosa-rojo">Este campo es requerido</span>
+              <span className="text-rosa-rojo text-sm font">
+                Este campo es requerido
+              </span>
             )}
           </p>
         </div>
 
-        <div className="mt-4">
-          <FormControl fullWidth>
-            <InputLabel error={errors.clave ? true : false}>
-              Contraseña
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              {...register("clave", {
-                required: true,
-              })}
-              error={errors.clave ? true : false}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
+        <div className="mt-4 flex flex-col">
+          <label
+            className={`block text-base font-medium ${
+              errors.clave && "text-rosa-rojo"
+            }`}
+          >
+            Contraseña
+          </label>
+          <input
+            placeholder="Contraseña"
+            type="password"
+            {...register("clave", {
+              required: true,
+            })}
+            className={`block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm ${
+              errors.correo &&
+              "focus:border-rosa-rojo focus:ring-rosa-rojo placeholder:text-rosa-rojo border-rosa-rojo"
+            }`}
+          />
           <p>
             {errors.clave?.type === "required" && (
               <span className="text-rosa-rojo">Este campo es requerido</span>
@@ -107,23 +93,27 @@ const FormLogin = () => {
         </div>
 
         <div className="flex items-center justify-end pt-2">
-          <p className="text-base font-medium text-gray-700 hover:text-bright-blue focus:text-bright-blue cursor-pointer">
+          <p className="text-sm font-medium text-gray-700 hover:text-bright-blue focus:text-bright-blue cursor-pointer">
             ¿Olvidaste tu contraseña?
           </p>
         </div>
-        <Btn type="submit" fullWidth sx={{ mt: 2 }}>
+        <button
+          className="w-full p-2 mt-2 font-semibold rounded-md bg-bright-blue text-white cursor-pointer border-2 border-bright-blue transition duration-500 hover:bg-white hover:text-bright-blue"
+          type="submit"
+        >
           {loading ? <Loader /> : "Iniciar sesión"}
-        </Btn>
+        </button>
       </form>
       <hr className="my-6 border-gray-300 w-full" />
-      <Btn type="button" fullWidth>
-        <div className="flex items-center justify-center ">
-          <AiFillGoogleCircle className="text-lg md:text-base" />
-          <span className="ml-4 text-14 2xl:text-lg md:text-base">
-            Inicia sesion con Google
-          </span>
+      <button
+        type="submit"
+        className="w-full p-2 mt-2 font-semibold rounded-md bg-bright-blue text-white cursor-pointer border-2 border-bright-blue transition duration-500 hover:bg-white hover:text-bright-blue"
+      >
+        <div className="flex items-center gap-2 justify-center ">
+          <AiFillGoogleCircle />
+          <span>Inicia sesion con Google</span>
         </div>
-      </Btn>
+      </button>
       <p className="mt-5 text-base">
         Necesitas una cuenta?
         <Link

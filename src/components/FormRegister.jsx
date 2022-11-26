@@ -1,19 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-import { Btn } from "../components/Button";
 import { useForm } from "react-hook-form";
 import { instance } from "../api/api";
-import {Loader} from ".";
+import { Loader } from ".";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormRegister = () => {
@@ -22,13 +12,8 @@ const FormRegister = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  const handleClickShowPassword = () => {
-    setShowPassword((showPassword) => !showPassword);
-  };
 
   const registerUser = async (data) => {
     try {
@@ -49,22 +34,31 @@ const FormRegister = () => {
   // console.log('Estos son los errores',err)
 
   return (
-    <div className="w-full h-100">
+    <div className="w-full overflow-auto scroll-smooth h-96 movilM:h-auto 2xl:h-auto">
       <h1 className="text-xl md:text-xl 2xl:text-2xl font-medium">
         Registra tu cuenta
       </h1>
       <form className="mt-6" onSubmit={handleSubmit(registerUser)}>
         <ToastContainer />
-        <div>
-          <TextField
-            fullWidth
-            label="Usuario"
+
+        {/* Usuario */}
+        <div className="flex flex-col">
+          <label
+            className={`block text-base font-medium ${errors.usuario && "text-rosa-rojo"
+              }`}
+          >
+            Usuario
+          </label>
+          <input
             type="text"
+            placeholder="Usuario"
             {...register("usuario", {
               required: true,
               maxLength: 20,
             })}
-            error={errors.usuario ? true : false}
+            className={`block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm ${errors.usuario &&
+              "focus:border-rosa-rojo focus:ring-rosa-rojo placeholder:text-rosa-rojo border-rosa-rojo"
+              }`}
           />
           <p>
             {errors.usuario?.type === "required" && (
@@ -78,15 +72,23 @@ const FormRegister = () => {
           </p>
         </div>
 
-        <div className="mt-4">
-          <TextField
-            fullWidth
-            label="Nombre"
+        {/* Nombre */}
+        <div className="mt-4 flex flex-col">
+          <label
+            className={`block text-base font-medium ${errors.nombre && "text-rosa-rojo"
+              }`}
+          >
+            Nombre
+          </label>
+          <input
             type="text"
+            placeholder="Nombre"
             {...register("nombre", {
               required: true,
             })}
-            error={errors.nombre ? true : false}
+            className={`block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm ${errors.nombre &&
+              "focus:border-rosa-rojo focus:ring-rosa-rojo placeholder:text-rosa-rojo border-rosa-rojo"
+              }`}
           />
           <p>
             {errors.nombre?.type === "required" && (
@@ -95,16 +97,24 @@ const FormRegister = () => {
           </p>
         </div>
 
+        {/* Correo */}
         <div className="mt-4">
-          <TextField
-            fullWidth
-            label="Correo"
+          <label
+            className={`block text-base font-medium ${errors.correo && "text-rosa-rojo"
+              }`}
+          >
+            Correo
+          </label>
+          <input
             type="text"
+            placeholder="Correo"
             {...register("correo", {
               required: true,
               pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
             })}
-            error={errors.correo ? true : false}
+            className={`block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm ${errors.correo &&
+              "focus:border-rosa-rojo focus:ring-rosa-rojo placeholder:text-rosa-rojo border-rosa-rojo"
+              }`}
           />
           <p>
             {errors.correo?.type === "required" && (
@@ -116,32 +126,25 @@ const FormRegister = () => {
           </p>
         </div>
 
-        <div className="mt-4">
-          <FormControl fullWidth>
-            <InputLabel error={errors.clave ? true : false}>
-              Contraseña
-            </InputLabel>
-            <OutlinedInput
-              id="clave"
-              type={showPassword ? "text" : "password"}
-              {...register("clave", {
-                required: true,
-              })}
-              error={errors.clave ? true : false}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
+        {/* Contrasenia */}
+        <div className="mt-4 flex flex-col">
+          <label
+            className={`block text-base font-medium ${errors.clave && "text-rosa-rojo"
+              }`}
+          >
+            Contraseña
+          </label>
+          <input
+            id="clave"
+            placeholder="Contraseña"
+            type="password"
+            {...register("clave", {
+              required: true,
+            })}
+            className={`block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm ${errors.clave &&
+              "focus:border-rosa-rojo focus:ring-rosa-rojo placeholder:text-rosa-rojo border-rosa-rojo"
+              }`}
+          />
           <p>
             {errors.clave?.type === "required" && (
               <span className="text-rosa-rojo">Este campo es requerido</span>
@@ -149,28 +152,24 @@ const FormRegister = () => {
           </p>
         </div>
 
-        <div className="mt-4">
-          <FormControl fullWidth>
-            <InputLabel error={errors.confClave ? true : false}>
-              Confirmar
-            </InputLabel>
-            <OutlinedInput
-              type={showPassword ? "text" : "password"}
-              {...register("confClave", {
-                required: true,
-                validate: (value) => value === document.getElementById("clave").value,
-              })}
-              error={errors.confClave ? true : false}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowPassword} edge="end">
-                    {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
+        {/* Confirmar contrasenia */}
+        <div className="mt-4 flex flex-col">
+          <label
+            className={`block text-base font-medium ${errors.confClave && "text-rosa-rojo"
+              }`}
+          >
+            Confirmar contraseña
+          </label>
+          <input
+            type="password"
+            {...register("confClave", {
+              required: true,
+              validate: (value) => value === document.getElementById("clave").value,
+            })}
+            className={`block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm ${errors.confClave &&
+              "focus:border-rosa-rojo focus:ring-rosa-rojo placeholder:text-rosa-rojo border-rosa-rojo"
+              }`}
+          />
           <p>
             {errors.confClave?.type === "required" && (
               <span className="text-rosa-rojo">Este campo es requerido</span>
@@ -180,9 +179,9 @@ const FormRegister = () => {
             )}
           </p>
         </div>
-        <Btn fullWidth sx={{ mt: 2 }} type="submit" value="Registrar">
+        <button className="w-full p-2 mt-2 font-semibold rounded-md bg-bright-blue text-white cursor-pointer border-2 border-bright-blue transition duration-500 hover:bg-white hover:text-bright-blue">
           {loading ? <Loader /> : "Registrarse"}
-        </Btn>
+        </button>
       </form>
 
       <p className="text-xs text-gray-500 mt-1">
