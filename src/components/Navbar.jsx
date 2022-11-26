@@ -3,14 +3,14 @@ import { ButtonMode, UserMenu} from '.'
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
-    <header className="sticky top-0 bg-white border-b border-slate-200 z-30 shadow-lg">
+    <header className="sticky top-0 bg-white border-b border-slate-200 z-30 shadow-lg dark:bg-black dark:border-black/50">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 -mb-px">
           {/* Header: Left side */}
           <div className="flex">
             {/* Boton hamburguesa */}
             <button
-              className="text-slate-500 hover:text-slate-600 lg:hidden"
+              className="text-slate-500 dark:text-white hover:text-slate-600 lg:hidden"
               aria-controls="sidebar"
               aria-expanded={sidebarOpen}
               onClick={(e) => {

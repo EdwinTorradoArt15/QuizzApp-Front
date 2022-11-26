@@ -25,10 +25,9 @@
 .btn-cuestionario{
   @apply
   bg-bright-blue dark:bg-black text-white 
-  cursor-pointer 
   border-2 border-bright-blue dark:border-black/20
   transition duration-500
 
   /* Hover */
-  hover:bg-white dark:hover:bg-white hover:text-bright-blue dark:hover:text-black
+  hover:bg-white  hover:text-bright-blue dark:hover:text-black dark:hover:bg-white
 }

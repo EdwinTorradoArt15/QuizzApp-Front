@@ -112,7 +112,7 @@ const UserMenu = () => {
                     <div className="flex items-center truncate">
                         
                         <svg
-                            className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400"
+                            className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 dark:text-white"
                             viewBox="0 0 12 12"
                         >
                             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -122,7 +122,7 @@ const UserMenu = () => {
             </Tooltip>
 
             <Transition
-                className="origin-top-right z-10 absolute top-full right-0 min-w-44 bg-white border border-slate-200 py-1.5 rounded shadow-lg overflow-hidden mt-1"
+                className="origin-top-right z-10 absolute top-full right-0 min-w-44 bg-white border dark:bg-[#191919]/95 border-slate-200 dark:border-gray-700 py-1.5 rounded shadow-lg overflow-hidden mt-1"
                 show={dropdownOpen}
                 enter="transition ease-out duration-200 transform"
                 enterStart="opacity-0 -translate-y-2"
@@ -136,14 +136,14 @@ const UserMenu = () => {
                     onFocus={() => setDropdownOpen(true)}
                     onBlur={() => setDropdownOpen(false)}
                 >
-                    <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200">
-                        <div className="font-medium text-slate-800">{name}</div>
-                        <div className="text-xs text-slate-500 italic">UX-Front-End</div>
+                    <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-gray-700">
+                        <div className="font-medium text-slate-800 dark:text-white">{name}</div>
+                        <div className="text-xs text-slate-500 dark:text-gray-100 italic">UX-Front-End</div>
                     </div>
                     <ul>
                         <li>
                             <NavLink
-                                className="font-medium text-sm text-bright-blue hover:underline hover:underline-offset-1 flex items-center py-1 px-3"
+                                className="font-medium text-sm text-bright-blue dark:text-white hover:underline hover:underline-offset-1 flex items-center py-1 px-3"
                                 to='/dashboard/perfil'
                                 onClick={() => setDropdownOpen(!dropdownOpen)}
                             >
@@ -152,7 +152,7 @@ const UserMenu = () => {
                         </li>
                         <li>
                             <span
-                                className="font-medium cursor-pointer text-sm text-rosa-rojo hover:underline hover:underline-offset-1 flex items-center py-1 px-3"
+                                className="font-medium cursor-pointer text-sm text-rosa-rojo dark:text-white hover:underline hover:underline-offset-1 flex items-center py-1 px-3"
                                 to="/"
                                 onClick={Logout}
                             >

@@ -34,7 +34,7 @@ const ButtonMode = () => {
                         onClick={setMode}
                     />
                     <Tooltip title="Modo claro" arrow>
-                        <label htmlFor="light" className="rounded-full bg-gray-600/50 p-1 cursor-pointer">
+                        <label htmlFor="light" className="rounded-full bg-gray-600/50 p-1 cursor-pointer text-white">
                             <FaSun/>
                         </label>
                     </Tooltip>

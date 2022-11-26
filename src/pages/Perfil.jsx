@@ -123,10 +123,10 @@ const Perfil = () => {
   };
 
   return (
-    <div className="w-full min-h-screen p-3">
+    <div className="w-full min-h-screen">
       <ToastContainer />
       {/* Banner */}
-      <div className="banner">
+      <div className="banner mt-3">
         {userData.urlPortada ? (
           <img
             className="w-full h-52 rounded-md object-cover"

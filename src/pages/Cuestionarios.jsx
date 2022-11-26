@@ -39,9 +39,9 @@ const Cuestionarios = () => {
   };
 
   return (
-    <div className="w-full min-h-screen p-3">
+    <div className="w-full min-h-screen">
       {/* Barra busqueda */}
-      <form className="mt-5">
+      <form className="mt-3">
         <div className="flex justify-between">
           <div className="flex">
             <input

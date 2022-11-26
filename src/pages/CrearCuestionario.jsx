@@ -31,7 +31,7 @@ const CrearCuestionario = () => {
   const traerCuestionarios = async () => {
     try {
       await instance.get("/cuestionaries/preguntas");
-    } catch (error) {}
+    } catch (error) { }
   };
   useEffect(() => {
     traerCuestionarios();
@@ -128,24 +128,23 @@ const CrearCuestionario = () => {
   };
 
   return (
-    <div className="w-full min-h-screen p-3">
+    <div className="w-full min-h-screen">
       {/* Header */}
       <ToastContainer />
       {ocultarDescripcion && (
         <form onSubmit={handleSubmit(postCuestionario)}>
           <div className="flex flex-col portatil:flex-row gap-2 items-start">
             <div className="flex flex-col gap-1">
-              <label className="font-medium text-base movilM:text-lg dark:text-white">
+              <label className="block   font-medium text-base movilM:text-lg dark:text-white">
                 Nombre del cuestionario
               </label>
               <input
                 {...register("nomCuest", { required: true })}
                 type="text"
                 placeholder="Nombre"
-                className={`border-2 border-bright-blue/20 placeholder:text-sm focus-within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-64 movilM:w-80 tableta:w-96 ${
-                  errors.nomCuest &&
+                className={` border-gray-300 placeholder:text-sm focus:border-bright-blue focus:ring-bright-blue focus:outline-none rounded-md p-2 w-64 movilM:w-80 tableta:w-96 ${errors.nomCuest &&
                   "border-rosa-rojo focus-within:border-rosa-rojo"
-                }`}
+                  }`}
               />
               <p>
                 {errors.nomCuest?.type === "required" && (
@@ -158,12 +157,12 @@ const CrearCuestionario = () => {
             {/* Select categorias */}
             <div className="flex gap-3 mt-1 portatil:mt-0">
               <div className="flex flex-col gap-1">
-                <label className="font-medium dark:text-white text-base movilM:text-lg">
+                <label className="block font-medium dark:text-white text-base movilM:text-lg">
                   Categorías
                 </label>
                 <select
                   {...register("idCategoria", { required: true })}
-                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-3"
+                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-2"
                 >
                   {categorias.map((categoria) => (
                     <option
@@ -177,12 +176,12 @@ const CrearCuestionario = () => {
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="font-medium dark:text-white text-base movilM:text-lg">
+                <label className="block font-medium dark:text-white text-base movilM:text-lg">
                   Tiempo
                 </label>
                 <select
                   {...register("tiempoTotal", { required: true })}
-                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-3"
+                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-2"
                 >
                   <option value="20" className="text-black bg-white">
                     20 segundos
@@ -202,7 +201,7 @@ const CrearCuestionario = () => {
             {/* Select tiempo */}
           </div>
           <button
-            className="btn-cuestionario p-2 font-medium rounded-md mt-3 text-sm movilM:text-base"
+            className="p-2 mt-2 text-sm movilM:text-base font-semibold rounded-md bg-bright-blue dark:hover:text-black dark:bg-black dark:border-black/20 dark:hover:bg-white text-white cursor-pointer border-2 border-bright-blue transition duration-500 hover:bg-white hover:text-bright-blue"
             type="submit"
             disabled={loading ? true : false}
           >
