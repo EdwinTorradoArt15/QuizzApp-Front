@@ -1,38 +1,20 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState} from "react";
 import { instance } from "../../api/api";
 import { Transition, Loader } from "..";
 import { toast, ToastContainer } from "react-toastify";
 import { AiFillCamera } from "react-icons/ai";
 import "react-toastify/dist/ReactToastify.css";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton } from "@mui/material";
 
-const ModalAdministrar = ({ id, modalOpen, setModalOpen, categorias }) => {
+const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
     const modalContent = useRef(null);
+    const firstInput = useRef(null);
+    const secondInput = useRef(null);
     const [loading, setLoading] = useState(false);
     const [image, setImg] = useState({ preview: "", data: "" });
     const [categoria, setCategoria] = useState({
         nombre: "",
         descripcion: "",
-    });
-
-    // Cerrar modal fuera del contenido
-    useEffect(() => {
-        const clickHandler = ({ target }) => {
-            if (!modalOpen || modalContent.current.contains(target)) return;
-            setModalOpen(false);
-        };
-        document.addEventListener("click", clickHandler);
-        return () => document.removeEventListener("click", clickHandler);
-    });
-
-    // Cerrar modal con ESC
-    useEffect(() => {
-        const keyHandler = ({ keyCode }) => {
-            if (!modalOpen || keyCode !== 27) return;
-            setModalOpen(false);
-        };
-        document.addEventListener("keydown", keyHandler);
-        return () => document.removeEventListener("keydown", keyHandler);
     });
 
     const handleChange = (e) => {
@@ -51,10 +33,11 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, categorias }) => {
         }));
     };
 
-    const categories = async () => {
-        const cats = await categorias;
-        return cats;
-    };
+    const cleanInputs = () => {
+        firstInput.current.value = "";
+        secondInput.current.value = "";
+        setImg({ preview: "", data: "" });
+    }
 
     const postCategories = async (e) => {
         e.preventDefault();
@@ -67,13 +50,15 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, categorias }) => {
             const response = await instance.post("/categories", formData);
             setLoading(false);
             toast.success(response.data.msg);
-            categories();
+            getCategorias();
+            cleanInputs();
             setModalOpen(false);
         } catch (err) {
             setLoading(false);
             toast.error(err.response.data.msg);
         }
     };
+
     return (
         <>
             {/* Modal backdrop */}
@@ -111,7 +96,7 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, categorias }) => {
                     <form encType="multipart/form-data" onSubmit={postCategories}>
                         <div className="flex flex-col items-center justify-center w-full bg-white border-2 border-azul-marino/60 rounded-lg">
                             <img
-                                src={image.preview ? image.preview : "https://picsum.photos/200/300"}
+                                src={image.preview ? image.preview : ""}
                                 alt="No hay imagen"
                                 className="w-full h-32 object-cover object-center rounded-t-md"
                             />
@@ -130,11 +115,11 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, categorias }) => {
                         </div>
                         <div className="flex flex-col my-4">
                             <label className="block text-base dark:text-white font-medium">Nombre</label>
-                            <input type="text" placeholder="Nombre" onChange={handleTarget} required name="nombre" className="block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm" />
+                            <input ref={firstInput} type="text" placeholder="Nombre" onChange={handleTarget} required name="nombre" className="block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm" />
                         </div>
                         <div className="flex flex-col">
                             <label className="block dark:text-white text-base font-medium">Descripcion</label>
-                            <input type="text" placeholder="Descripcion" required onChange={handleTarget}
+                            <input ref={secondInput} type="text" placeholder="Descripcion" required onChange={handleTarget}
                             name="descripcion" className="block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm" />
                         </div>
                         <div className="flex pt-3 gap-3">
@@ -145,6 +130,7 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, categorias }) => {
                                 {loading ? <Loader /> : "Agregar Categoria"}
                             </button>
                             <button
+                                type='reset'
                                 className="btn-cuestionario font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
                                 onClick={() => setModalOpen(false)}
                             >

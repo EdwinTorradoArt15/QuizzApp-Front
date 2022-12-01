@@ -14,7 +14,7 @@ const Administrar = () => {
   const getCategories = async () => {
     try {
       const response = await instance.get("/categories");
-      return setData(response.data.categorias);
+      setData(response.data.categorias);
     } catch (err) {
       setData([]);
     }
@@ -41,7 +41,7 @@ const Administrar = () => {
         ))}
       </div>
       {/* Modal administrar */}
-      <ModalAdministrar id="modal-add" modalOpen={modalAdd} setModalOpen={setModalAdd} categorias={getCategories()}/>
+      <ModalAdministrar id="modal-add" modalOpen={modalAdd} setModalOpen={setModalAdd} getCategorias={getCategories}/>
     </div>
   );
 };
