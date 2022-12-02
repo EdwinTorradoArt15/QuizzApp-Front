@@ -1,10 +1,9 @@
 import { useRef, useState} from "react";
-import { instance } from "../../api/api";
-import { Transition, Loader } from "..";
+import { instance } from "../../../api/api";
+import { Transition, Loader } from "../..";
 import { toast, ToastContainer } from "react-toastify";
 import { AiFillCamera } from "react-icons/ai";
 import "react-toastify/dist/ReactToastify.css";
-import { IconButton } from "@mui/material";
 
 const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
     const modalContent = useRef(null);
@@ -90,7 +89,7 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
             >
                 <div
                     ref={modalContent}
-                    className="bg-white dark:bg-[#191919]/95 border border-slate-700 dark:border-gray-700 overflow-auto max-w-2xl p-3 max-h-full rounded shadow-lg"
+                    className="bg-white dark:bg-[#191919] border border-slate-700 dark:border-gray-700 overflow-auto max-w-2xl p-3 max-h-full rounded shadow-lg"
                 >
                     {/* Search form */}
                     <form encType="multipart/form-data" onSubmit={postCategories}>
@@ -100,10 +99,12 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
                                 alt="No hay imagen"
                                 className="w-full h-32 object-cover object-center rounded-t-md"
                             />
-                            <IconButton sx={{ color: "black" }}>
-                                <label htmlFor="file">
-                                    <AiFillCamera />
-                                </label>
+                            <div className="bg-white dark:bg-[#353535] w-full rounded-b-lg flex justify-center">
+                                <div className="hover:bg-slate-200 dark:text-white dark:hover:text-black border dark:border transition duration-200 rounded-full p-1">
+                                    <label htmlFor="file">
+                                        <AiFillCamera size={22}/>
+                                    </label>
+                                </div>
                                 <input
                                     id="file"
                                     type="file"
@@ -111,27 +112,27 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
                                     onChange={handleChange}
                                     style={{ display: "none" }}
                                 />
-                            </IconButton>
+                            </div>
                         </div>
                         <div className="flex flex-col my-4">
                             <label className="block text-base dark:text-white font-medium">Nombre</label>
-                            <input ref={firstInput} type="text" placeholder="Nombre" onChange={handleTarget} required name="nombre" className="block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm" />
+                            <input ref={firstInput} type="text" placeholder="Nombre" onChange={handleTarget} required name="nombre" className="dark:bg-[#353535] block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm placeholder:dark:text-white dark:text-white" />
                         </div>
                         <div className="flex flex-col">
                             <label className="block dark:text-white text-base font-medium">Descripcion</label>
                             <input ref={secondInput} type="text" placeholder="Descripcion" required onChange={handleTarget}
-                            name="descripcion" className="block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm" />
+                            name="descripcion" className="dark:bg-[#353535] block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm placeholder:dark:text-white dark:text-white" />
                         </div>
                         <div className="flex pt-3 gap-3">
                             <button
                                 type="submit"
-                                className="bg-bright-blue dark:bg-black text-white border-2 border-bright-blue dark:border-black/20 transition duration-500 hover:bg-white  hover:text-bright-blue dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
+                                className="bg-bright-blue dark:bg-black text-white border-2 border-bright-blue dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-bright-blue dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
                             >
                                 {loading ? <Loader /> : "Agregar Categoria"}
                             </button>
                             <button
                                 type='reset'
-                                className="btn-cuestionario font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
+                                className="bg-rosa-rojo dark:bg-black text-white border-2 border-rosa-rojo dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-rosa-rojo dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
                                 onClick={() => setModalOpen(false)}
                             >
                                 Cancelar

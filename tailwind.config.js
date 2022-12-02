@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       screens: {
         'movilM': '360px',
+        'movilN': '380px',
         'movilL': '425px',
         'tableta': '768px',
         'portatil': '1024px',

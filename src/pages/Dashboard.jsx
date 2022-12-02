@@ -23,7 +23,7 @@ const Dashboard = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex h-screen overflow-hidden dark:bg-[#191919]/95">
+        <div className="flex h-screen overflow-hidden dark:bg-[#353535]">
             {/* Sidebar */}
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { instance } from "../api/api";
-import { toast, ToastContainer } from "react-toastify";
-import { AiFillGoogleCircle } from "react-icons/ai";
-import { useForm } from "react-hook-form";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from ".";
+import { useForm } from "react-hook-form";
+import { instance } from "../api/api";
+import { AiFillGoogleCircle } from "react-icons/ai";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormLogin = () => {
   const {
