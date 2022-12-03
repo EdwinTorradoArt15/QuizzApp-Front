@@ -38,6 +38,11 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
         setImg({ preview: "", data: "" });
     }
 
+    const cleanButtonCancel = () => {
+        setModalOpen(false);
+        cleanInputs();
+    }
+
     const postCategories = async (e) => {
         e.preventDefault();
         try {
@@ -130,13 +135,12 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
                             >
                                 {loading ? <Loader /> : "Agregar Categoria"}
                             </button>
-                            <button
-                                type='reset'
-                                className="bg-rosa-rojo dark:bg-black text-white border-2 border-rosa-rojo dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-rosa-rojo dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
-                                onClick={() => setModalOpen(false)}
+                            <p
+                                className="cursor-pointer bg-rosa-rojo dark:bg-black text-white border-2 border-rosa-rojo dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-rosa-rojo dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
+                                onClick={cleanButtonCancel}
                             >
                                 Cancelar
-                            </button>
+                            </p>
                         </div>
                     </form>
                 </div>

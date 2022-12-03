@@ -8,6 +8,7 @@ import { AiFillCamera } from "react-icons/ai";
 
 const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
   const modalContent = useRef(null);
+  const inputPassword = useRef(null);
   const [userData, setUserData] = useState([]);
   const [image, setImg] = useState({ preview: "", data: "" });
   const [imagePortada, setImagePortada] = useState({ preview: "", data: "" });
@@ -52,6 +53,17 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
     }
   };
 
+  const cleanInputs = () => {
+    inputPassword.current.value = "";
+    setImg({ preview: "", data: "" });
+    setImagePortada({ preview: "", data: "" });
+  }
+
+  const cleanButtonCancel = () => {
+    inputPassword.current.value = "";
+    setModalOpen(false);
+  }
+
   const updateUser = async (e) => {
     e.preventDefault();
     try {
@@ -70,6 +82,7 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
         formData
       );
       toast.success(response.data.msg);
+      cleanInputs();
       setModalOpen(false)
       setLoading(false);
     } catch (err) {
@@ -162,44 +175,44 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
                 </div>
               </div>
               <div className="flex flex-col mt-3">
-                <label className="block text-base font-medium">Usuario</label>
+                <label className="block text-base font-medium dark:text-white">Usuario</label>
                 <input
                   type="text"
                   name="usuario"
                   onChange={handleTarget}
                   defaultValue={userData.usuario}
-                  className='block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
                 />
               </div>
               <div className="flex flex-col my-3">
-                <label className="block text-base font-medium">Nombre</label>
+                <label className="block text-base font-medium dark:text-white">Nombre</label>
                 <input
                   name="nombre"
                   type="text"
                   onChange={handleTarget}
                   defaultValue={userData.nombre}
-                  className='block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
                 />
               </div>
               <div className="flex flex-col mb-3">
-                <label className="block text-base font-medium">Correo</label>
+                <label className="block text-base font-medium dark:text-white">Correo</label>
                 <input
                   type="text"
                   name="correo"
                   onChange={handleTarget}
                   defaultValue={userData.correo}
-                  className='block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
                 />
               </div>
               <div className="flex flex-col mb-3">
-                <label className="block text-base font-medium">Contraseña</label>
+                <label className="block text-base font-medium dark:text-white">Contraseña</label>
                 <input
-                  required
+                  ref={inputPassword}
                   type="password"
                   label="Contraseña"
                   onChange={handleTarget}
                   name="clave"
-                  className='block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
                 />
               </div>
               <div className="flex gap-3">
@@ -209,12 +222,12 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
                 >
                   {loading ? <Loader /> : "Editar"}
                 </button>
-                <button
-                  className="bg-rosa-rojo dark:bg-black text-white border-2 border-rosa-rojo dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-rosa-rojo dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
-                  onClick={() => setModalOpen(false)}
+                <p
+                  className="bg-rosa-rojo cursor-pointer dark:bg-black text-white border-2 border-rosa-rojo dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-rosa-rojo dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
+                  onClick={cleanButtonCancel}
                 >
                   Cancelar
-                </button>
+                </p>
               </div>
             </form>
           </div>

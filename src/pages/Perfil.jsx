@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Avatar, Rating, Stack } from "@mui/material";
+import { Rating, Stack } from "@mui/material";
 import { CardCuestionarios, ModalEditarUsuario } from "../components";
 import { instance } from "../api/api";
 import { FaPen, FaPlus } from "react-icons/fa";
@@ -89,16 +89,9 @@ const Perfil = () => {
               alt="Imagen perfil"
             />
           ) : (
-            <Avatar
-              sx={{
-                fontWeight: "500",
-                bgcolor: "#ba181b",
-                width: 170,
-                height: 170,
-              }}
-            >
-              <p className="text-[3rem]">{getInitial(nameUser)}</p>
-            </Avatar>
+            <span className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm font-medium">
+              {getInitial(nameUser)}
+            </span>
           )}
         </div>
       </div>
