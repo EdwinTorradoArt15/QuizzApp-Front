@@ -7,3 +7,4 @@ export {default as CrearCuestionario} from './CrearCuestionario';
 export {default as Completados} from './Completados';
 export {default as Perfil} from './Perfil';
 export {default as Administrar} from './Administrar';
+export {default as ResponderPreguntas} from './ResponderPreguntas';

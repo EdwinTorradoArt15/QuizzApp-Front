@@ -311,7 +311,7 @@ const CrearCuestionario = () => {
                     <button
                       type="button"
                       onClick={() => remove(index)}
-                      className="btn-cuestionario rounded-lg font-medium text-sm movilM:text-base p-2"
+                      className="bg-bright-blue dark:bg-black text-white border-2 border-bright-blue dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-bright-blue dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
                     >
                       Delete
                     </button>
@@ -322,7 +322,7 @@ const CrearCuestionario = () => {
           )}
           <div className="flex flex-col w-max gap-7">
             <button
-              className="btn-cuestionario rounded-lg font-medium text-sm movilM:text-base p-2"
+              className="bg-bright-blue dark:bg-black text-white border-2 border-bright-blue dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-bright-blue dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
               type="button"
               onClick={() =>
                 append({
@@ -338,7 +338,7 @@ const CrearCuestionario = () => {
             </button>
             <button
               type="submit"
-              className="btn-cuestionario rounded-lg font-medium text-sm movilM:text-base p-2"
+              className="bg-bright-blue dark:bg-black text-white border-2 border-bright-blue dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-bright-blue dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
             >
               {loading ? <Loader /> : "Enviar"}
             </button>

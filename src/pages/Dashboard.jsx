@@ -8,6 +8,7 @@ import {
     Completados,
     Perfil,
     Administrar,
+    ResponderPreguntas,
 } from ".";
 import {
     INDEX,
@@ -17,6 +18,7 @@ import {
     COMPLETADOS,
     PERFIL,
     ADMINISTRAR,
+    RESPONDER_CUESTIONARIO
 } from "../routes/paths";
 
 const Dashboard = () => {
@@ -40,7 +42,8 @@ const Dashboard = () => {
                             <Route
                                 path={CREAR_CUESTIONARIO}
                                 element={<CrearCuestionario />}
-                            ></Route>
+                            />
+                            <Route path={RESPONDER_CUESTIONARIO} element={<ResponderPreguntas/>}/>
                             <Route path={COMPLETADOS} element={<Completados />} />
                             <Route path={PERFIL} element={<Perfil />} />
                             <Route path={ADMINISTRAR} element={<Administrar />} />
