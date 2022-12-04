@@ -77,6 +77,7 @@ const Inicio = () => {
           : filterData().map((item) => (
               <CardCategoria
                 key={item.id}
+                id={item.id}
                 imagen={item.urlImage}
                 nombreCategoria={item.nombre}
               />

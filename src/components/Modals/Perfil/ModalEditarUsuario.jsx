@@ -9,7 +9,7 @@ import { AiFillCamera } from "react-icons/ai";
 const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
   const modalContent = useRef(null);
   const inputPassword = useRef(null);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({});
   const [image, setImg] = useState({ preview: "", data: "" });
   const [imagePortada, setImagePortada] = useState({ preview: "", data: "" });
   const [loading, setLoading] = useState(false);
@@ -57,33 +57,37 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
     inputPassword.current.value = "";
     setImg({ preview: "", data: "" });
     setImagePortada({ preview: "", data: "" });
-  }
+  };
 
   const cleanButtonCancel = () => {
     inputPassword.current.value = "";
     setModalOpen(false);
-  }
+  };
 
   const updateUser = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
+
       let formData = new FormData();
       formData.append("usuario", userData.usuario);
       formData.append("nombre", userData.nombre);
       formData.append("correo", userData.correo);
-      formData.append("clave", userData.clave);
+      if (inputPassword.current.value.trim().length > 0) {
+        formData.append("clave", userData.clave);
+      }
       formData.append("urlPortada", imagePortada.data);
       formData.append("urlImage", image.data);
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
+
       const response = await instance.put(
         `/users/update/${decoded.userId}`,
         formData
       );
       toast.success(response.data.msg);
       cleanInputs();
-      setModalOpen(false)
+      setModalOpen(false);
       setLoading(false);
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -93,7 +97,7 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
 
   return (
     <>
-      <ToastContainer/>    
+      <ToastContainer />
       <Transition
         className="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity"
         show={modalOpen}
@@ -161,11 +165,10 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
                 <div className="bg-white dark:bg-[#353535] w-full rounded-b-lg flex justify-center">
                   <div className="hover:bg-slate-200 dark:text-white dark:hover:text-black border dark:border transition duration-200 rounded-full p-1">
                     <label htmlFor="file">
-                      <AiFillCamera size={22}/>
+                      <AiFillCamera size={22} />
                     </label>
                   </div>
                   <input
-
                     id="file"
                     type="file"
                     name="urlImage"
@@ -175,44 +178,52 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
                 </div>
               </div>
               <div className="flex flex-col mt-3">
-                <label className="block text-base font-medium dark:text-white">Usuario</label>
+                <label className="block text-base font-medium dark:text-white">
+                  Usuario
+                </label>
                 <input
                   type="text"
                   name="usuario"
                   onChange={handleTarget}
                   defaultValue={userData.usuario}
-                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className="dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm"
                 />
               </div>
               <div className="flex flex-col my-3">
-                <label className="block text-base font-medium dark:text-white">Nombre</label>
+                <label className="block text-base font-medium dark:text-white">
+                  Nombre
+                </label>
                 <input
                   name="nombre"
                   type="text"
                   onChange={handleTarget}
                   defaultValue={userData.nombre}
-                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className="dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm"
                 />
               </div>
               <div className="flex flex-col mb-3">
-                <label className="block text-base font-medium dark:text-white">Correo</label>
+                <label className="block text-base font-medium dark:text-white">
+                  Correo
+                </label>
                 <input
                   type="text"
                   name="correo"
                   onChange={handleTarget}
                   defaultValue={userData.correo}
-                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className="dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm"
                 />
               </div>
               <div className="flex flex-col mb-3">
-                <label className="block text-base font-medium dark:text-white">Contraseña</label>
+                <label className="block text-base font-medium dark:text-white">
+                  Contraseña
+                </label>
                 <input
                   ref={inputPassword}
                   type="password"
                   label="Contraseña"
                   onChange={handleTarget}
                   name="clave"
-                  className='dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm'
+                  className="dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm"
                 />
               </div>
               <div className="flex gap-3">

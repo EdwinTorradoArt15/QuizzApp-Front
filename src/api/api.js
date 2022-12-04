@@ -9,13 +9,9 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-
-    console.log("Hola soy el error:",error)
-
     if (error.response.status === 401 || error.response.status === 403) {
-        console.log("Lo lees:?")
       localStorage.clear();
-      window.location.href="/login"
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const CardCategoria = ({ imagen, nombreCategoria }) => {
+const CardCategoria = ({ imagen, nombreCategoria ,id}) => {
     return (
         <div
             style={{
@@ -13,7 +13,7 @@ const CardCategoria = ({ imagen, nombreCategoria }) => {
         >
             <div>
                 <Link
-                    to=""
+                    to={`/dashboard/cuestionarios/categoria/${id}`}
                     className="btn btn-categoria font-extrabold text-lg px-3 py-2"
                 >
                     {nombreCategoria}

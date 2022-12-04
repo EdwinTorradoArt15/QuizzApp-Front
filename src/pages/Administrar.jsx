@@ -34,7 +34,9 @@ const Administrar = () => {
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
         {data.map((cat) => (
           <CardCategoria
+            
             key={cat.id}
+            id={cat.id}
             imagen={cat.urlImage}
             nombreCategoria={cat.nombre}
           />
