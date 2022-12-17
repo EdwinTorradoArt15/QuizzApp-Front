@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { instance } from "../api/api";
 import { Loader } from ".";
-import "react-toastify/dist/ReactToastify.css";
-
 const FormRegister = () => {
   const {
     register,
@@ -39,7 +37,6 @@ const FormRegister = () => {
         Registra tu cuenta
       </h1>
       <form className="mt-6" onSubmit={handleSubmit(registerUser)}>
-        <ToastContainer />
 
         {/* Usuario */}
         <div className="flex flex-col">

@@ -4,8 +4,7 @@ import { Loader } from ".";
 import { useForm } from "react-hook-form";
 import { instance } from "../api/api";
 import { AiFillGoogleCircle } from "react-icons/ai";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const FormLogin = () => {
   const {
@@ -36,7 +35,6 @@ const FormLogin = () => {
         Iniciar sesion
       </h1>
       <span>Bienvenido a QuizzApp.</span>
-      <ToastContainer />
       <form className="mt-6" onSubmit={handleSubmit(Login)}>
         <div className="flex flex-col">
           <label

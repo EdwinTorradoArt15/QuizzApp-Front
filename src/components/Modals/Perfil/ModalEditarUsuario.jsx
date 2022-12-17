@@ -97,7 +97,6 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
 
   return (
     <>
-      <ToastContainer />
       <Transition
         className="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity"
         show={modalOpen}

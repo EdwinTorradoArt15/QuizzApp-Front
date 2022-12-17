@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { instance } from "../../../api/api";
 import { Transition, Loader } from "../..";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { AiFillCamera } from "react-icons/ai";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -66,7 +66,6 @@ const ModalAdministrar = ({ id, modalOpen, setModalOpen, getCategorias }) => {
   return (
     <>
       {/* Modal backdrop */}
-      <ToastContainer />
       <Transition
         className="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity"
         show={modalOpen}

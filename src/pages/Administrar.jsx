@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { CardCategoria, ModalAdministrar, Categoria } from "../components";
-import { FiMoreHorizontal } from "react-icons/fi";
+import { ModalAdministrar, Categoria } from "../components";
 import { instance } from "../api/api";
 
 const Administrar = () => {
-  const [data, setData] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
 
   useEffect(() => {
@@ -15,9 +14,9 @@ const Administrar = () => {
   const getCategories = async () => {
     try {
       const response = await instance.get("/categories");
-      setData(response.data.categorias);
+      setCategorias(response.data.categorias);
     } catch (err) {
-      setData([]);
+      setCategorias([]);
     }
   };
 
@@ -38,8 +37,8 @@ const Administrar = () => {
         </button>
       </div>
       <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
-        {data.map((categoria) => (
-          <Categoria key={categoria.id} categoria={categoria}/>
+        {categorias.map((categoria) => (
+          <Categoria key={categoria.id} categoria={categoria} getCategorias={getCategories}/>
         ))}
       </div>
       {/* Modal administrar */}

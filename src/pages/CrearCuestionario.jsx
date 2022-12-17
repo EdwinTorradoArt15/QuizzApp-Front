@@ -3,7 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../api/api";
 import { Loader } from "../components";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import jwt_decode from "jwt-decode";
 
 const CrearCuestionario = () => {
@@ -130,7 +130,6 @@ const CrearCuestionario = () => {
   return (
     <div className="w-full min-h-screen">
       {/* Header */}
-      <ToastContainer />
       {ocultarDescripcion && (
         <form onSubmit={handleSubmit(postCuestionario)}>
           <div className="flex flex-col portatil:flex-row gap-2 items-start">

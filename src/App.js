@@ -4,6 +4,8 @@ import { Privadas, Publicas } from './routes';
 import { HOME, LOGIN, REGISTRO, DASHBOARD } from './routes/paths'
 import { Login, Register, Dashboard } from './pages';
 import { useStateContext } from './context/ContextProvider';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
+      <ToastContainer />
       <Routes>
         <Route path={HOME} exact element={<Publicas> <Login /> </Publicas>} />
         <Route exact path={LOGIN} element={<Publicas> <Login /> </Publicas>} />
