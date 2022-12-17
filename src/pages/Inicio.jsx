@@ -6,6 +6,7 @@ import { instance } from "../api/api";
 let showCats = 4;
 
 const Inicio = () => {
+  const [load, setLoad] = useState(true);
   const [categorias, setCategorias] = useState([]);
   const [noOfElement, setNoOfElement] = useState(showCats);
   const [search, setSearch] = useState("");
@@ -32,9 +33,12 @@ const Inicio = () => {
   const getCategories = async () => {
     try {
       const response = await instance.get("/categories");
-      return setCategorias(response.data.categorias);
+      setCategorias(response.data.categorias);
+      setLoad(false);
     } catch (err) {
+      console.error(err)
       setCategorias([]);
+      setLoad(true);
     }
   };
 
@@ -74,7 +78,11 @@ const Inicio = () => {
       <h1 className="my-7 dark:text-white font-bold text-xl">
         Elige una categoria
       </h1>
-      {categorias.length === 0 ? (
+      {load ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-700"></div>
+        </div>
+      ) : categorias.length === 0 ? (
         <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
           <FiInfo className="text-blue-600" />
           <p className="text-blue-600 font-medium">No existen categorias.</p>

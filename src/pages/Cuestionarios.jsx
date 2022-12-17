@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 import { FiInfo, FiSearch } from "react-icons/fi";
 
 const Cuestionarios = () => {
+  const [load, setLoad] = useState(true);
   const [search, setSearch] = useState("");
   const [cuestionario, setCuestionario] = useState([]);
 
@@ -22,8 +23,10 @@ const Cuestionarios = () => {
       });
 
       setCuestionario(response.data.cuestionarios);
+      setLoad(false);
     } catch (err) {
-      console.log(err);
+      setLoad(true);
+      console.error(err);
     }
   };
 
@@ -71,7 +74,11 @@ const Cuestionarios = () => {
         </Link>
       </div>
       <div className="mt-7">
-        {cuestionario.length === 0 ? (
+        {load ? (
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-700"></div>
+          </div>
+        ) : cuestionario.length === 0 ? (
           <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
             <FiInfo className="text-blue-600" />
             <p className="text-blue-600 font-medium">
@@ -82,11 +89,11 @@ const Cuestionarios = () => {
           <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
             {filterData().length === 0 ? (
               <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
-              <FiInfo className="text-blue-600" />
-              <p className="text-blue-600 font-medium">
-                Cuestionario inexistente.
-              </p>
-            </div>
+                <FiInfo className="text-blue-600" />
+                <p className="text-blue-600 font-medium">
+                  Cuestionario inexistente.
+                </p>
+              </div>
             ) : (
               filterData().map((categoria) => (
                 <CardCuestionarios

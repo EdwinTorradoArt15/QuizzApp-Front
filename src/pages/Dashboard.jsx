@@ -9,7 +9,8 @@ import {
   Perfil,
   Administrar,
   ResponderPreguntas,
-  CuestionariosPorCategoriaPage
+  CuestionariosPorCategoriaPage,
+  ResponderCuestionario
 } from ".";
 import {
   INDEX,
@@ -48,8 +49,8 @@ const Dashboard = () => {
                 element={<CrearCuestionario />}
               />
               <Route
-                path={RESPONDER_CUESTIONARIO}
-                element={<ResponderPreguntas />}
+                path={`${RESPONDER_CUESTIONARIO}/:id`}
+                element={<ResponderCuestionario />}
               />
               <Route
                 path={`${CUESTIONARIO_CATEGORIA}/:id`}

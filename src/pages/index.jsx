@@ -9,3 +9,4 @@ export { default as Perfil } from "./Perfil";
 export { default as Administrar } from "./Administrar";
 export { default as ResponderPreguntas } from "./ResponderPreguntas";
 export { default as CuestionariosPorCategoriaPage } from "./CuestionariosPorCategoriaPage";
+export {default as ResponderCuestionario} from './ResponderCuestionario';

@@ -10,6 +10,7 @@ const CrearCuestionario = () => {
   const [categorias, setCategorias] = useState([]);
   const [idUser, setIdUser] = useState("");
   const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState(true);
 
   const [mostrarPregunta, setMostrarPregunta] = useState(false);
   const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
@@ -31,7 +32,7 @@ const CrearCuestionario = () => {
   const traerCuestionarios = async () => {
     try {
       await instance.get("/cuestionaries/preguntas");
-    } catch (error) { }
+    } catch (error) {}
   };
   useEffect(() => {
     traerCuestionarios();
@@ -49,8 +50,10 @@ const CrearCuestionario = () => {
     try {
       const response = await instance.get("/categories");
       setCategorias(response.data.categorias);
+      setLoad(false);
     } catch (err) {
-      console.log(err);
+      setLoad(true);
+      console.error(err);
     }
   };
 
@@ -130,83 +133,90 @@ const CrearCuestionario = () => {
   return (
     <div className="w-full min-h-screen">
       {/* Header */}
-      {ocultarDescripcion && (
-        <form onSubmit={handleSubmit(postCuestionario)}>
-          <div className="flex flex-col portatil:flex-row gap-2 items-start">
-            <div className="flex flex-col gap-1">
-              <label className="block   font-medium text-base movilM:text-lg dark:text-white">
-                Nombre del cuestionario
-              </label>
-              <input
-                {...register("nomCuest", { required: true })}
-                type="text"
-                placeholder="Nombre"
-                className={` border-gray-300 placeholder:text-sm focus:border-bright-blue focus:ring-bright-blue focus:outline-none rounded-md p-2 w-64 movilM:w-80 tableta:w-96 ${errors.nomCuest &&
-                  "border-rosa-rojo focus-within:border-rosa-rojo"
+      {load ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-700"></div>
+        </div>
+      ) : (
+        ocultarDescripcion && (
+          <form onSubmit={handleSubmit(postCuestionario)}>
+            <div className="flex flex-col portatil:flex-row gap-2 items-start">
+              <div className="flex flex-col gap-1">
+                <label className="block   font-medium text-base movilM:text-lg dark:text-white">
+                  Nombre del cuestionario
+                </label>
+                <input
+                  {...register("nomCuest", { required: true })}
+                  type="text"
+                  placeholder="Nombre"
+                  className={` border-gray-300 placeholder:text-sm focus:border-bright-blue focus:ring-bright-blue focus:outline-none rounded-md p-2 w-64 movilM:w-80 tableta:w-96 ${
+                    errors.nomCuest &&
+                    "border-rosa-rojo focus-within:border-rosa-rojo"
                   }`}
-              />
-              <p>
-                {errors.nomCuest?.type === "required" && (
-                  <span className="text-rosa-rojo">
-                    Este campo es requerido
-                  </span>
-                )}
-              </p>
-            </div>
-            {/* Select categorias */}
-            <div className="flex gap-3 mt-1 portatil:mt-0">
-              <div className="flex flex-col gap-1">
-                <label className="block font-medium dark:text-white text-base movilM:text-lg">
-                  Categorías
-                </label>
-                <select
-                  {...register("idCategoria", { required: true })}
-                  className="bg-bright-blue/20 text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold border-none text-bright-blue p-2"
-                >
-                  {categorias.map((categoria) => (
-                    <option
-                      className="text-black bg-white"
-                      key={categoria.id}
-                      value={categoria.id}
-                    >
-                      {categoria.nombre}
+                />
+                <p>
+                  {errors.nomCuest?.type === "required" && (
+                    <span className="text-rosa-rojo">
+                      Este campo es requerido
+                    </span>
+                  )}
+                </p>
+              </div>
+              {/* Select categorias */}
+              <div className="flex gap-3 mt-1 portatil:mt-0">
+                <div className="flex flex-col gap-1">
+                  <label className="block font-medium dark:text-white text-base movilM:text-lg">
+                    Categorías
+                  </label>
+                  <select
+                    {...register("idCategoria", { required: true })}
+                    className="bg-bright-blue/20 text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold border-none text-bright-blue p-2"
+                  >
+                    {categorias.map((categoria) => (
+                      <option
+                        className="text-black bg-white"
+                        key={categoria.id}
+                        value={categoria.id}
+                      >
+                        {categoria.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="block font-medium dark:text-white text-base movilM:text-lg">
+                    Tiempo
+                  </label>
+                  <select
+                    {...register("tiempoTotal", { required: true })}
+                    className="bg-bright-blue/20 text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold border-none text-bright-blue p-2"
+                  >
+                    <option value="20" className="text-black bg-white">
+                      20 segundos
                     </option>
-                  ))}
-                </select>
+                    <option value="30" className="text-black bg-white">
+                      30 segundos
+                    </option>
+                    <option value="40" className="text-black bg-white">
+                      40 segundos
+                    </option>
+                    <option value="60" className="text-black bg-white">
+                      60 segundos
+                    </option>
+                  </select>
+                </div>
               </div>
-              <div className="flex flex-col gap-1">
-                <label className="block font-medium dark:text-white text-base movilM:text-lg">
-                  Tiempo
-                </label>
-                <select
-                  {...register("tiempoTotal", { required: true })}
-                  className="bg-bright-blue/20 text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold border-none text-bright-blue p-2"
-                >
-                  <option value="20" className="text-black bg-white">
-                    20 segundos
-                  </option>
-                  <option value="30" className="text-black bg-white">
-                    30 segundos
-                  </option>
-                  <option value="40" className="text-black bg-white">
-                    40 segundos
-                  </option>
-                  <option value="60" className="text-black bg-white">
-                    60 segundos
-                  </option>
-                </select>
-              </div>
+              {/* Select tiempo */}
             </div>
-            {/* Select tiempo */}
-          </div>
-          <button
-            className="p-2 mt-2 text-sm movilM:text-base font-semibold rounded-md bg-bright-blue/20 dark:hover:text-black dark:bg-black dark:hover:bg-white text-bright-blue cursor-pointer transition duration-500 hover:bg-bright-blue hover:text-white"
-            type="submit"
-            disabled={loading ? true : false}
-          >
-            {loading ? <Loader /> : "Crear cuestionario"}
-          </button>
-        </form>
+            <button
+              className="p-2 mt-2 text-sm movilM:text-base font-semibold rounded-md bg-bright-blue/20 dark:hover:text-black dark:bg-black dark:hover:bg-white text-bright-blue cursor-pointer transition duration-500 hover:bg-bright-blue hover:text-white"
+              type="submit"
+              disabled={loading ? true : false}
+            >
+              {loading ? <Loader /> : "Crear cuestionario"}
+            </button>
+          </form>
+        )
       )}
 
       {/* Preguntas */}

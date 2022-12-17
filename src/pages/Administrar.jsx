@@ -4,6 +4,7 @@ import { instance } from "../api/api";
 import { FiInfo } from "react-icons/fi";
 
 const Administrar = () => {
+  const [load, setLoad] = useState(true);
   const [categorias, setCategorias] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
 
@@ -16,8 +17,11 @@ const Administrar = () => {
     try {
       const response = await instance.get("/categories");
       setCategorias(response.data.categorias);
+      setLoad(false);
     } catch (err) {
+      console.error(true)
       setCategorias([]);
+      setLoad(true);
     }
   };
 
@@ -37,11 +41,17 @@ const Administrar = () => {
           Añadir categoria
         </button>
       </div>
-      {categorias.length === 0 ? (
+      {load ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-700"></div>
+        </div>
+      ) : categorias.length === 0 ? (
         <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
-        <FiInfo className="text-blue-600" />
-        <p className="text-blue-600 font-medium">No se ha creado ninguna categoria.</p>
-      </div>
+          <FiInfo className="text-blue-600" />
+          <p className="text-blue-600 font-medium">
+            No se ha creado ninguna categoria.
+          </p>
+        </div>
       ) : (
         <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
           {categorias.map((categoria) => (
@@ -53,6 +63,7 @@ const Administrar = () => {
           ))}
         </div>
       )}
+
       {/* Modal administrar */}
       <ModalAdministrar
         id="modal-add"
