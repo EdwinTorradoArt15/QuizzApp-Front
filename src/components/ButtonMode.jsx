@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FiMoon,  FiSun } from "react-icons/fi";
 import { useStateContext } from "../context/ContextProvider";
 
 const ButtonMode = () => {
@@ -19,7 +19,7 @@ const ButtonMode = () => {
                     />
                     <Tooltip title="Modo oscuro" arrow>
                         <label htmlFor="dark" className="rounded-full bg-gray-500/20 p-1 cursor-pointer">
-                            <FaMoon/>
+                            <FiMoon/>
                         </label>
                     </Tooltip>
                 </>
@@ -35,7 +35,7 @@ const ButtonMode = () => {
                     />
                     <Tooltip title="Modo claro" arrow>
                         <label htmlFor="light" className="rounded-full bg-gray-600/50 p-1 cursor-pointer text-white">
-                            <FaSun/>
+                            <FiSun/>
                         </label>
                     </Tooltip>
                 </>

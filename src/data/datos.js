@@ -1,33 +1,31 @@
-import React from "react";
-import { AiFillHome, AiFillProfile, AiFillSetting } from "react-icons/ai";
-import { BiCheckDouble } from "react-icons/bi";
-import { BsFillPersonFill } from "react-icons/bs";
+import { FiHome, FiFileText, FiCheckCircle, FiUser, FiSettings } from 'react-icons/fi'
+
 
 export const dataSidebar = [
   {
     path: "inicio",
     titulo: 'Inicio',
-    icon: <AiFillHome />,
+    icon: <FiHome />,
   },
   {
     path: "cuestionarios",
     titulo: 'Cuestionarios',
-    icon: <AiFillProfile />,
+    icon: <FiFileText />,
   },
   {
     path: "completados",
     titulo: 'Completados',
-    icon: <BiCheckDouble />,
+    icon: <FiCheckCircle />,
   },
   {
     path: 'perfil',
     titulo: 'Perfil',
-    icon: <BsFillPersonFill />,
+    icon: <FiUser />,
   },
   {
     path: 'administrar',
     titulo: 'Administrar',
-    icon: <AiFillSetting />,
+    icon: <FiSettings />,
   }
 ];
 

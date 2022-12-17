@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ModalAdministrar, Categoria } from "../components";
 import { instance } from "../api/api";
+import { FiInfo } from "react-icons/fi";
 
 const Administrar = () => {
   const [categorias, setCategorias] = useState([]);
@@ -36,11 +37,22 @@ const Administrar = () => {
           Añadir categoria
         </button>
       </div>
-      <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
-        {categorias.map((categoria) => (
-          <Categoria key={categoria.id} categoria={categoria} getCategorias={getCategories}/>
-        ))}
+      {categorias.length === 0 ? (
+        <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
+        <FiInfo className="text-blue-600" />
+        <p className="text-blue-600 font-medium">No se ha creado ninguna categoria.</p>
       </div>
+      ) : (
+        <div className="flex flex-wrap my-7 justify-center gap-8 items-center">
+          {categorias.map((categoria) => (
+            <Categoria
+              key={categoria.id}
+              categoria={categoria}
+              getCategorias={getCategories}
+            />
+          ))}
+        </div>
+      )}
       {/* Modal administrar */}
       <ModalAdministrar
         id="modal-add"

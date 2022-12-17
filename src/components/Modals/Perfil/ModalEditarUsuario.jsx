@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { instance } from "../../../api/api";
 import { Transition, Loader } from "../..";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import jwt_decode from "jwt-decode";
 import { AiFillCamera } from "react-icons/ai";
@@ -228,16 +228,17 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
               <div className="flex gap-3">
                 <button
                   type="submit"
-                  className="bg-bright-blue dark:bg-black text-white border-2 border-bright-blue dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-bright-blue dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
+                  className="bg-bright-blue/20 dark:bg-black text-bright-blue transition duration-500 hover:bg-bright-blue  hover:text-white dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
                 >
                   {loading ? <Loader /> : "Editar"}
                 </button>
-                <p
-                  className="bg-rosa-rojo cursor-pointer dark:bg-black text-white border-2 border-rosa-rojo dark:border-[#353535] transition duration-500 hover:bg-white  hover:text-rosa-rojo dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
+                <button
+                  type="button"
+                  className="bg-rosa-rojo/20 dark:bg-black text-rosa-rojo transition duration-500 hover:bg-rosa-rojo hover:text-white dark:hover:text-black dark:hover:bg-white font-medium px-3 py-2 text-sm movilM:text-base rounded-lg"
                   onClick={cleanButtonCancel}
                 >
                   Cancelar
-                </p>
+                </button>
               </div>
             </form>
           </div>

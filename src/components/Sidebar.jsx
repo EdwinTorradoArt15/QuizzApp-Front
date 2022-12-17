@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { FiX } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import { dataSidebar } from "../data/datos";
 
@@ -78,17 +79,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             aria-expanded={sidebarOpen}
           >
             <span className="sr-only">Cerrar menu</span>
-            <svg
-              className="w-6 h-6 fill-current"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
-            </svg>
+            <FiX className='w-6 h-6 fill-current'/>
           </button>
           {/* Logo */}
           <NavLink end to="/" className="block">
-            <span className="text-white">Logo</span>
+            <span className="text-white font-semibold">QuizzApp</span>
           </NavLink>
         </div>
         {/* Links */}
@@ -96,12 +91,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {/* Pages groups */}
           <div>
             <h3 className="text-sm uppercase text-white font-semibold pl-3">
-              <span
-                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                aria-hidden="true"
-              >
-                •••
-              </span>
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 Paginas
               </span>

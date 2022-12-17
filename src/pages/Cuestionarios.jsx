@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { CardCuestionarios } from "../components";
-import { BiSearchAlt } from "react-icons/bi";
 import { instance } from "../api/api";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { FiInfo, FiSearch } from "react-icons/fi";
 
 const Cuestionarios = () => {
   const [search, setSearch] = useState("");
@@ -51,11 +51,11 @@ const Cuestionarios = () => {
               onChange={(event) => {
                 setSearch(event.target.value);
               }}
-              className="px-2 movilM:px-2.5 py-1 movilM:py-2 placeholder-gray-500 text-black rounded-l-lg border-2 border-bright-blue/20 focus-within:border-bright-blue dark:focus-within:border-white focus:outline-none"
+              className="px-2 py-1 movilM:px-2.5 movilM:py-2 placeholder-gray-500 text-black rounded-l-lg border-gray-300 focus:border-bright-blue focus:ring-bright-blue dark:border-black/20 focus:outline-none"
             />
             <div className="inline-flex">
               <button className="btn-cuestionario px-2 movilM:px-2.5 rounded-r-lg">
-                <BiSearchAlt size={20} />
+                <FiSearch size={20} />
               </button>
             </div>
           </div>
@@ -71,22 +71,34 @@ const Cuestionarios = () => {
         </Link>
       </div>
       <div className="mt-7">
-        <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
-          {filterData().length === 0 ? (
-            <div className="text-center">
-              <p className="dark:text-white">No hay cuestionarios</p>
+        {cuestionario.length === 0 ? (
+          <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
+            <FiInfo className="text-blue-600" />
+            <p className="text-blue-600 font-medium">
+              No has creado ningun cuestionario.
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-wrap my-7 justify-center gap-6 items-center">
+            {filterData().length === 0 ? (
+              <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
+              <FiInfo className="text-blue-600" />
+              <p className="text-blue-600 font-medium">
+                Cuestionario inexistente.
+              </p>
             </div>
-          ) : (
-            filterData().map((categoria) => (
-              <CardCuestionarios
-                key={categoria.id}
-                nombre={categoria.nomCuest}
-                usuario={categoria.usuarioCreador}
-                categoria={categoria.nombreCategoria}
-              />
-            ))
-          )}
-        </div>
+            ) : (
+              filterData().map((categoria) => (
+                <CardCuestionarios
+                  key={categoria.id}
+                  nombre={categoria.nomCuest}
+                  usuario={categoria.usuarioCreador}
+                  categoria={categoria.nombreCategoria}
+                />
+              ))
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

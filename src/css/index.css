@@ -9,8 +9,8 @@
 @import 'tailwindcss/utilities';
 
 /* Estilos adicionales */
-@import './secondary-styles/btnCat.css';
-@import './secondary-styles/sliders.css';
-@import './secondary-styles/cards.css';
-@import './secondary-styles/banner.css';
+@import './secondary-styles/btnCss.css';
+@import './secondary-styles/login.css';
+@import './secondary-styles/cuestionarios.css';
+@import './secondary-styles/perfil.css';
 

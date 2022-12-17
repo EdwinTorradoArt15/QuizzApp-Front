@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Rating, Stack } from "@mui/material";
 import { CardCuestionarios, ModalEditarUsuario } from "../components";
 import { instance } from "../api/api";
-import { FaPen, FaPlus } from "react-icons/fa";
+import { Rating, Stack } from "@mui/material";
+import {FiEdit, FiInfo, FiPlus} from "react-icons/fi";
 import jwt_decode from "jwt-decode";
 
 const Perfil = () => {
@@ -126,24 +126,24 @@ const Perfil = () => {
               e.stopPropagation();
               setModalOpen(true);
             }}
-            className={`flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-1 text-sm movilM:text-base ${
+            className={`flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-2 text-sm movilM:text-base ${
               modalOpen && "bg-slate-200"
             }`}
           >
-            Editar perfil <FaPen size={13} />
+            Editar perfil <FiEdit size={13} />
           </button>
         </div>
       </div>
 
       {/* Botones informacion */}
       <div className="flex gap-3 justify-center mt-5">
-        <button className="flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-1 text-sm movilM:text-base">
-          Seguir <FaPlus size={13} />
+        <button className="flex items-center gap-2 btn-cuestionario rounded-lg font-medium px-3 py-2 text-sm movilM:text-base">
+          Seguir <FiPlus size={13} />
         </button>
-        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-1 text-sm movilM:text-base">
+        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-2 text-sm movilM:text-base">
           160K seguidores
         </button>
-        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-1 text-sm movilM:text-base">
+        <button className="bg-white drop-shadow-lg border-2 rounded-lg font-medium px-3 py-2 text-sm movilM:text-base">
           200K seguidos
         </button>
       </div>
@@ -155,7 +155,10 @@ const Perfil = () => {
         </h1>
         <div className="flex flex-wrap mt-7 justify-center gap-6 items-center">
           {cuestionario.length === 0 ? (
-            <p className="dark:text-white">No hay cuestionarios</p>
+            <div className="bg-blue-200 w-full rounded p-3 flex items-center gap-2">
+            <FiInfo className="text-blue-600" />
+            <p className="text-blue-600 font-medium">No has creado ningun cuestionario.</p>
+          </div>
           ) : (
             cuestionario
               .slice(0, 4)

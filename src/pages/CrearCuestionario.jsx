@@ -161,7 +161,7 @@ const CrearCuestionario = () => {
                 </label>
                 <select
                   {...register("idCategoria", { required: true })}
-                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-2"
+                  className="bg-bright-blue/20 text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold border-none text-bright-blue p-2"
                 >
                   {categorias.map((categoria) => (
                     <option
@@ -180,7 +180,7 @@ const CrearCuestionario = () => {
                 </label>
                 <select
                   {...register("tiempoTotal", { required: true })}
-                  className="bg-bright-blue text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold focus:outline-none text-white p-2"
+                  className="bg-bright-blue/20 text-sm movilM:text-base w-32 movilM:w-36 tableta:w-40 dark:bg-[#423F3E] rounded-md font-semibold border-none text-bright-blue p-2"
                 >
                   <option value="20" className="text-black bg-white">
                     20 segundos
@@ -200,7 +200,7 @@ const CrearCuestionario = () => {
             {/* Select tiempo */}
           </div>
           <button
-            className="p-2 mt-2 text-sm movilM:text-base font-semibold rounded-md bg-bright-blue dark:hover:text-black dark:bg-black dark:border-black/20 dark:hover:bg-white text-white cursor-pointer border-2 border-bright-blue transition duration-500 hover:bg-white hover:text-bright-blue"
+            className="p-2 mt-2 text-sm movilM:text-base font-semibold rounded-md bg-bright-blue/20 dark:hover:text-black dark:bg-black dark:hover:bg-white text-bright-blue cursor-pointer transition duration-500 hover:bg-bright-blue hover:text-white"
             type="submit"
             disabled={loading ? true : false}
           >
@@ -227,7 +227,7 @@ const CrearCuestionario = () => {
                       {...register(`preguntas.${index}.nombre`)}
                       defaultValue={nombre}
                       placeholder="Pregunta"
-                      className="border-2 border-bright-blue/20 placeholder:text-xs movilM:placeholder:text-sm focus:within:border-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-64 movilM:w-80 tableta:w-96"
+                      className="border-2 border-bright-blue/20 placeholder:text-xs movilM:placeholder:text-sm focus:border-bright-blue focus:ring-bright-blue focus:outline-none border-gray-300 rounded-md p-2 w-64 movilM:w-80 tableta:w-96"
                     />
                   </div>
                   <div className="flex justify-center items-center my-4">
@@ -246,7 +246,7 @@ const CrearCuestionario = () => {
                             {...register(`preguntas.${index}.r1`)}
                             placeholder="Respuesta 1"
                             type="text"
-                            className="p-2 w-28 movilM:w-32 tableta:w-56 portatil:w-96 placeholder-gray-500 placeholder:text-xs movilM:placeholder:text-sm text-black rounded-lg border-2 border-bright-blue/20 focus-within:border-bright-blue focus:outline-none"
+                            className="p-2 w-28 movilM:w-32 tableta:w-56 portatil:w-96 placeholder-gray-500 placeholder:text-xs movilM:placeholder:text-sm text-black rounded-lg border-2 border-bright-blue/20 focus:border-bright-blue focus:ring-bright-blue focus:outline-none"
                           />
                         </div>
                       </div>
