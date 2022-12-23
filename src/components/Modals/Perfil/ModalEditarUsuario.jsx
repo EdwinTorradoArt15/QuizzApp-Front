@@ -71,6 +71,7 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
 
       let formData = new FormData();
       formData.append("usuario", userData.usuario);
+      formData.append("descripcion", userData.descripcion);
       formData.append("nombre", userData.nombre);
       formData.append("correo", userData.correo);
       if (inputPassword.current.value.trim().length > 0) {
@@ -185,6 +186,18 @@ const ModalEditarUsuario = ({ id, modalOpen, setModalOpen }) => {
                   name="usuario"
                   onChange={handleTarget}
                   defaultValue={userData.usuario}
+                  className="dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm"
+                />
+              </div>
+              <div className="flex flex-col mt-3">
+                <label className="block text-base font-medium dark:text-white">
+                  Descripcion
+                </label>
+                <input
+                  type="text"
+                  name="descripcion"
+                  onChange={handleTarget}
+                  defaultValue={userData.descripcion}
                   className="dark:bg-[#353535] dark:text-white block p-3 w-full flex-1 rounded-md border-gray-300 focus:border-bright-blue focus:ring-bright-blue sm:text-sm"
                 />
               </div>

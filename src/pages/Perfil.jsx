@@ -55,6 +55,8 @@ const Perfil = () => {
     }
   };
 
+  console.log('Informacion del usuario ->', userData)
+
   const getInitial = (name) => {
     const names = name.split("");
     const initials = names[0];
@@ -124,7 +126,7 @@ const Perfil = () => {
               {userData.nombre}
             </p>
             <p className="font-medium text-xs movilM:text-sm text-black/50 dark:text-white">
-              UX/UI - Front-End
+              {userData.descripcion}
             </p>
             <div className="flex justify-center pt-2">
               <button
