@@ -81,8 +81,7 @@ const CrearCuestionario = () => {
   };
 
   const enviarPreguntas = async (data) => {
-
-    console.log("XDDDDDD",data);
+    console.log("XDDDDDD", data);
     /* const informacionPreguntasFormateada = data.preguntas.map((pregunta) => {
       const valorRespuesta = pregunta[`${pregunta.respuestaPregunta}`];
 

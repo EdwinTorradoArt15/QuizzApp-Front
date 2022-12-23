@@ -4,13 +4,13 @@
   font-family: "Montserrat", sans-serif;
 }
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 /* Estilos adicionales */
-@import './secondary-styles/btnCss.css';
-@import './secondary-styles/login.css';
-@import './secondary-styles/cuestionarios.css';
-@import './secondary-styles/perfil.css';
-
+@import "./secondary-styles/btnCss.css";
+@import "./secondary-styles/login.css";
+@import "./secondary-styles/cuestionarios.css";
+@import "./secondary-styles/perfil.css";
+@import "./secondary-styles/checkbox.css";

@@ -8,17 +8,14 @@ function OpcionesPregunta(props) {
 
   const cargarOpcionesPregunta = async () => {
     try {
-        console.log("eSTAS SON LAS PROPS:",props)
       const response = await instance.post(`/preguntas/opciones`, {
         idCuestionario: props.idCuestionario,
         idPregunta: props.idPregunta,
       });
 
       const respuesta = response.data;
-      setOpciones(respuesta.opciones)
-      console.log("Recibo esta respuestsa:", respuesta);
+      setOpciones(respuesta.opciones);
     } catch (err) {
-
       console.error(err);
     }
   };
@@ -28,18 +25,13 @@ function OpcionesPregunta(props) {
   }, []);
   return (
     <div>
-      <ul>
-{
-    opciones.map((opcion,index)=>(
-        <div key={index} >
-            <label>{opcion.descripcion}</label>
-            <input type={"checkbox"}></input>
-            
-        </div>
-     
-    ))
-}
-
+      <ul className="container-checkbox grid grid-cols-2 gap-4">
+        {opciones.map((opcion, index) => (
+          <li key={index}>
+            <input id={"pregunta" + index} type={"checkbox"} />
+            <label htmlFor={"pregunta" + index}>{opcion.descripcion}</label>
+          </li>
+        ))}
       </ul>
     </div>
   );

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import { instance } from "../api/api";
-import { preguntas } from "../data/datos";
 import OpcionesPregunta from "../components/OpcionesPregunta";
 
 const ResponderCuestionario = () => {
@@ -28,20 +26,31 @@ const ResponderCuestionario = () => {
 
   const getPreguntas = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const decoded = jwt_decode(token);
       const response = await instance.post(`/preguntas`, {
         idCuestionario: Number(id),
       });
 
       const respuesta = response.data;
-      console.log("Recibo esta respuestsa:", respuesta);
       setPreguntas(respuesta.preguntas);
     } catch (err) {
       setLoad(true);
       console.error(err);
     }
   };
+
+  // Discount time of the questionarie with useEffect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (infoCuestionario.tiempoTotal > 0) {
+        setInfoCuestionario({
+          ...infoCuestionario,
+          tiempoTotal: infoCuestionario.tiempoTotal - 1,
+        });
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [infoCuestionario.tiempoTotal]);
+
   useEffect(() => {
     getCuestionario();
     getPreguntas();
@@ -62,23 +71,26 @@ const ResponderCuestionario = () => {
               {infoCuestionario.nombreCategoria}
             </span>
             <span className="bg-lime-green px-6 py-2 rounded-md text-white font-semibold">
-              {infoCuestionario.tiempoTotal}
+              {infoCuestionario.tiempoTotal} segundos
             </span>
           </div>
           <hr className="mt-5" />
-          <h1 className="font-bold">Informacion cuestionario</h1>
 
           <div className="flex flex-col">
             {[...preguntas].map((pregunta, index) => (
               <div className="m-3" key={index}>
-                {
-                  console.log("Objeto pregunta soy:",pregunta)
-                }
-                <p className="text-[red]">{pregunta.pregunta_descripcion}</p>
-                <OpcionesPregunta
-                  idPregunta={pregunta.id_pregunta}
-                  idCuestionario={pregunta.id_cuestionario}
-                ></OpcionesPregunta>
+                <div className="flex items-center gap-2">
+                  <p className="text-bright-blue dark:text-white font-bold text-base movilM:text-lg">
+                    {index + 1}
+                  </p>
+                  <p className="font-medium">{pregunta.pregunta_descripcion}</p>
+                </div>
+                <div className="flex justify-center">
+                  <OpcionesPregunta
+                    idPregunta={pregunta.id_pregunta}
+                    idCuestionario={pregunta.id_cuestionario}
+                  ></OpcionesPregunta>
+                </div>
               </div>
             ))}
           </div>
