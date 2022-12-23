@@ -81,7 +81,9 @@ const CrearCuestionario = () => {
   };
 
   const enviarPreguntas = async (data) => {
-    const informacionPreguntasFormateada = data.preguntas.map((pregunta) => {
+
+    console.log("XDDDDDD",data);
+    /* const informacionPreguntasFormateada = data.preguntas.map((pregunta) => {
       const valorRespuesta = pregunta[`${pregunta.respuestaPregunta}`];
 
       return {
@@ -120,7 +122,7 @@ const CrearCuestionario = () => {
     } catch (err) {
       setLoading(false);
       toast.error(err.response.data.msg);
-    }
+    } */
   };
 
   //Se obtiene el id del usuario
